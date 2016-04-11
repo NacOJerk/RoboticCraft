@@ -126,6 +126,8 @@ public class RobotBase {
 			e1.printStackTrace();
 		}
 		this.chick = chick;
+		this.chick.setMaxHealth(Integer.MAX_VALUE);
+		this.chick.setHealth(this.chick.getMaxHealth());
 		final Chicken fchick = chick;
 		Bukkit.getScheduler().scheduleSyncDelayedTask(
 				RoboticCraft.getInstance(), new Runnable() {
@@ -140,6 +142,7 @@ public class RobotBase {
 				}, 2L);
 		this.armorStand = (ArmorStand) getWorld().spawnEntity(getLocation(),
 				EntityType.ARMOR_STAND);
+		this.armorStand.setInvulnerable(true);
 		setFuel(100);
 		this.invetory = Bukkit.createInventory(null, 9 * 3);
 		this.robotTask = new RobotTask();
