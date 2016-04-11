@@ -1,6 +1,8 @@
 package com.kirelcodes.RoboticCraft.Robot;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 
 public class RobotCenter {
@@ -25,5 +27,8 @@ public class RobotCenter {
 	}
 	public static boolean removeRobot(int ID){
 		return robotBase.remove(ID) != null;
+	}
+	public static List<RobotBase> getRobots(){
+		return new ArrayList<>(robotBase.values());
 	}
 }
