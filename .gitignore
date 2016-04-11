@@ -1,3 +1,27 @@
+# Eclipse stuff
+/.classpath
+/.project
+/.settings
+PotionMC.iws
+/.iws
+
+# various other potential build files
+/build
+/bin
+/dist
+/manifest.mf
+/jars
+/out
+ *~
+.DS_Store
+.project
+.settings
+.classpath
+.metadata
+*.ipr
+*.jws
+*.iml
+*.iws
 # Windows image file caches
 Thumbs.db
 ehthumbs.db
@@ -14,9 +38,6 @@ $RECYCLE.BIN/
 *.msm
 *.msp
 
-# Windows shortcuts
-*.lnk
-
 # =========================
 # Operating System Files
 # =========================
@@ -28,16 +49,18 @@ $RECYCLE.BIN/
 .AppleDouble
 .LSOverride
 
+# Icon must ends with two \r.
+Icon
+
+
 # Thumbnails
 ._*
 
 # Files that might appear on external disk
 .Spotlight-V100
 .Trashes
-
-# Directories potentially created on remote AFP share
-.AppleDB
-.AppleDesktop
-Network Trash Folder
-Temporary Items
-.apdisk
+server.properties
+*.iws
+logs/latest.log
+logs/2014-09-11-1.log.gz
+eula.txt
