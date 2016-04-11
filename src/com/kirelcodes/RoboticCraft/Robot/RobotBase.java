@@ -27,6 +27,9 @@ public class RobotBase {
 			chick.remove();
 			return;
 		}
+		this.armorStand = (ArmorStand) getWorld().spawnEntity(getLocation(), EntityType.ARMOR_STAND); 
+		setFuel(100);
+		this.ID = RobotCenter.addRobot(this);
 	}
 
 	public Location getLocation() {
@@ -50,7 +53,7 @@ public class RobotBase {
 		getNMSHandle().getClass()
 				.getMethod("setSize", float.class, float.class)
 				.invoke(getNMSHandle(), 0.5F, 1.975F);
-
+		getNMSHandle().getClass().getMethod("setInvisible", boolean.class).invoke(getNMSHandle(), true);
 	}
 
 	/**
@@ -107,5 +110,19 @@ public class RobotBase {
 
 	public int getFuel() {
 		return fuel;
+	}
+	/**
+	 * Between 0 to 100 
+	 * @param fuel
+	 */
+	public void setFuel(int fuel){
+		if(!(0 <= fuel && fuel <= 100)){
+			//Error logger here
+			return;
+		}
+		this.fuel = fuel;
+	}
+	public boolean hasFuel(){
+		return 0 < fuel;
 	}
 }
