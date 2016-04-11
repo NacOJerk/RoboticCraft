@@ -105,5 +105,19 @@ public class NMSClassInteracter {
 		f.setAccessible(false);
 		return o2;
 	}
+	/**
+	 * 
+	 * @param o
+	 * @param field
+	 * @return
+	 * @throws Exception
+	 */
+	public static Object getDeclaredField(Object o , String field)throws Exception{
+		Field f = o.getClass().getDeclaredField(field);
+		f.setAccessible(true);
+		Object o2 = f.get(o);
+		f.setAccessible(false);
+		return o2;
+	}
 
 }

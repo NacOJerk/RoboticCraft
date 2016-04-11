@@ -1,14 +1,19 @@
 package com.kirelcodes.RoboticCraft.Robot;
 
+import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.block.Block;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Chicken;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 import com.kirelcodes.RoboticCraft.RoboticCraft;
 
@@ -28,7 +33,9 @@ public class RobotBase {
 	private boolean isFollowing;
 	private Entity followTarget;
 	private RobotTask robotTask;
-
+	private Inventory invetory;
+	
+	
 	/**
 	 * Responsible for the armor stand teleportation and target following
 	 * 
@@ -40,7 +47,6 @@ public class RobotBase {
 		private int mark;
 		private int stuckCalc;
 		private Location previus;
-
 		public RobotTask() {
 			this.ID = Bukkit.getScheduler().scheduleSyncRepeatingTask(
 					RoboticCraft.getInstance(), this, 0L, 1L);
@@ -49,12 +55,20 @@ public class RobotBase {
 
 		@Override
 		public void run() {
+			if(!hasFuel()){
+				try {
+					setTargetLocation(getLocation());
+				} catch (Exception e) {
+					//Error thrower here
+				}
+			}
 			if ((mark % 5) == 0) {
 				if (isFollowing()) {
 					setFollow();
 				}
 			}
 			if ((mark % 20) == 0) {
+				if(isFollowing()){
 				if (previus.distance(getLocation()) <= 2) 
 					stuckCalc++;
 				else{
@@ -69,8 +83,9 @@ public class RobotBase {
 					isStuck = false;
 					stuckCalc = 0;
 				}
-				
+				}
 			}
+			
 			getArmoStand().teleport(getLocation());
 			this.previus = getLocation();
 			mark++;
@@ -109,9 +124,11 @@ public class RobotBase {
 		this.armorStand = (ArmorStand) getWorld().spawnEntity(getLocation(),
 				EntityType.ARMOR_STAND);
 		setFuel(100);
+		this.invetory = Bukkit.createInventory(null, 9*3);
 		this.robotTask = new RobotTask();
-		this.ID = RobotCenter.addRobot(this);
+		this.ID = RobotCenter.addRobot(this);		
 	}
+	
 
 	/**
 	 * 
@@ -142,8 +159,8 @@ public class RobotBase {
 	 */
 	private void clearChicken() throws Exception {
 		Object goalSelector = getField(getNMSHandle(), "goalSelector");
-		List<?> goalSelectorA = (List<?>) getField(goalSelector, "b");
-		List<?> goalSelectorB = (List<?>) getField(goalSelector, "c");
+		LinkedHashSet<?> goalSelectorA = (LinkedHashSet<?>) getDeclaredField(goalSelector, "b");
+		LinkedHashSet<?> goalSelectorB = (LinkedHashSet<?>) getDeclaredField(goalSelector, "c");
 		goalSelectorA.clear();
 		goalSelectorB.clear();
 		getNMSHandle().getClass()
@@ -171,7 +188,7 @@ public class RobotBase {
 	}
 
 	/**
-	 * Setts the location the robot should move to
+	 * Sets the location the robot should move to
 	 * 
 	 * @param loc
 	 * @return did it start or not
@@ -287,5 +304,13 @@ public class RobotBase {
 		this.chick.remove();
 		this.armorStand.remove();
 		RobotCenter.removeRobot(getID());
+	}
+	public Inventory getInventory(){
+		return invetory;
+	}
+	public HashMap<Integer, ItemStack> addItem(ItemStack ... item){
+		return getInventory().addItem(item);
+	}
+	public void mineBlock(Block b){
 	}
 }
