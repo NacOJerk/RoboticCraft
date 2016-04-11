@@ -2,7 +2,6 @@ package com.kirelcodes.RoboticCraft.Robot;
 
 import java.util.HashMap;
 import java.util.LinkedHashSet;
-import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -34,8 +33,7 @@ public class RobotBase {
 	private Entity followTarget;
 	private RobotTask robotTask;
 	private Inventory invetory;
-	
-	
+
 	/**
 	 * Responsible for the armor stand teleportation and target following
 	 * 
@@ -47,19 +45,21 @@ public class RobotBase {
 		private int mark;
 		private int stuckCalc;
 		private Location previus;
+
 		public RobotTask() {
 			this.ID = Bukkit.getScheduler().scheduleSyncRepeatingTask(
 					RoboticCraft.getInstance(), this, 0L, 1L);
 			mark = 0;
+			previus = getLocation();
 		}
 
 		@Override
 		public void run() {
-			if(!hasFuel()){
+			if (!hasFuel()) {
 				try {
 					setTargetLocation(getLocation());
 				} catch (Exception e) {
-					//Error thrower here
+					// Error thrower here
 				}
 			}
 			if ((mark % 5) == 0) {
@@ -68,24 +68,29 @@ public class RobotBase {
 				}
 			}
 			if ((mark % 20) == 0) {
-				if(isFollowing()){
-				if (previus.distance(getLocation()) <= 2) 
-					stuckCalc++;
-				else{
-					stuckCalc = 0;
-					isStuck = false;
-				}
-				if(stuckCalc >= 3){
-					isStuck = true;
-				}
-				if(stuckCalc == 5){
-					getNavigator().teleport(getFollowTarget().getLocation().clone().add(1 , 0 , 1));
-					isStuck = false;
-					stuckCalc = 0;
-				}
+				if (isFollowing()) {
+					if (getFollowTarget() == null) {
+						cancelFollow();
+					}
+					if (previus.distance(getLocation()) <= 2)
+						stuckCalc++;
+					else {
+						stuckCalc = 0;
+						isStuck = false;
+					}
+					if (stuckCalc >= 3) {
+						isStuck = true;
+					}
+					if (stuckCalc == 5) {
+						getNavigator().teleport(
+								getFollowTarget().getLocation().clone()
+										.add(1, 0, 1));
+						isStuck = false;
+						stuckCalc = 0;
+					}
 				}
 			}
-			
+
 			getArmoStand().teleport(getLocation());
 			this.previus = getLocation();
 			mark++;
@@ -96,7 +101,8 @@ public class RobotBase {
 				setTargetLocation(getFollowTarget().getLocation().clone()
 						.add(1, 0, 1));
 			} catch (Exception e) {
-				// Error thrower here
+				e.printStackTrace();
+				cancel();
 			}
 		}
 
@@ -112,23 +118,33 @@ public class RobotBase {
 	 *            the location where the robot would be spawned
 	 */
 	public RobotBase(Location loc) {
-		Chicken chick = (Chicken) loc.getWorld().spawnEntity(loc,
-				EntityType.CHICKEN);
-		this.chick = chick;
+		Chicken chick = null;
 		try {
-			clearChicken();
-		} catch (Exception e) {
-			chick.remove();
-			return;
+			chick = getSilentChicken(loc);
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
+		this.chick = chick;
+		final Chicken fchick = chick;
+		Bukkit.getScheduler().scheduleSyncDelayedTask(
+				RoboticCraft.getInstance(), new Runnable() {
+					public void run() {
+						try {
+							clearChicken();
+						} catch (Exception e) {
+							fchick.remove();
+							return;
+						}
+					}
+				}, 2L);
 		this.armorStand = (ArmorStand) getWorld().spawnEntity(getLocation(),
 				EntityType.ARMOR_STAND);
 		setFuel(100);
-		this.invetory = Bukkit.createInventory(null, 9*3);
+		this.invetory = Bukkit.createInventory(null, 9 * 3);
 		this.robotTask = new RobotTask();
-		this.ID = RobotCenter.addRobot(this);		
+		this.ID = RobotCenter.addRobot(this);
 	}
-	
 
 	/**
 	 * 
@@ -159,15 +175,19 @@ public class RobotBase {
 	 */
 	private void clearChicken() throws Exception {
 		Object goalSelector = getField(getNMSHandle(), "goalSelector");
-		LinkedHashSet<?> goalSelectorA = (LinkedHashSet<?>) getDeclaredField(goalSelector, "b");
-		LinkedHashSet<?> goalSelectorB = (LinkedHashSet<?>) getDeclaredField(goalSelector, "c");
+		LinkedHashSet<?> goalSelectorA = (LinkedHashSet<?>) getDeclaredField(
+				goalSelector, "b");
+		LinkedHashSet<?> goalSelectorB = (LinkedHashSet<?>) getDeclaredField(
+				goalSelector, "c");
 		goalSelectorA.clear();
 		goalSelectorB.clear();
 		getNMSHandle().getClass()
 				.getMethod("setSize", float.class, float.class)
 				.invoke(getNMSHandle(), 0.5F, 1.975F);
+
 		getNMSHandle().getClass().getMethod("setInvisible", boolean.class)
 				.invoke(getNMSHandle(), true);
+
 	}
 
 	/**
@@ -188,6 +208,21 @@ public class RobotBase {
 	}
 
 	/**
+	 * Gets the speed of the chicken (Navigator)
+	 * 
+	 * @throws Exception
+	 */
+	public double getSpeed() throws Exception {
+		Object MOVEMENT_SPEED = getNMS("GenericAttributes").getField(
+				"MOVEMENT_SPEED").get(null);
+		Object genericSpeed = getNMSHandle().getClass()
+				.getMethod("getAttributeInstance", getNMS("IAttribute"))
+				.invoke(getNMSHandle(), MOVEMENT_SPEED);
+		return (double) genericSpeed.getClass().getMethod("getValue")
+				.invoke(genericSpeed);
+	}
+
+	/**
 	 * Sets the location the robot should move to
 	 * 
 	 * @param loc
@@ -205,7 +240,7 @@ public class RobotBase {
 		}
 		navagation.getClass()
 				.getMethod("a", getNMS("PathEntity"), double.class)
-				.invoke(navagation, path, 1.0D);
+				.invoke(navagation, path, getSpeed());
 		navagation.getClass().getMethod("a", double.class)
 				.invoke(navagation, 2.0D);
 		return true;
@@ -305,12 +340,38 @@ public class RobotBase {
 		this.armorStand.remove();
 		RobotCenter.removeRobot(getID());
 	}
-	public Inventory getInventory(){
+
+	public Inventory getInventory() {
 		return invetory;
 	}
-	public HashMap<Integer, ItemStack> addItem(ItemStack ... item){
+
+	public HashMap<Integer, ItemStack> addItem(ItemStack... item) {
 		return getInventory().addItem(item);
 	}
-	public void mineBlock(Block b){
+
+	public void mineBlock(Block b) {
+	}
+
+	public static Chicken getSilentChicken(Location loc) throws Exception {
+		Object nbtTAG = getNMS("NBTTagCompound").getConstructor().newInstance();
+		nbtTAG.getClass()
+				.getDeclaredMethod("setString", String.class, String.class)
+				.invoke(nbtTAG, "id", "Chicken");
+		nbtTAG.getClass()
+				.getDeclaredMethod("setBoolean", String.class, boolean.class)
+				.invoke(nbtTAG, "Silent", true);
+		Object world = loc.getWorld().getClass().getMethod("getHandle")
+				.invoke(loc.getWorld());
+		Object entity = getNMS("ChunkRegionLoader").getMethod("a",
+				nbtTAG.getClass(), getNMS("World"), double.class, double.class,
+				double.class, boolean.class).invoke(null, nbtTAG, world,
+				loc.getX(), loc.getY(), loc.getZ(), true);
+		entity.getClass()
+				.getMethod("setPosition", double.class, double.class,
+						double.class)
+				.invoke(entity, loc.getX(), loc.getY(), loc.getZ());
+		Object craftChicken = entity.getClass().getMethod("getBukkitEntity")
+				.invoke(entity);
+		return (Chicken) craftChicken;
 	}
 }

@@ -1,5 +1,7 @@
 package com.kirelcodes.RoboticCraft;
 
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.kirelcodes.RoboticCraft.Robot.RobotBase;
@@ -13,6 +15,10 @@ public class RoboticCraft extends JavaPlugin{
 	public void onEnable() {
 		robotiCraft = this;
 		controllerManager = new ControllerManager(this);
+		for(Player p : Bukkit.getOnlinePlayers()){
+			final RobotBase rb = new RobotBase(p.getLocation().add(4, 0, 4));
+			rb.setFollow(p);
+		}
 	}
 	@Override
 	public void onDisable() {
