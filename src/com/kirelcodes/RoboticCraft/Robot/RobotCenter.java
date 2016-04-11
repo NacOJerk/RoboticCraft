@@ -4,7 +4,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
-
+/**
+ * 
+ * @author NacOJerk
+ *
+ */
 public class RobotCenter {
 	private static HashMap<Integer, RobotBase> robotBase = new HashMap<>();
 	public static int addRobot(RobotBase robot){
