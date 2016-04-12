@@ -11,12 +11,14 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public abstract class GUI implements InventoryHolder {
 
+	private String id;
 	private int size;
 	private Inventory inventory;
 	
-	public GUI(String title, int rows){
-		inventory = Bukkit.createInventory(null, rows*9, title);
+	public GUI(String title, int rows, String ID){
+		this.inventory = Bukkit.createInventory(this, rows*9, title);
 		this.size = rows*9;
+		this.id = ID;
 	}
 	
 	public void show(Player player) {
@@ -47,6 +49,10 @@ public abstract class GUI implements InventoryHolder {
 	
 	public Inventory getInventory(){
 		return inventory;
+	}
+	
+	public String getId() {
+		return id;
 	}
 
 }

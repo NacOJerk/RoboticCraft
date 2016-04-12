@@ -22,7 +22,7 @@ public abstract class BasicPathfinder {
 	 * Called after each time the update task method is called
 	 * Could be used to create delays for example
 	 */
-	public void resetTask(){}
+	public void afterTask(){}
 	/**
 	 * Called every tick
 	 * Basically the most important task
