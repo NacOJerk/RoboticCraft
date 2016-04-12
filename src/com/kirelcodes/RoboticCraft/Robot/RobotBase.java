@@ -6,12 +6,12 @@ import java.util.LinkedHashSet;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.block.Block;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Chicken;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
 import com.kirelcodes.RoboticCraft.RoboticCraft;
@@ -23,7 +23,7 @@ import static com.kirelcodes.RoboticCraft.utils.NMSClassInteracter.*;
  * @author NacOJerk
  *
  */
-public class RobotBase {
+public class RobotBase implements InventoryHolder{
 	private Chicken chick;
 	private ArmorStand armorStand;
 	private boolean isStuck;
@@ -144,7 +144,7 @@ public class RobotBase {
 				EntityType.ARMOR_STAND);
 		this.armorStand.setInvulnerable(true);
 		setFuel(100);
-		this.invetory = Bukkit.createInventory(null, 9 * 3);
+		this.invetory = Bukkit.createInventory(this, 9 * 3);
 		this.robotTask = new RobotTask();
 		this.ID = RobotCenter.addRobot(this);
 	}
@@ -351,10 +351,6 @@ public class RobotBase {
 
 	public HashMap<Integer, ItemStack> addItem(ItemStack... item) {
 		return getInventory().addItem(item);
-	}
-
-	public void mineBlock(final Block b) {
-		
 	}
 
 	public static Chicken getSilentChicken(Location loc) throws Exception {
