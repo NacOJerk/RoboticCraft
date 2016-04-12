@@ -2,6 +2,7 @@ package com.kirelcodes.RoboticCraft.robot;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import com.kirelcodes.RoboticCraft.RoboticCraft;
@@ -15,6 +16,7 @@ public class RobotMiner extends RobotBase {
 	private boolean onDelay= false;
 	public RobotMiner(Location loc) {
 		super(loc);
+		getArmoStand().setItemInHand(new ItemStack(Material.DIAMOND_PICKAXE));
 	}
 	
 	@Override
@@ -30,7 +32,9 @@ public class RobotMiner extends RobotBase {
 			public void run() {
 				if(loc2.getBlock().getType() == Material.BEDROCK)
 					setMining(false);
-				loc2.getBlock().breakNaturally();				
+				for(ItemStack drop : loc2.getBlock().getDrops())
+					addItem(drop);
+				loc2.getBlock().setType(Material.AIR);
 				setOnDelay(false);
 			}
 		}.runTaskLater(RoboticCraft.getInstance(), (long) (BlockUtils.getMineTime(loc.getBlock())*20));
