@@ -353,4 +353,7 @@ public class RobotBase implements InventoryHolder {
 				.invoke(entity);
 		return (Chicken) craftChicken;
 	}
+	public void setStuck(boolean stuck){
+		this.isStuck = stuck;
+	}
 }
