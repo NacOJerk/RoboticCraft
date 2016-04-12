@@ -15,12 +15,13 @@ public class RobotMiner extends RobotBase {
 		super(loc);
 	}
 	
-	public void mineBlock(Location loc){
+	public void mineBlock(final Location loc){
 		new BukkitRunnable() {
 			
 			@Override
 			public void run() {
 				loc.getBlock().breakNaturally();				
+				System.out.println(loc.getBlock().getType().name());
 			}
 		}.runTaskLaterAsynchronously(RoboticCraft.getInstance(), (long) (BlockUtils.getMineTime(loc.getBlock())*20));
 	}

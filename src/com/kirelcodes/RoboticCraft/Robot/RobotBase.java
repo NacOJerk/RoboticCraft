@@ -36,7 +36,7 @@ public class RobotBase implements InventoryHolder {
 	private RobotTask robotTask;
 	private Inventory invetory;
 	private Object nmsHandel;
-	private PathManager pathManager;
+	protected PathManager pathManager;
 	/**
 	 * Responsible for the armor stand teleportation and target following
 	 * 

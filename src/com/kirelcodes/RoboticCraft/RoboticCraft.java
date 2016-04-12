@@ -7,6 +7,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.kirelcodes.RoboticCraft.gui.ControllerManager;
 import com.kirelcodes.RoboticCraft.robot.RobotBase;
 import com.kirelcodes.RoboticCraft.robot.RobotCenter;
+import com.kirelcodes.RoboticCraft.robot.RobotMiner;
 
 public class RoboticCraft extends JavaPlugin{
 	private static RoboticCraft robotiCraft= null;
@@ -16,8 +17,9 @@ public class RoboticCraft extends JavaPlugin{
 		robotiCraft = this;
 		controllerManager = new ControllerManager(this);
 		for(Player p : Bukkit.getOnlinePlayers()){
-			final RobotBase rb = new RobotBase(p.getLocation().add(4, 0, 4));
-			rb.setFollow(p);
+			RobotMiner minerRobby = new RobotMiner(p.getLocation().clone().add(5, 0, 5));
+			minerRobby.setStartBlock(minerRobby.getLocation().clone().subtract(0, 1, 0));
+			System.out.println(minerRobby.getLocation().clone().subtract(0, 1, 0));
 		}
 	}
 	@Override
