@@ -15,6 +15,7 @@ import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
 import com.kirelcodes.RoboticCraft.RoboticCraft;
+import com.kirelcodes.RoboticCraft.pathFinders.FollowPathfinder;
 import com.kirelcodes.RoboticCraft.pathFinders.PathManager;
 
 import static com.kirelcodes.RoboticCraft.utils.NMSClassInteracter.*;
@@ -120,12 +121,16 @@ public class RobotBase implements InventoryHolder {
 				EntityType.ARMOR_STAND);
 		setFuel(100);
 		this.pathManager = new PathManager();
+		addPaths();
 		this.invetory = Bukkit.createInventory(this, 9 * 3);
 		this.robotTask = new RobotTask();
 		this.ID = RobotCenter.addRobot(this);
 	}
+	/**
+	 * Adds the paths to the code
+	 */
 	protected void addPaths(){
-
+		pathManager.addPath(new FollowPathfinder(this));
 	}
 	/**
 	 * 
@@ -319,6 +324,7 @@ public class RobotBase implements InventoryHolder {
 	 */
 	public void remove() {
 		this.robotTask.cancel();
+		this.pathManager.cancel();
 		this.chick.remove();
 		this.armorStand.remove();
 		RobotCenter.removeRobot(getID());
