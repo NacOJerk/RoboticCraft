@@ -3,6 +3,8 @@ package com.kirelcodes.RoboticCraft.robot;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 
+import net.md_5.bungee.api.ChatColor;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -64,25 +66,9 @@ public class RobotBase implements InventoryHolder {
 					// Error thrower here
 				}
 			}
-			/*
-			 * if ((mark % 5) == 0) { if (isFollowing()) { setFollow(); } } if
-			 * ((mark % 20) == 0) { if (isFollowing()) { if (getFollowTarget()
-			 * == null) { cancelFollow(); } if (previus.distance(getLocation())
-			 * <= 2) stuckCalc++; else { stuckCalc = 0; isStuck = false; } if
-			 * (stuckCalc >= 3) { isStuck = true; } if (stuckCalc == 5) {
-			 * getNavigator().teleport( getFollowTarget().getLocation().clone()
-			 * .add(1, 0, 1)); isStuck = false; stuckCalc = 0; } } }
-			 */
-
 			getArmoStand().teleport(getLocation());
-			// mark++;
 		}
 
-		/*
-		 * private void setFollow() { try {
-		 * setTargetLocation(getFollowTarget().getLocation().clone() .add(1, 0,
-		 * 1)); } catch (Exception e) { e.printStackTrace(); cancel(); } }
-		 */
 		public void cancel() {
 			Bukkit.getScheduler().cancelTask(ID);
 		}
@@ -119,6 +105,8 @@ public class RobotBase implements InventoryHolder {
 				}, 2L);
 		this.armorStand = (ArmorStand) getWorld().spawnEntity(getLocation(),
 				EntityType.ARMOR_STAND);
+		this.armorStand.setBasePlate(false);
+		this.armorStand.setArms(true);
 		setFuel(100);
 		this.pathManager = new PathManager();
 		addPaths();
@@ -162,6 +150,9 @@ public class RobotBase implements InventoryHolder {
 	 * @throws Exception
 	 */
 	private void clearChicken() throws Exception {
+		//chick.setCanPickupItems(true);
+		chick.setCustomName(ChatColor.MAGIC + "" + getID());
+		chick.setCustomNameVisible(false);
 		Object goalSelector = getField(getNMSHandle(), "goalSelector");
 		LinkedHashSet<?> goalSelectorA = (LinkedHashSet<?>) getDeclaredField(
 				goalSelector, "b");
