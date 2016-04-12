@@ -38,7 +38,7 @@ public class RobotMiner extends RobotBase {
 	}
 	
 	public Location getStartBlock(){
-		return startBlock;
+		return startBlock.clone();
 	}
 
 }

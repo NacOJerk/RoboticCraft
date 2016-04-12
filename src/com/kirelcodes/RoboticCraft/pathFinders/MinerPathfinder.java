@@ -25,6 +25,9 @@ public class MinerPathfinder extends BasicPathfinder{
 	public void updateTask() {
 		if(blockIterator==0)
 			currentHeight--;
+		if(currentHeight==1){
+			robot.setMining(false);
+		}
 		blockIterator++;
 		Location mine = robot.getStartBlock();
 		mine.setY(currentHeight);
