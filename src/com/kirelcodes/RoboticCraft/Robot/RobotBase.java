@@ -51,7 +51,6 @@ public class RobotBase implements InventoryHolder {
 			this.ID = Bukkit.getScheduler().scheduleSyncRepeatingTask(
 					RoboticCraft.getInstance(), this, 0L, 1L);
 			// mark = 0;
-			previus = getLocation();
 		}
 
 		@Override
@@ -74,7 +73,6 @@ public class RobotBase implements InventoryHolder {
 			 */
 
 			getArmoStand().teleport(getLocation());
-			this.previus = getLocation();
 			// mark++;
 		}
 
@@ -119,7 +117,6 @@ public class RobotBase implements InventoryHolder {
 				}, 2L);
 		this.armorStand = (ArmorStand) getWorld().spawnEntity(getLocation(),
 				EntityType.ARMOR_STAND);
-		this.armorStand.setInvulnerable(true);
 		setFuel(100);
 		this.invetory = Bukkit.createInventory(this, 9 * 3);
 		this.robotTask = new RobotTask();
