@@ -1,4 +1,4 @@
-package com.kirelcodes.RoboticCraft.Utils;
+package com.kirelcodes.RoboticCraft.utils;
 
 import java.lang.reflect.Field;
 

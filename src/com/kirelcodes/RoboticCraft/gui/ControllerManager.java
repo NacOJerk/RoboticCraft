@@ -15,21 +15,21 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class ControllerManager implements Listener{
 	
-	private Map<String, GUI> controllers = new HashMap<>();
+	private static Map<String, GUI> controllers = new HashMap<>();
 	
 	public ControllerManager(JavaPlugin plugin){
 		Bukkit.getPluginManager().registerEvents(this, plugin);
 	}
 	
-	public void addController(String id, GUI controller){
+	public static void addController(String id, GUI controller){
 		controllers.put(id, controller);
 	}
 	
-	public Collection<GUI> getControllers(){
+	public static Collection<GUI> getControllers(){
 		return controllers.values();
 	}
 	
-	public GUI getController(String id){
+	public static GUI getController(String id){
 		return controllers.get(id);
 	}
 	

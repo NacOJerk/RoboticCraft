@@ -1,11 +1,11 @@
-package com.kirelcodes.RoboticCraft.Utils;
+package com.kirelcodes.RoboticCraft.utils;
 
 import java.lang.reflect.Field;
 
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 
-import static com.kirelcodes.RoboticCraft.Utils.NMSClassInteracter.*;
+import static com.kirelcodes.RoboticCraft.utils.NMSClassInteracter.*;
 
 public class BlockUtils {
 	public static double getBlockStrength(Block b) {

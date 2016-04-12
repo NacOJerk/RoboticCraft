@@ -1,4 +1,4 @@
-package com.kirelcodes.RoboticCraft.Robot;
+package com.kirelcodes.RoboticCraft.robot;
 
 import java.util.ArrayList;
 import java.util.HashMap;

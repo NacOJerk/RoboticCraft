@@ -1,8 +1,8 @@
-package com.kirelcodes.RoboticCraft.Utils;
+package com.kirelcodes.RoboticCraft.utils;
 
 import org.bukkit.inventory.ItemStack;
 
-import static com.kirelcodes.RoboticCraft.Utils.NMSClassInteracter.*;
+import static com.kirelcodes.RoboticCraft.utils.NMSClassInteracter.*;
 
 public class NBTRobotId {
 	public static ItemStack setID(ItemStack item, int ID) throws Exception {

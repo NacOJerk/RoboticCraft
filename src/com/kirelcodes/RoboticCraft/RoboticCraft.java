@@ -4,9 +4,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.kirelcodes.RoboticCraft.Robot.RobotBase;
-import com.kirelcodes.RoboticCraft.Robot.RobotCenter;
 import com.kirelcodes.RoboticCraft.gui.ControllerManager;
+import com.kirelcodes.RoboticCraft.robot.RobotBase;
+import com.kirelcodes.RoboticCraft.robot.RobotCenter;
 
 public class RoboticCraft extends JavaPlugin{
 	private static RoboticCraft robotiCraft= null;

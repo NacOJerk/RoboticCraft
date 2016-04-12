@@ -1,4 +1,4 @@
-package com.kirelcodes.RoboticCraft.Robot;
+package com.kirelcodes.RoboticCraft.robot;
 
 import java.util.HashMap;
 import java.util.LinkedHashSet;
@@ -16,7 +16,7 @@ import org.bukkit.inventory.ItemStack;
 
 import com.kirelcodes.RoboticCraft.RoboticCraft;
 
-import static com.kirelcodes.RoboticCraft.Utils.NMSClassInteracter.*;
+import static com.kirelcodes.RoboticCraft.utils.NMSClassInteracter.*;
 
 /**
  * 
@@ -33,7 +33,7 @@ public class RobotBase {
 	private Entity followTarget;
 	private RobotTask robotTask;
 	private Inventory invetory;
-
+	private Object nmsHandel;
 	/**
 	 * Responsible for the armor stand teleportation and target following
 	 * 
@@ -167,7 +167,8 @@ public class RobotBase {
 	 * @throws Exception
 	 */
 	private Object getNMSHandle() throws Exception {
-		return chick.getClass().getMethod("getHandle").invoke(chick);
+		
+		return (nmsHandel == null) ? (nmsHandel = chick.getClass().getMethod("getHandle").invoke(chick)) : nmsHandel;
 	}
 
 	/**
@@ -352,7 +353,8 @@ public class RobotBase {
 		return getInventory().addItem(item);
 	}
 
-	public void mineBlock(Block b) {
+	public void mineBlock(final Block b) {
+		
 	}
 
 	public static Chicken getSilentChicken(Location loc) throws Exception {
