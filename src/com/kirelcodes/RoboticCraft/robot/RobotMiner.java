@@ -23,7 +23,7 @@ public class RobotMiner extends RobotBase {
 				loc.getBlock().breakNaturally();				
 				System.out.println(loc.getBlock().getType().name());
 			}
-		}.runTaskLaterAsynchronously(RoboticCraft.getInstance(), (long) (BlockUtils.getMineTime(loc.getBlock())*20));
+		}.runTaskLater(RoboticCraft.getInstance(), 40/*(long) (BlockUtils.getMineTime(loc.getBlock())*20)*/);
 	}
 	
 	public boolean isMining(){

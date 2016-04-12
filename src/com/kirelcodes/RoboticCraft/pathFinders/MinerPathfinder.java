@@ -23,6 +23,8 @@ public class MinerPathfinder extends BasicPathfinder{
 
 	@Override
 	public void updateTask() {
+		System.out.println("Block Iterator: "+blockIterator);
+		System.out.println("Current Height: "+currentHeight);
 		if(blockIterator==0)
 			currentHeight--;
 		if(currentHeight==1){

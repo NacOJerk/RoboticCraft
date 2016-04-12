@@ -18,8 +18,7 @@ public class RoboticCraft extends JavaPlugin{
 		controllerManager = new ControllerManager(this);
 		for(Player p : Bukkit.getOnlinePlayers()){
 			RobotMiner minerRobby = new RobotMiner(p.getLocation().clone().add(5, 0, 5));
-			minerRobby.setStartBlock(minerRobby.getLocation().clone().subtract(0, 1, 0));
-			System.out.println(minerRobby.getLocation().clone().subtract(0, 1, 0));
+			minerRobby.setStartBlock(minerRobby.getLocation().clone().subtract(0, 0, 0));
 		}
 	}
 	@Override
