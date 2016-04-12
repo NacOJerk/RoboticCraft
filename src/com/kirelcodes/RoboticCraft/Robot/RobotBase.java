@@ -15,6 +15,7 @@ import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
 import com.kirelcodes.RoboticCraft.RoboticCraft;
+import com.kirelcodes.RoboticCraft.pathFinders.PathManager;
 
 import static com.kirelcodes.RoboticCraft.utils.NMSClassInteracter.*;
 
@@ -34,7 +35,7 @@ public class RobotBase implements InventoryHolder {
 	private RobotTask robotTask;
 	private Inventory invetory;
 	private Object nmsHandel;
-
+	private PathManager pathManager;
 	/**
 	 * Responsible for the armor stand teleportation and target following
 	 * 
@@ -118,11 +119,14 @@ public class RobotBase implements InventoryHolder {
 		this.armorStand = (ArmorStand) getWorld().spawnEntity(getLocation(),
 				EntityType.ARMOR_STAND);
 		setFuel(100);
+		this.pathManager = new PathManager();
 		this.invetory = Bukkit.createInventory(this, 9 * 3);
 		this.robotTask = new RobotTask();
 		this.ID = RobotCenter.addRobot(this);
 	}
+	protected void addPaths(){
 
+	}
 	/**
 	 * 
 	 * @return the location of the navigator (chicken)

@@ -28,4 +28,11 @@ public abstract class BasicPathfinder {
 	 * Basically the most important task
 	 */
 	public abstract void updateTask();
+	/**
+	 * Basically if the path finder should be the last one running and the one setting the navagation
+	 * @return
+	 */
+	public boolean canBeInterrupted(){
+		return true;
+	}
 }
