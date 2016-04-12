@@ -23,7 +23,7 @@ import static com.kirelcodes.RoboticCraft.utils.NMSClassInteracter.*;
  * @author NacOJerk
  *
  */
-public class RobotBase implements InventoryHolder{
+public class RobotBase implements InventoryHolder {
 	private Chicken chick;
 	private ArmorStand armorStand;
 	private boolean isStuck;
@@ -34,6 +34,7 @@ public class RobotBase implements InventoryHolder{
 	private RobotTask robotTask;
 	private Inventory invetory;
 	private Object nmsHandel;
+
 	/**
 	 * Responsible for the armor stand teleportation and target following
 	 * 
@@ -42,14 +43,14 @@ public class RobotBase implements InventoryHolder{
 	 */
 	public class RobotTask implements Runnable {
 		private int ID;
-		private int mark;
-		private int stuckCalc;
-		private Location previus;
+		// private int mark; not needed
+		//private int stuckCalc; 
+		//private Location previus;
 
 		public RobotTask() {
 			this.ID = Bukkit.getScheduler().scheduleSyncRepeatingTask(
 					RoboticCraft.getInstance(), this, 0L, 1L);
-			mark = 0;
+			// mark = 0;
 			previus = getLocation();
 		}
 
@@ -62,50 +63,26 @@ public class RobotBase implements InventoryHolder{
 					// Error thrower here
 				}
 			}
-			if ((mark % 5) == 0) {
-				if (isFollowing()) {
-					setFollow();
-				}
-			}
-			if ((mark % 20) == 0) {
-				if (isFollowing()) {
-					if (getFollowTarget() == null) {
-						cancelFollow();
-					}
-					if (previus.distance(getLocation()) <= 2)
-						stuckCalc++;
-					else {
-						stuckCalc = 0;
-						isStuck = false;
-					}
-					if (stuckCalc >= 3) {
-						isStuck = true;
-					}
-					if (stuckCalc == 5) {
-						getNavigator().teleport(
-								getFollowTarget().getLocation().clone()
-										.add(1, 0, 1));
-						isStuck = false;
-						stuckCalc = 0;
-					}
-				}
-			}
+			/*
+			 * if ((mark % 5) == 0) { if (isFollowing()) { setFollow(); } } if
+			 * ((mark % 20) == 0) { if (isFollowing()) { if (getFollowTarget()
+			 * == null) { cancelFollow(); } if (previus.distance(getLocation())
+			 * <= 2) stuckCalc++; else { stuckCalc = 0; isStuck = false; } if
+			 * (stuckCalc >= 3) { isStuck = true; } if (stuckCalc == 5) {
+			 * getNavigator().teleport( getFollowTarget().getLocation().clone()
+			 * .add(1, 0, 1)); isStuck = false; stuckCalc = 0; } } }
+			 */
 
 			getArmoStand().teleport(getLocation());
 			this.previus = getLocation();
-			mark++;
+			// mark++;
 		}
 
-		private void setFollow() {
-			try {
-				setTargetLocation(getFollowTarget().getLocation().clone()
-						.add(1, 0, 1));
-			} catch (Exception e) {
-				e.printStackTrace();
-				cancel();
-			}
-		}
-
+		/*
+		 * private void setFollow() { try {
+		 * setTargetLocation(getFollowTarget().getLocation().clone() .add(1, 0,
+		 * 1)); } catch (Exception e) { e.printStackTrace(); cancel(); } }
+		 */
 		public void cancel() {
 			Bukkit.getScheduler().cancelTask(ID);
 		}
@@ -167,8 +144,9 @@ public class RobotBase implements InventoryHolder{
 	 * @throws Exception
 	 */
 	private Object getNMSHandle() throws Exception {
-		
-		return (nmsHandel == null) ? (nmsHandel = chick.getClass().getMethod("getHandle").invoke(chick)) : nmsHandel;
+
+		return (nmsHandel == null) ? (nmsHandel = chick.getClass()
+				.getMethod("getHandle").invoke(chick)) : nmsHandel;
 	}
 
 	/**
