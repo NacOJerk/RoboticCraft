@@ -37,7 +37,6 @@ public class FarmerPathFinder extends BasicPathfinder{
 			b.setType(Material.AIR);
 			if(!robot.getInventory().contains(Material.SEEDS))
 				continue;
-			Material type = null;
 			for(ItemStack is : robot.getInventory().getContents()){
 				if(is.getType() != Material.SEEDS)
 					continue;
