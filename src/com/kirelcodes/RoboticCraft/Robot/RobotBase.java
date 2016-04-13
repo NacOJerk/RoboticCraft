@@ -108,7 +108,11 @@ public class RobotBase implements InventoryHolder {
 				EntityType.ARMOR_STAND);
 		this.armorStand.setBasePlate(false);
 		this.armorStand.setArms(true);
-		this.armorStand.setHelmet(ItemStackUtils.getSkullFromFreshcoal("http://textures.minecraft.net/texture/ad24ac9e176eb3aeb23e7bdfda3db88147a62fff6103688d7c4c33c9d1ad7"));
+		try {
+			this.armorStand.setHelmet(ItemStackUtils.getSkullFromURL("http://textures.minecraft.net/texture/ad24ac9e176eb3aeb23e7bdfda3db88147a62fff6103688d7c4c33c9d1ad7", "Robot"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		this.armorStand.setBoots(new ItemStack(Material.IRON_BOOTS));
 		this.armorStand.setLeggings(new ItemStack(Material.IRON_LEGGINGS));
 		this.armorStand.setChestplate(new ItemStack(Material.IRON_CHESTPLATE));
