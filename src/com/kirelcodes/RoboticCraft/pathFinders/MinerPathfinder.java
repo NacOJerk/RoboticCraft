@@ -1,6 +1,7 @@
 package com.kirelcodes.RoboticCraft.pathFinders;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
 
 import com.kirelcodes.RoboticCraft.robot.RobotMiner;
 
@@ -37,6 +38,8 @@ public class MinerPathfinder extends BasicPathfinder {
 			currentHeight--;
 			stairIterator++;
 		}
+		if (stairIterator == 9)
+			stairIterator = 1;
 		if (currentHeight == 1) {
 			robot.setMining(false);
 		}
@@ -46,19 +49,12 @@ public class MinerPathfinder extends BasicPathfinder {
 		try {
 			robot.setTargetLocation(previus);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		if(blockIterator == 1 && stairIterator == 1){
-			previus = mine;
-			return;
+			robot.setMining(false);
 		}
 		switch (blockIterator) {
 		case 1:
 			if (stairIterator != 1)
 				mine.add(0, 0, 0);
-			else
-				mine.add(0, 1, 0);
 			break;
 		case 2:
 			if (stairIterator != 2)
@@ -71,8 +67,6 @@ public class MinerPathfinder extends BasicPathfinder {
 		case 4:
 			if (stairIterator != 8)
 				mine.add(0, 0, 1);
-			if (stairIterator == 8)
-				stairIterator = 1;
 			break;
 		case 5:
 			mine.add(1, 0, 1);
@@ -95,8 +89,11 @@ public class MinerPathfinder extends BasicPathfinder {
 			blockIterator = 0;
 			break;
 		}
+		if (mine.getBlock().getType() == Material.BEDROCK) {
+			robot.setMining(false);
+			return;
+		}
 		robot.mineBlock(mine);
 		previus = mine;
 	}
-
 }

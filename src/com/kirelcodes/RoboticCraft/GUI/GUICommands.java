@@ -1,4 +1,4 @@
-package com.kirelcodes.RoboticCraft.GUI;
+package com.kirelcodes.RoboticCraft.gui;
 
 public class GUICommands {
 
