@@ -119,9 +119,11 @@ public class RobotBase implements InventoryHolder {
 		setFuel(100);
 		this.pathManager = new PathManager();
 		addPaths();
-		this.invetory = Bukkit.createInventory(this, 9 * 3);
+		this.invetory = Bukkit.createInventory(this, 9 * 3 , ChatColor.RED + "Robot's Inventory");
 		this.robotTask = new RobotTask();
 		this.ID = RobotCenter.addRobot(this);
+		getArmorStand().setCustomName(ChatColor.MAGIC + "NacOJerkGalShaked-" + ID);
+		getArmorStand().setCustomNameVisible(false);
 	}
 	/**
 	 * Adds the paths to the code
