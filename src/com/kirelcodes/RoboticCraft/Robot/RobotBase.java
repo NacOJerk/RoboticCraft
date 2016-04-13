@@ -7,6 +7,7 @@ import net.md_5.bungee.api.ChatColor;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Chicken;
@@ -19,6 +20,7 @@ import org.bukkit.inventory.ItemStack;
 import com.kirelcodes.RoboticCraft.RoboticCraft;
 import com.kirelcodes.RoboticCraft.pathFinders.FollowPathfinder;
 import com.kirelcodes.RoboticCraft.pathFinders.PathManager;
+import com.kirelcodes.RoboticCraft.utils.ItemStackUtils;
 
 import static com.kirelcodes.RoboticCraft.utils.NMSClassInteracter.*;
 
@@ -66,7 +68,7 @@ public class RobotBase implements InventoryHolder {
 					// Error thrower here
 				}
 			}
-			getArmoStand().teleport(getLocation());
+			getArmorStand().teleport(getLocation());
 		}
 
 		public void cancel() {
@@ -85,7 +87,6 @@ public class RobotBase implements InventoryHolder {
 		try {
 			chick = getSilentChicken(loc);
 		} catch (Exception e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		this.chick = chick;
@@ -107,6 +108,10 @@ public class RobotBase implements InventoryHolder {
 				EntityType.ARMOR_STAND);
 		this.armorStand.setBasePlate(false);
 		this.armorStand.setArms(true);
+		this.armorStand.setHelmet(ItemStackUtils.getSkullFromFreshcoal("http://textures.minecraft.net/texture/ad24ac9e176eb3aeb23e7bdfda3db88147a62fff6103688d7c4c33c9d1ad7"));
+		this.armorStand.setBoots(new ItemStack(Material.IRON_BOOTS));
+		this.armorStand.setLeggings(new ItemStack(Material.IRON_LEGGINGS));
+		this.armorStand.setChestplate(new ItemStack(Material.IRON_CHESTPLATE));
 		setFuel(100);
 		this.pathManager = new PathManager();
 		addPaths();
@@ -237,13 +242,13 @@ public class RobotBase implements InventoryHolder {
 	 * 
 	 * @return the armor which represents the robot
 	 */
-	public ArmorStand getArmoStand() {
+	public ArmorStand getArmorStand() {
 		return armorStand;
 	}
 
 	/**
 	 * 
-	 * @return if the robot haven't moved for 3 seconds a distance bigger than 2
+	 * @return if the robot haven't moved for 3 seconds a distance bigger than 1
 	 *         blocks
 	 */
 	public boolean isStuck() {

@@ -16,7 +16,7 @@ public class RobotMiner extends RobotBase {
 	private boolean onDelay= false;
 	public RobotMiner(Location loc) {
 		super(loc);
-		getArmoStand().setItemInHand(new ItemStack(Material.DIAMOND_PICKAXE));
+		getArmorStand().setItemInHand(new ItemStack(Material.DIAMOND_PICKAXE));
 	}
 	
 	@Override
