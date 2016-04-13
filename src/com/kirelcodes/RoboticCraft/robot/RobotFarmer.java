@@ -9,6 +9,7 @@ import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 
 import com.kirelcodes.RoboticCraft.pathFinders.FarmerPathFinder;
+import com.kirelcodes.RoboticCraft.utils.ItemStackUtils;
 
 public class RobotFarmer extends RobotBase {
 	private Location mark1, mark2;
@@ -17,6 +18,11 @@ public class RobotFarmer extends RobotBase {
 	public RobotFarmer(Location loc) {
 		super(loc);
 		getArmorStand().setItemInHand(new ItemStack(Material.DIAMOND_HOE));
+		try {
+			getArmorStand().setHelmet(ItemStackUtils.getSkullFromURL("http://textures.minecraft.net/texture/5a921c75cd645aa753d89e1c14097bfeca22a497829edd6fc7a875956a1282", "Robot"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -90,7 +96,7 @@ public class RobotFarmer extends RobotBase {
 		for(int x : getXList()){
 			for(int z : getZList()){
 				blocks.add(new Location(getMarkOne().getWorld(), x, getMarkOne().getY(), z).getBlock());
-				blocks.add(new Location(getMarkOne().getWorld(), x, getMarkOne().getY() - 1, z).getBlock());
+				//blocks.add(new Location(getMarkOne().getWorld(), x, getMarkOne().getY() - 1, z).getBlock());
 			}
 		}
 		return blocks;

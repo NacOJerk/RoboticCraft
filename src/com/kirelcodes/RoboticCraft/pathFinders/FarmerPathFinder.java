@@ -22,7 +22,7 @@ public class FarmerPathFinder extends BasicPathfinder{
 	@Override
 	public void updateTask() {
 		for(Block b : robot.getAllBlocks()){
-			if(b.getType() != Material.WHEAT)
+			if(b.getType() != Material.CROPS)
 				continue;
 			if(b.getData() != 7)
 				continue;
@@ -33,21 +33,21 @@ public class FarmerPathFinder extends BasicPathfinder{
 			}
 			for(ItemStack drop : b.getDrops())
 				robot.addItem(drop);
-			b.breakNaturally(new ItemStack(Material.AIR));
+			robot.addItem(new ItemStack(Material.SEEDS));
+			b.setType(Material.AIR);
 			if(!robot.getInventory().contains(Material.SEEDS))
 				continue;
 			Material type = null;
 			for(ItemStack is : robot.getInventory().getContents()){
 				if(is.getType() != Material.SEEDS)
 					continue;
-				type = is.getType();
 				if(is.getAmount() == 1)
 					robot.getInventory().remove(is);
 				else
 					is.setAmount(is.getAmount() - 1);
 				break;
 			}
-			b.setType(type);
+			b.setType(Material.CROPS);
 		}
 	}
 
