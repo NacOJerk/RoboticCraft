@@ -21,7 +21,6 @@ public class LighterPathfinder extends BasicPathfinder {
 		this.delayManager = 0;
 		this.timeout = 0;
 		this.torchTimer = 0;
-		this.robot.getInventory().addItem(new ItemStack(Material.TORCH, 64));
 	}
 
 	@Override
@@ -32,6 +31,7 @@ public class LighterPathfinder extends BasicPathfinder {
 	@Override
 	public void onStart() {
 		previous = robot.getLocation();
+		this.robot.getInventory().addItem(new ItemStack(Material.TORCH, 64));
 	}
 
 	@Override
