@@ -1,6 +1,9 @@
 package com.kirelcodes.RoboticCraft.utils;
 
-import java.lang.reflect.InvocationTargetException;
+import static com.kirelcodes.RoboticCraft.utils.NMSClassInteracter.asBukkitCopy;
+import static com.kirelcodes.RoboticCraft.utils.NMSClassInteracter.asNMSCopy;
+import static com.kirelcodes.RoboticCraft.utils.NMSClassInteracter.getNMS;
+
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
@@ -16,8 +19,6 @@ import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
 
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
-
-import static com.kirelcodes.RoboticCraft.utils.NMSClassInteracter.*;
 
 public class ItemStackUtils {
 

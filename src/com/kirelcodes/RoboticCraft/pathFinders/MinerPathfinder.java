@@ -46,6 +46,7 @@ public class MinerPathfinder extends BasicPathfinder {
 		blockIterator++;
 		Location mine = robot.getStartBlock().clone();
 		mine.setY(currentHeight);
+		Location check = mine.clone();
 		try {
 			robot.setTargetLocation(previus);
 		} catch (Exception e) {
@@ -53,7 +54,7 @@ public class MinerPathfinder extends BasicPathfinder {
 		}
 		switch (blockIterator) {
 		case 1:
-			if (stairIterator != 1)
+			if (stairIterator != 1)//SO just do that:
 				mine.add(0, 0, 0);
 			break;
 		case 2:
@@ -93,7 +94,12 @@ public class MinerPathfinder extends BasicPathfinder {
 			robot.setMining(false);
 			return;
 		}
-		robot.mineBlock(mine);
 		previus = mine;
+		//System.out.print(stairIterator);
+		//System.out.print(check);
+		//System.out.print(mine);
+		if(mine.getBlockX()==check.getBlockX()&&mine.getBlockY()==check.getBlockY()&&mine.getBlockZ()==check.getBlockZ()&&stairIterator==1)
+			return;
+		robot.mineBlock(mine);
 	}
 }
