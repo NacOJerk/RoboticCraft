@@ -2,7 +2,6 @@ package com.kirelcodes.RoboticCraft.pathFinders;
 
 import java.util.ArrayList;
 
-import org.bukkit.entity.Chicken;
 import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Ocelot;
