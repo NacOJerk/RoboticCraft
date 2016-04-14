@@ -8,7 +8,7 @@ import com.kirelcodes.RoboticCraft.gui.ControllerManager;
 import com.kirelcodes.RoboticCraft.listener.RobotListener;
 import com.kirelcodes.RoboticCraft.robot.RobotBase;
 import com.kirelcodes.RoboticCraft.robot.RobotCenter;
-import com.kirelcodes.RoboticCraft.robot.RobotFarmer;
+import com.kirelcodes.RoboticCraft.robot.RobotLumberjack;
 
 public class RoboticCraft extends JavaPlugin{
 	private static RoboticCraft robotiCraft= null;
@@ -19,10 +19,8 @@ public class RoboticCraft extends JavaPlugin{
 		controllerManager = new ControllerManager(this);
 		new RobotListener(this);
 		for(Player p : Bukkit.getOnlinePlayers()){
-			RobotFarmer robyTheFarmer = new RobotFarmer(p.getLocation());
-			robyTheFarmer.setMarkOne(p.getLocation());
-			robyTheFarmer.setMarkTwo(p.getLocation().clone().add(5, 0, 5));
-			robyTheFarmer.setFarming(true);
+			RobotLumberjack lumber = new RobotLumberjack(p.getLocation());
+			lumber.setCutting(true);
 			break;
 		}
 	}
