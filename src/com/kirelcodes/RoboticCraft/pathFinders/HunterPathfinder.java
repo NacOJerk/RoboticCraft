@@ -2,6 +2,7 @@ package com.kirelcodes.RoboticCraft.pathFinders;
 
 import java.util.ArrayList;
 
+import org.bukkit.Location;
 import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Ocelot;
@@ -14,10 +15,12 @@ public class HunterPathfinder extends BasicPathfinder {
 	private RobotHunter robot;
 	private Entity target;
 	private int attackTimer;
+	private Location startBlock;
 
-	public HunterPathfinder(RobotHunter robot) {
+	public HunterPathfinder(RobotHunter robot, Location startBlock) {
 		this.robot = robot;
 		this.attackTimer = 0;
+		this.startBlock = startBlock;
 	}
 
 	@Override
@@ -34,6 +37,7 @@ public class HunterPathfinder extends BasicPathfinder {
 
 	@Override
 	public void updateTask() {
+		boolean found = false;
 		if (target == null) {
 			ArrayList<Entity> nearby = new ArrayList<Entity>();
 			nearby.addAll(this.robot.getWorld().getNearbyEntities(
@@ -46,8 +50,14 @@ public class HunterPathfinder extends BasicPathfinder {
 					continue;
 				if (e instanceof Damageable) {
 					target = e;
+					found = true;
 					break;
 				}
+			}
+			if(!found){
+				try {
+					this.robot.setTargetLocation(startBlock);
+				} catch (Exception e) {	this.robot.setHunting(false); }
 			}
 		}
 		if (target == null)

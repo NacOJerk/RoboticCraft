@@ -9,6 +9,7 @@ import com.kirelcodes.RoboticCraft.utils.ItemStackUtils;
 
 public class RobotHunter extends RobotBase {
 	private boolean isHunting;
+	private Location startBlock;
 	public RobotHunter(Location loc) {
 		super(loc);
 		getArmorStand().setItemInHand(new ItemStack(Material.DIAMOND_SWORD));
@@ -17,10 +18,11 @@ public class RobotHunter extends RobotBase {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		startBlock = loc;
 	}
 	@Override
 	protected void addPaths() {
-		pathManager.addPath(new HunterPathfinder(this));
+		pathManager.addPath(new HunterPathfinder(this, startBlock));
 	}
 	
 	public boolean isHunting(){

@@ -5,6 +5,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.kirelcodes.RoboticCraft.gui.ControllerManager;
+import com.kirelcodes.RoboticCraft.listener.RobotListener;
 import com.kirelcodes.RoboticCraft.robot.RobotBase;
 import com.kirelcodes.RoboticCraft.robot.RobotCenter;
 import com.kirelcodes.RoboticCraft.robot.RobotFarmer;
@@ -16,6 +17,7 @@ public class RoboticCraft extends JavaPlugin{
 	public void onEnable() {
 		robotiCraft = this;
 		controllerManager = new ControllerManager(this);
+		new RobotListener(this);
 		for(Player p : Bukkit.getOnlinePlayers()){
 			RobotFarmer robyTheFarmer = new RobotFarmer(p.getLocation());
 			robyTheFarmer.setMarkOne(p.getLocation());
