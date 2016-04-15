@@ -3,6 +3,7 @@ package com.kirelcodes.RoboticCraft.pathFinders;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 
@@ -11,6 +12,7 @@ import com.kirelcodes.RoboticCraft.robot.RobotLumberjack;
 public class LumberjackPathfinder extends BasicPathfinder {
 	private RobotLumberjack robot;
 	private Block target;
+	private ArrayList<Block> bl = new ArrayList<Block>();
 
 	public LumberjackPathfinder(RobotLumberjack robot) {
 		this.robot = robot;
@@ -23,7 +25,9 @@ public class LumberjackPathfinder extends BasicPathfinder {
 
 	@Override
 	public void afterTask() {
-
+		if(target.getType() == Material.AIR){
+			target = null;
+		}
 	}
 
 	@Override
@@ -44,19 +48,24 @@ public class LumberjackPathfinder extends BasicPathfinder {
 			if (b == null)
 				return;
 			if (b.getType() == Material.LOG) {
-				target = b;
-				break;
+				if (!bl.contains(b)) {
+					target = b;
+					break;
+				}
 			}
 		}
 		if (target == null)
 			return;
 		try {
 			robot.setTargetLocation(target.getLocation());
-			if (target.getLocation().distance(robot.getLocation()) < 5) {
+			if (target.getLocation().distance(robot.getLocation()) <= 5) {
 				robot.mineBlock(target);
 				target = null;
-			}else{
-				System.out.println("too far");
+			} else if (target.getLocation().getBlockX() == robot.getLocation().getBlockX()) {
+				if (target.getLocation().getBlockZ() == robot.getLocation().getBlockZ()) {
+					bl.add(target);
+					target = null;
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
