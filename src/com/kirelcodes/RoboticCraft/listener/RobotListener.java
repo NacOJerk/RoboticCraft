@@ -17,6 +17,7 @@ public class RobotListener implements Listener{
 	public RobotListener(Plugin p){
 		Bukkit.getPluginManager().registerEvents(this, p);
 	}
+	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void intaractAtArmor(PlayerArmorStandManipulateEvent e){
 		

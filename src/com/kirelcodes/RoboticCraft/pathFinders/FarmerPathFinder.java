@@ -30,7 +30,7 @@ public class FarmerPathFinder extends BasicPathfinder{
 	@SuppressWarnings("deprecation")
 	@Override
 	public void updateTask() {
-		for(Block b : robot.getAllBlocks()){
+		for(final Block b : robot.getAllBlocks()){
 			if(dirty.contains(b.getLocation().clone()))
 				continue;
 			//HOEING
@@ -65,7 +65,7 @@ public class FarmerPathFinder extends BasicPathfinder{
 			}
 			for(ItemStack drop : b.getDrops())
 				robot.addItem(drop);
-			Material type = b.getType();
+			final Material type = b.getType();
 			dirty.add(b.getLocation().clone());
 			new BukkitRunnable() {
 				

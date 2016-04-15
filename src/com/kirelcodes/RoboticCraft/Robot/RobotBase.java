@@ -20,6 +20,7 @@ import org.bukkit.inventory.ItemStack;
 import com.kirelcodes.RoboticCraft.RoboticCraft;
 import com.kirelcodes.RoboticCraft.pathFinders.FollowPathfinder;
 import com.kirelcodes.RoboticCraft.pathFinders.PathManager;
+import com.kirelcodes.RoboticCraft.pathFinders.RandomStrollPathfinder;
 import com.kirelcodes.RoboticCraft.utils.ItemStackUtils;
 
 import static com.kirelcodes.RoboticCraft.utils.NMSClassInteracter.*;
@@ -129,6 +130,7 @@ public class RobotBase implements InventoryHolder {
 	 * Adds the paths to the code
 	 */
 	protected void addPaths(){
+		pathManager.addPath(new RandomStrollPathfinder(this));
 		pathManager.addPath(new FollowPathfinder(this));
 	}
 	/**

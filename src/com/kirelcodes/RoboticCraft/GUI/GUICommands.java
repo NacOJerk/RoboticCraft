@@ -9,6 +9,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public class GUICommands {
+	@SuppressWarnings("unused")
 	private Player p;
 	private static HashMap<String, GUI> gui = new HashMap<>();
 	ItemStack follow = new ItemStack(Material.COMPASS);
