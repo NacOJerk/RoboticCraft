@@ -39,6 +39,7 @@ public class RobotLumberjack extends RobotBase {
 
 	@Override
 	protected void addPaths() {
+		super.addPaths();
 		pathManager.addPath(new LumberjackPathfinder(this));
 	}
 

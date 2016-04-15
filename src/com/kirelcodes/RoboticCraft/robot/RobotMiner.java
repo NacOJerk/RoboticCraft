@@ -33,6 +33,7 @@ public class RobotMiner extends RobotBase {
 	
 	@Override
 	protected void addPaths() {
+		super.addPaths();
 		pathManager.addPath(new MinerPathfinder(this));
 	}
 	

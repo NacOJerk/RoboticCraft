@@ -3,6 +3,7 @@ package com.kirelcodes.RoboticCraft.robot;
 import org.bukkit.Location;
 
 import com.kirelcodes.RoboticCraft.pathFinders.LighterPathfinder;
+import com.kirelcodes.RoboticCraft.pathFinders.RandomStrollPathfinder;
 import com.kirelcodes.RoboticCraft.utils.ItemStackUtils;
 
 public class RobotLighter extends RobotBase{
@@ -18,6 +19,7 @@ public class RobotLighter extends RobotBase{
 
 	@Override
 	protected void addPaths() {
+		pathManager.addPath(new RandomStrollPathfinder(this));
 		pathManager.addPath(new LighterPathfinder(this));
 	}
 }

@@ -17,7 +17,7 @@ public class RandomStrollPathfinder extends BasicPathfinder{
 	
 	@Override
 	public void onStart() {
-		clock = 1;
+		clock = 0;
 		rand = new Random();
 	}
 	
@@ -32,7 +32,7 @@ public class RandomStrollPathfinder extends BasicPathfinder{
 	}
 	@Override
 	public void updateTask() {
-		if((clock % 30) != 0)
+		if((clock % 1200) != 0)
 			return;
 		int x1 = rand.nextInt(30) - 15;
 		int x = robot.getLocation().clone().add(x1, 0, 0).getBlockX();

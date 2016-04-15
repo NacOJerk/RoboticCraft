@@ -22,6 +22,7 @@ public class RobotHunter extends RobotBase {
 	}
 	@Override
 	protected void addPaths() {
+		super.addPaths();
 		pathManager.addPath(new HunterPathfinder(this, startBlock));
 	}
 	
