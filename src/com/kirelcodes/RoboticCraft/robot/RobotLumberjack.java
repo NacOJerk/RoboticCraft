@@ -2,34 +2,35 @@ package com.kirelcodes.RoboticCraft.robot;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import com.kirelcodes.RoboticCraft.RoboticCraft;
 import com.kirelcodes.RoboticCraft.pathFinders.LumberjackPathfinder;
-import com.kirelcodes.RoboticCraft.utils.BlockUtils;
 
 public class RobotLumberjack extends RobotBase {
 	private boolean isCutting;
+	@SuppressWarnings("unused")
 	private boolean onDelay = false;
 
 	public RobotLumberjack(Location loc) {
 		super(loc);
-		getArmorStand().setItemInHand(new ItemStack(Material.GOLD_AXE));
+		getArmorStand().setItemInHand(new ItemStack(Material.DIAMOND_AXE));
 	}
 
-	public void mineBlock(Location loc) {
-		final Location loc2 = loc;
+	public void mineBlock(Block b) {
+		final Block b2 = b;
 		onDelay = true;
 		new BukkitRunnable() {
 			@Override
 			public void run() {
-				for (ItemStack drop : loc2.getBlock().getDrops())
+				for (ItemStack drop : b2.getDrops())
 					addItem(drop);
-				loc2.getBlock().setType(Material.AIR);
+				b2.setType(Material.AIR);
 				setOnDelay(false);
 			}
-		}.runTaskLater(RoboticCraft.getInstance(), (long) (BlockUtils.getMineTime(loc.getBlock()) * 40));
+		}.runTaskLater(RoboticCraft.getInstance(), (long) 10);
 	}
 
 	public void setOnDelay(boolean onDelay) {
