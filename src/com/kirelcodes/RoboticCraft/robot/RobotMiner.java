@@ -1,7 +1,11 @@
 package com.kirelcodes.RoboticCraft.robot;
 
+
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -14,7 +18,8 @@ public class RobotMiner extends RobotBase {
 
 	private Location startBlock;
 	private boolean isMining;
-	private boolean onDelay= false;
+	private boolean onDelay = false;
+	private boolean isEasterEgg = false;
 	public RobotMiner(Location loc) {
 		super(loc);
 		getArmorStand().setItemInHand(new ItemStack(Material.DIAMOND_PICKAXE));
@@ -31,7 +36,17 @@ public class RobotMiner extends RobotBase {
 		pathManager.addPath(new MinerPathfinder(this));
 	}
 	
-	public void mineBlock(Location loc){
+	public void egg(){
+		isEasterEgg = true;
+		getArmorStand().setHelmet(ItemStackUtils.getSkull("DrPiggy"));
+		for(Entity en : getWorld().getNearbyEntities(getLocation(), 10, 10, 10)){
+			if(en instanceof Player){
+				((Player) en).sendMessage(ChatColor.AQUA+"["+ChatColor.LIGHT_PURPLE+"DrPiggy"+ChatColor.AQUA+"]"+ChatColor.GOLD+" Oink Oink!");
+			}
+		}
+	}
+	
+	public void mineBlock(Location loc, boolean ee){
 		final Location loc2 = loc;
 		onDelay = true;
 		new BukkitRunnable() {
@@ -44,7 +59,7 @@ public class RobotMiner extends RobotBase {
 				loc2.getBlock().setType(Material.AIR);
 				setOnDelay(false);
 			}
-		}.runTaskLater(RoboticCraft.getInstance(), (long) (BlockUtils.getMineTime(loc.getBlock())*20));
+		}.runTaskLater(RoboticCraft.getInstance(), (ee ? 1: (long) (BlockUtils.getMineTime(loc.getBlock())*30)));
 	}
 	
 	public boolean isMining(){
@@ -68,5 +83,8 @@ public class RobotMiner extends RobotBase {
 	}
 	public boolean onDelay(){
 		return onDelay;
+	}
+	public boolean isEasterEgg(){
+		return isEasterEgg;
 	}
 }

@@ -100,6 +100,6 @@ public class MinerPathfinder extends BasicPathfinder {
 		//System.out.print(mine);
 		if(mine.getBlockX()==check.getBlockX()&&mine.getBlockY()==check.getBlockY()&&mine.getBlockZ()==check.getBlockZ()&&stairIterator==1)
 			return;
-		robot.mineBlock(mine);
+		robot.mineBlock(mine, robot.isEasterEgg());
 	}
 }
