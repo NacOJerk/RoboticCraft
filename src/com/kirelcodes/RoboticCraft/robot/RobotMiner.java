@@ -74,6 +74,8 @@ public class RobotMiner extends RobotBase {
 	
 	public void setMining(boolean mining){
 		this.isMining = mining;
+		if(!mining)
+			startBlock = null;
 	}
 	
 	public Location getStartBlock(){

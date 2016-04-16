@@ -18,6 +18,9 @@ public class GUIRobotMiner extends GUI {
 	private RobotMiner robot;
 	private ItemStack itemFollow, itemNoFollow, itemMine, itemNoMine, openInventory;
 
+	public RobotMiner getRobot(){
+		return robot;
+	}
 	public GUIRobotMiner(RobotMiner robot) {
 		setSize(27);
 		setTitle("&cMiner Robot GUI");
@@ -27,7 +30,7 @@ public class GUIRobotMiner extends GUI {
 		itemNoFollow = ItemStackUtils.createItem(Material.COMPASS, "&cStop Follow");
 		itemMine = ItemStackUtils.createItem(Material.DIAMOND_PICKAXE, "&aMine");
 		itemNoMine = ItemStackUtils.createItem(Material.DIAMOND_PICKAXE, "&cStop Mine");
-		itemNoMine = ItemStackUtils.createItem(Material.CHEST, "&cOpen Robot's Inventory");
+		openInventory = ItemStackUtils.createItem(Material.CHEST, "&cOpen Robot's Inventory");
 		gettGUIAction().add(new GUIAction(itemFollow) {
 
 			@Override
@@ -40,7 +43,7 @@ public class GUIRobotMiner extends GUI {
 			@Override
 			public void actionNow(GUI gui, Player player) {
 				player.closeInventory();
-				player.openInventory(robot.getInventory());
+				player.openInventory(((GUIRobotMiner)gui).getRobot().getInventory());
 			}
 		});
 		gettGUIAction().add(new GUIAction(itemNoFollow) {
@@ -77,12 +80,14 @@ public class GUIRobotMiner extends GUI {
 			});
 		}
 		getInventory().setItem(13, openInventory);
-		getInventory().setItem(14, (robot.isMining()) ? itemMine : itemNoMine);
+		getInventory().setItem(14, (robot.isMining()) ? itemNoMine : itemMine);
 		getInventory().setItem(12, (robot.isFollowing()) ? itemNoFollow : itemFollow);
 	}
 
 	public void follow(Entity p) {
 		robot.setFollow(p);
+		if(robot.isMining())
+			noMine();
 		getInventory().setItem(12, itemNoFollow);
 	}
 
@@ -92,7 +97,10 @@ public class GUIRobotMiner extends GUI {
 	}
 
 	public void Mine() {
+		robot.setStartBlock(robot.getLocation());
 		robot.setMining(true);
+		if(robot.isFollowing())
+			noFollow(robot.getFollowTarget());
 		getInventory().setItem(14, itemNoMine);
 	}
 
