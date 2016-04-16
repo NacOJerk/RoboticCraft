@@ -60,7 +60,7 @@ public class RobotMiner extends RobotBase {
 				loc2.getBlock().setType(Material.AIR);
 				setOnDelay(false);
 			}
-		}.runTaskLater(RoboticCraft.getInstance(), (ee ? 1: (long) (BlockUtils.getMineTime(loc.getBlock())*30)));
+		}.runTaskLater(RoboticCraft.getInstance(), (ee ? 1: (long) (BlockUtils.getMineTime(loc.getBlock())*35)));
 	}
 	
 	public boolean isMining(){

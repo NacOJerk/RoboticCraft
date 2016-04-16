@@ -30,7 +30,7 @@ public class RobotLumberjack extends RobotBase {
 				b2.setType(Material.AIR);
 				setOnDelay(false);
 			}
-		}.runTaskLater(RoboticCraft.getInstance(), (long) 15);
+		}.runTaskLater(RoboticCraft.getInstance(), (long) 18);
 	}
 
 	public void setOnDelay(boolean onDelay) {

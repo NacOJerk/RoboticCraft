@@ -1,5 +1,7 @@
 package com.kirelcodes.RoboticCraft;
 
+import java.io.IOException;
+
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.kirelcodes.RoboticCraft.gui.GUIListener;
@@ -14,6 +16,12 @@ public class RoboticCraft extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		robotiCraft = this;
+		try {
+			Metrics metrics = new Metrics(this);
+			metrics.start();
+		} catch (IOException e) { // Failed to submit the stats :-(
+			System.out.println("Error Submitting stats!");
+		}
 		controllerManager = new GUIListener(this);
 		new RobotListener(this);
 		RecipeAdder.addAll();

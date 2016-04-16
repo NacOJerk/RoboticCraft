@@ -18,6 +18,7 @@ import com.kirelcodes.RoboticCraft.robot.RobotLighter;
 import com.kirelcodes.RoboticCraft.robot.RobotLumberjack;
 import com.kirelcodes.RoboticCraft.robot.RobotMiner;
 import com.kirelcodes.RoboticCraft.utils.ItemStackUtils;
+import com.kirelcodes.RoboticCraft.utils.NMSClassInteracter;
 
 public class RecipeAdder {
 	private static ItemStack remoteBase, remoteFarmer, remoteHunter,
@@ -41,21 +42,26 @@ public class RecipeAdder {
 	
 	
 	public static void initializeItem(){
-		remoteBase = ItemStackUtils.createItem(Material.END_CRYSTAL, "&cRemote Control Basic", ChatColor.AQUA + "Remote for the basic robot");
+		Material m = null;
+		if(NMSClassInteracter.getVersion().contains("9")){
+			m = Material.END_CRYSTAL;
+		}else
+			m = Material.WATCH;
+		remoteBase = ItemStackUtils.createItem(m, "&cRemote Control Basic", ChatColor.AQUA + "Remote for the basic robot");
 		items.add(remoteBase);
-		remoteFarmer = ItemStackUtils.createItem(Material.END_CRYSTAL, "&cRemote Control Farmer", ChatColor.AQUA + "Remote for the farmer robot");
+		remoteFarmer = ItemStackUtils.createItem(m, "&cRemote Control Farmer", ChatColor.AQUA + "Remote for the farmer robot");
 		items.add(remoteFarmer);
-		remoteHunter = ItemStackUtils.createItem(Material.END_CRYSTAL, "&cRemote Control Hunter", ChatColor.AQUA + "Remote for the hunter robot");
+		remoteHunter = ItemStackUtils.createItem(m, "&cRemote Control Hunter", ChatColor.AQUA + "Remote for the hunter robot");
 		items.add(remoteHunter);
-		remoteLighter = ItemStackUtils.createItem(Material.END_CRYSTAL, "&cRemote Control Lighter", ChatColor.AQUA + "Remote for the lighter robot");
+		remoteLighter = ItemStackUtils.createItem(m, "&cRemote Control Lighter", ChatColor.AQUA + "Remote for the lighter robot");
 		items.add(remoteLighter);
-		remoteLumberjack = ItemStackUtils.createItem(Material.END_CRYSTAL, "&cRemote Control Lumberjack", ChatColor.AQUA + "Remote for the lumberjack robot");
+		remoteLumberjack = ItemStackUtils.createItem(m, "&cRemote Control Lumberjack", ChatColor.AQUA + "Remote for the lumberjack robot");
 		items.add(remoteLumberjack);
-		remoteMiner = ItemStackUtils.createItem(Material.END_CRYSTAL, "&cRemote Control Miner", ChatColor.AQUA + "Remote for the miner robot");
+		remoteMiner = ItemStackUtils.createItem(m, "&cRemote Control Miner", ChatColor.AQUA + "Remote for the miner robot");
 		items.add(remoteMiner);
-		remoteFisher = ItemStackUtils.createItem(Material.END_CRYSTAL, "&cRemote Fisher Basic", ChatColor.AQUA + "Remote for the fisher robot");
+		remoteFisher = ItemStackUtils.createItem(m, "&cRemote Fisher Basic", ChatColor.AQUA + "Remote for the fisher robot");
 		items.add(remoteFisher);
-		remoteBreeder = ItemStackUtils.createItem(Material.END_CRYSTAL, "&cRemote Breeder Basic", ChatColor.AQUA + "Remote for the breeder robot");
+		remoteBreeder = ItemStackUtils.createItem(m, "&cRemote Breeder Basic", ChatColor.AQUA + "Remote for the breeder robot");
 		items.add(remoteBreeder);
 	}
 	public static boolean containsItem(ItemStack item){

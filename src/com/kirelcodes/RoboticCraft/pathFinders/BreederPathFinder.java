@@ -32,6 +32,8 @@ public class BreederPathFinder extends BasicPathfinder {
 
 	@Override
 	public void updateTask() {
+		if((clock % 600) != 0)
+			return;
 		/*
 		if((clock % 600) != 0)
 			return;
