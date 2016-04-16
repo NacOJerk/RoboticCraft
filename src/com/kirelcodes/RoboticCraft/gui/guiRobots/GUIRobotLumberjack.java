@@ -44,7 +44,7 @@ public class GUIRobotLumberjack extends GUI {
 
 			@Override
 			public void actionNow(GUI gui, Player player) {
-				robot.destroy();
+				((GUIRobotLumberjack) gui).getRobot().destroy();
 			}
 		});
 		gettGUIAction().add(new GUIAction(openInventory) {

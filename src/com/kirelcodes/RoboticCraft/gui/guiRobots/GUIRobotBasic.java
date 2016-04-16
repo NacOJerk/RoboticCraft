@@ -36,7 +36,7 @@ public class GUIRobotBasic extends GUI {
 
 			@Override
 			public void actionNow(GUI gui, Player player) {
-				robot.destroy();
+				((GUIRobotBasic) gui).getRobot().destroy();
 			}
 		});
 		gettGUIAction().add(new GUIAction(itemNoFollow) {
@@ -60,6 +60,11 @@ public class GUIRobotBasic extends GUI {
 			});
 		}
 		getInventory().setItem(13, (robot.isFollowing()) ? itemNoFollow : itemFollow);
+	}
+
+	protected RobotBase getRobot() {
+		// TODO Auto-generated method stub
+		return robot;
 	}
 
 	public void follow(Entity p) {

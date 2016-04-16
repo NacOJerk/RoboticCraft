@@ -11,6 +11,7 @@ import org.bukkit.inventory.ShapedRecipe;
 
 import com.kirelcodes.RoboticCraft.robot.RobotBase;
 import com.kirelcodes.RoboticCraft.robot.RobotFarmer;
+import com.kirelcodes.RoboticCraft.robot.RobotFisher;
 import com.kirelcodes.RoboticCraft.robot.RobotHunter;
 import com.kirelcodes.RoboticCraft.robot.RobotLighter;
 import com.kirelcodes.RoboticCraft.robot.RobotLumberjack;
@@ -19,7 +20,7 @@ import com.kirelcodes.RoboticCraft.utils.ItemStackUtils;
 
 public class RecipeAdder {
 	private static ItemStack remoteBase, remoteFarmer, remoteHunter,
-			remoteLighter, remoteLumberjack, remoteMiner;
+			remoteLighter, remoteLumberjack, remoteMiner , remoteFisher;
 	private static ArrayList<ItemStack> items;
 	
 	public static void addAll(){
@@ -31,6 +32,7 @@ public class RecipeAdder {
 		addRecipeLighterRobot();
 		addRecipeLumberjackRobot();
 		addRecipeMinerRobot();
+		addRecipeFisherRobot();
 	}
 	
 	
@@ -49,6 +51,9 @@ public class RecipeAdder {
 		items.add(remoteLumberjack);
 		remoteMiner = ItemStackUtils.createItem(Material.END_CRYSTAL, "&cRemote Miner Basic", ChatColor.AQUA + "Remote for the miner robot");
 		items.add(remoteMiner);
+		remoteFisher = ItemStackUtils.createItem(Material.END_CRYSTAL, "&cRemote Fisher Basic", ChatColor.AQUA + "Remote for the fisher robot");
+		items.add(remoteFisher);
+
 	}
 	public static boolean containsItem(ItemStack item){
 		for(ItemStack itemC : items)
@@ -78,6 +83,9 @@ public class RecipeAdder {
 		if(robot.getClass().getName().equalsIgnoreCase(RobotLumberjack.class.getName())){
 			return remoteLumberjack;
 		}
+		if(robot.getClass().getName().equalsIgnoreCase(RobotFisher.class.getName())){
+			return remoteFisher;
+		}
 		return null;
 	}
 	public static RobotBase getRobot(ItemStack item , Location loc){
@@ -93,6 +101,8 @@ public class RecipeAdder {
 			return new RobotLumberjack(loc);
 		if(remoteMiner.isSimilar(item))
 			return new RobotMiner(loc);
+		if(remoteFisher.isSimilar(item))
+			return new RobotFisher(loc);
 		return null;
 	}
 	
@@ -143,5 +153,13 @@ public class RecipeAdder {
 				.setIngredient('S', Material.ARMOR_STAND)
 				.setIngredient('G', Material.GOLD_BLOCK)
 				.setIngredient('A', Material.DIAMOND_PICKAXE));
+	}
+	public static void addRecipeFisherRobot() {
+		Bukkit.addRecipe(new ShapedRecipe(remoteFisher)
+				.shape("GAG", "DSD", "DDD")
+				.setIngredient('D', Material.DIAMOND_BLOCK)
+				.setIngredient('S', Material.ARMOR_STAND)
+				.setIngredient('G', Material.GOLD_BLOCK)
+				.setIngredient('A', Material.FISHING_ROD));
 	}
 }

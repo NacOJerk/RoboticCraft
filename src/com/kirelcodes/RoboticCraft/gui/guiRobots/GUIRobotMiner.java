@@ -44,7 +44,7 @@ public class GUIRobotMiner extends GUI {
 
 			@Override
 			public void actionNow(GUI gui, Player player) {
-				robot.destroy();
+				((GUIRobotMiner) gui).getRobot().destroy();
 			}
 		});
 		gettGUIAction().add(new GUIAction(openInventory) {

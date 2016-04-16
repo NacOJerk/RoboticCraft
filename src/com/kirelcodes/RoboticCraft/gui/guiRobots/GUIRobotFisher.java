@@ -43,7 +43,7 @@ public class GUIRobotFisher extends GUI {
 
 			@Override
 			public void actionNow(GUI gui, Player player) {
-				robot.destroy();
+				((GUIRobotFisher) gui).getRobot().destroy();
 			}
 		});
 		gettGUIAction().add(new GUIAction(openInventory) {
