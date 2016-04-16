@@ -29,8 +29,8 @@ public class GUIRobotLighter extends GUI {
 		this.robot = robot;
 		itemFollow = ItemStackUtils.createItem(Material.COMPASS, "&aFollow");
 		itemNoFollow = ItemStackUtils.createItem(Material.COMPASS, "&cStop Follow");
-		itemLight = ItemStackUtils.createItem(Material.DIAMOND_PICKAXE, "&aLight");
-		itemNoLight = ItemStackUtils.createItem(Material.DIAMOND_PICKAXE, "&cStop Light");
+		itemLight = ItemStackUtils.createItem(Material.TORCH, "&aLight");
+		itemNoLight = ItemStackUtils.createItem(Material.TORCH, "&cStop Light");
 		openInventory = ItemStackUtils.createItem(Material.CHEST, "&cOpen Robot's Inventory");
 		gettGUIAction().add(new GUIAction(itemFollow) {
 
