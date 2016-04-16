@@ -4,11 +4,11 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
-import com.kirelcodes.RoboticCraft.robot.RobotBase;
+import com.kirelcodes.RoboticCraft.robot.RobotLighter;
 
 public class LighterPathfinder extends BasicPathfinder {
 
-	private RobotBase robot;
+	private RobotLighter robot;
 	private int delayManager;
 	private int timeout;
 	private Location previous;
@@ -16,7 +16,7 @@ public class LighterPathfinder extends BasicPathfinder {
 	// torches.
 	private int torchTimer;
 
-	public LighterPathfinder(RobotBase robot) {
+	public LighterPathfinder(RobotLighter robot) {
 		this.robot = robot;
 		this.delayManager = 0;
 		this.timeout = 0;
@@ -25,7 +25,7 @@ public class LighterPathfinder extends BasicPathfinder {
 
 	@Override
 	public boolean shouldStart() {
-		return this.robot.isFollowing();
+		return this.robot.isLightning();
 	}
 
 	@Override
@@ -39,15 +39,12 @@ public class LighterPathfinder extends BasicPathfinder {
 		if ((delayManager % 5) != 0)
 			return;
 		try {
-			robot.setTargetLocation(robot.getFollowTarget().getLocation()
-					.clone().add(1, 0, 1));
+			robot.setTargetLocation(robot.getFollowTarget().getLocation().clone().add(1, 0, 1));
 		} catch (Exception e) {
 			robot.cancelFollow();
 		}
-		if ((delayManager % 20) != 0
-				&& robot.getLocation().distance(previous) <= 1
-				&& robot.getFollowTarget().getLocation()
-						.distance(robot.getLocation()) > 5) {
+		if ((delayManager % 20) != 0 && robot.getLocation().distance(previous) <= 1
+				&& robot.getFollowTarget().getLocation().distance(robot.getLocation()) > 5) {
 			timeout++;
 		}
 		if ((delayManager % 20) != 0) {
@@ -60,15 +57,14 @@ public class LighterPathfinder extends BasicPathfinder {
 			robot.setStuck(true);
 		}
 		if (timeout >= 5 && robot.isStuck()) {
-			robot.getNavigator().teleport(
-					robot.getFollowTarget().getLocation().clone().add(1, 0, 1));
+			robot.getNavigator().teleport(robot.getFollowTarget().getLocation().clone().add(1, 0, 1));
 			robot.setStuck(false);
 			timeout = 0;
 		}
 
 		// Now we want to check if the timer reaches 3
 		if (torchTimer >= 3) {
-			if(this.robot.isStuck())
+			if (this.robot.isStuck())
 				return;
 			// Place the torches
 			if (this.robot.getInventory().contains(Material.TORCH))
