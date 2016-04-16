@@ -47,8 +47,6 @@ public abstract class GUI implements InventoryHolder {
 		gettGUIAction().add(gui);
 	}
 
-	public abstract GUI getGUI();
-
 	public void openGUI(Player p){
 		p.openInventory(getInventory());
 	}
