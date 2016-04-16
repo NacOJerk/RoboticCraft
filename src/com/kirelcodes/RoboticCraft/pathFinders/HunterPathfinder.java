@@ -19,7 +19,6 @@ public class HunterPathfinder extends BasicPathfinder {
 
 	public HunterPathfinder(RobotHunter robot, Location startBlock) {
 		this.robot = robot;
-		this.attackTimer = 0;
 		this.startBlock = startBlock;
 	}
 
@@ -35,6 +34,10 @@ public class HunterPathfinder extends BasicPathfinder {
 			target = null;
 	}
 
+	@Override
+	public void onStart() {
+		this.attackTimer = 0;
+	}
 	@Override
 	public void updateTask() {
 		boolean found = false;

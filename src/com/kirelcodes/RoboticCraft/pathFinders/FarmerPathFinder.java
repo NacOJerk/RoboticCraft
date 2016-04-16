@@ -18,7 +18,6 @@ public class FarmerPathFinder extends BasicPathfinder{
 	private int test =0;
 	public FarmerPathFinder(RobotFarmer robot) {
 		this.robot = robot;
-		this.dirty = new ArrayList<>();
 	}
 	
 	
@@ -26,7 +25,10 @@ public class FarmerPathFinder extends BasicPathfinder{
 	public boolean shouldStart() {
 		return robot.isFarming();
 	}
-
+	@Override
+	public void onStart() {
+		this.dirty = new ArrayList<>();
+	}
 	@SuppressWarnings("deprecation")
 	@Override
 	public void updateTask() {
