@@ -9,8 +9,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerArmorStandManipulateEvent;
 import org.bukkit.plugin.Plugin;
 
-import com.kirelcodes.RoboticCraft.gui.guiRobots.GUIRobotMiner;
+import com.kirelcodes.RoboticCraft.gui.guiRobots.GUIRobotLighter;
 import com.kirelcodes.RoboticCraft.robot.RobotCenter;
+import com.kirelcodes.RoboticCraft.robot.RobotLighter;
 import com.kirelcodes.RoboticCraft.robot.RobotMiner;
 
 public class RobotListener implements Listener {
@@ -42,7 +43,7 @@ public class RobotListener implements Listener {
 			 * Inventory inven = RobotCenter.getRobot(ID).getInventory();
 			 * e.getPlayer().openInventory(inven);
 			 */
-			new GUIRobotMiner((RobotMiner) RobotCenter.getRobot(ID)).openGUI(e.getPlayer());
+			new GUIRobotLighter((RobotLighter) RobotCenter.getRobot(ID)).openGUI(e.getPlayer());
 		}
 	}
 }

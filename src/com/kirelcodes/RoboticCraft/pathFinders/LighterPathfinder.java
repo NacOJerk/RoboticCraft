@@ -18,20 +18,19 @@ public class LighterPathfinder extends BasicPathfinder {
 
 	public LighterPathfinder(RobotLighter robot) {
 		this.robot = robot;
-		this.delayManager = 0;
-		this.timeout = 0;
-		this.torchTimer = 0;
 	}
 
 	@Override
 	public boolean shouldStart() {
-		return this.robot.isLightning();
+		return this.robot.isLightning() && robot.isFollowing();
 	}
 
 	@Override
 	public void onStart() {
 		previous = robot.getLocation();
-		this.robot.getInventory().addItem(new ItemStack(Material.TORCH, 64));
+		this.delayManager = 0;
+		this.timeout = 0;
+		this.torchTimer = 0;
 	}
 
 	@Override
@@ -39,12 +38,15 @@ public class LighterPathfinder extends BasicPathfinder {
 		if ((delayManager % 5) != 0)
 			return;
 		try {
-			robot.setTargetLocation(robot.getFollowTarget().getLocation().clone().add(1, 0, 1));
+			robot.setTargetLocation(robot.getFollowTarget().getLocation()
+					.clone().add(1, 0, 1));
 		} catch (Exception e) {
 			robot.cancelFollow();
 		}
-		if ((delayManager % 20) != 0 && robot.getLocation().distance(previous) <= 1
-				&& robot.getFollowTarget().getLocation().distance(robot.getLocation()) > 5) {
+		if ((delayManager % 20) != 0
+				&& robot.getLocation().distance(previous) <= 1
+				&& robot.getFollowTarget().getLocation()
+						.distance(robot.getLocation()) > 5) {
 			timeout++;
 		}
 		if ((delayManager % 20) != 0) {
@@ -57,7 +59,8 @@ public class LighterPathfinder extends BasicPathfinder {
 			robot.setStuck(true);
 		}
 		if (timeout >= 5 && robot.isStuck()) {
-			robot.getNavigator().teleport(robot.getFollowTarget().getLocation().clone().add(1, 0, 1));
+			robot.getNavigator().teleport(
+					robot.getFollowTarget().getLocation().clone().add(1, 0, 1));
 			robot.setStuck(false);
 			timeout = 0;
 		}
@@ -67,10 +70,22 @@ public class LighterPathfinder extends BasicPathfinder {
 			if (this.robot.isStuck())
 				return;
 			// Place the torches
-			if (this.robot.getInventory().contains(Material.TORCH))
+			if (this.robot.getInventory().contains(Material.TORCH)
+					&& !(this.robot.getLocation().clone().subtract(0, 1, 0)
+							.getBlock().isLiquid())
 				if (this.robot.getLocation().getBlock().getType() == Material.AIR) {
 					this.robot.getLocation().getBlock().setType(Material.TORCH);
-					this.robot.getInventory().remove(new ItemStack(Material.TORCH, 1));
+					for (ItemStack is : robot.getInventory().getContents()) {
+						if (is == null)
+							continue;
+						if (is.getType() != Material.TORCH)
+							continue;
+						if (is.getAmount() == 1) {
+							robot.getInventory().remove(is);
+							break;
+						}
+						is.setAmount(is.getAmount() - 1);
+					}
 				}
 			torchTimer = 0;
 		}
