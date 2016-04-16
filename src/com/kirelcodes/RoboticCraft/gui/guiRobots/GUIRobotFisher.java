@@ -8,33 +8,33 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import com.kirelcodes.RoboticCraft.gui.GUI;
-import com.kirelcodes.RoboticCraft.robot.RobotHunter;
+import com.kirelcodes.RoboticCraft.robot.RobotFisher;
 import com.kirelcodes.RoboticCraft.utils.ItemStackUtils;
 
 import net.md_5.bungee.api.ChatColor;
 
-public class GUIRobotHunter extends GUI{
-	private RobotHunter robot;
-	private ItemStack itemFollow, itemNoFollow, itemHunt, itemNoHunt, openInventory;
+public class GUIRobotFisher extends GUI{
+	private RobotFisher robot;
+	private ItemStack itemFollow, itemNoFollow, itemFish, itemNoFish, openInventory;
 
-	public RobotHunter getRobot(){
+	public RobotFisher getRobot(){
 		return robot;
 	}
-	public GUIRobotHunter(RobotHunter robot) {
+	public GUIRobotFisher(RobotFisher robot) {
 		setSize(27);
-		setTitle("&cHunter Robot GUI");
+		setTitle("&cFisher Robot GUI");
 		instalizeInventory();
 		this.robot = robot;
 		itemFollow = ItemStackUtils.createItem(Material.COMPASS, "&aFollow");
 		itemNoFollow = ItemStackUtils.createItem(Material.COMPASS, "&cStop Follow");
-		itemHunt = ItemStackUtils.createItem(Material.DIAMOND_SWORD, "&aHunt");
-		itemNoHunt = ItemStackUtils.createItem(Material.DIAMOND_SWORD, "&cStop Hunt");
+		itemFish = ItemStackUtils.createItem(Material.DIAMOND_SWORD, "&aFish");
+		itemNoFish = ItemStackUtils.createItem(Material.DIAMOND_SWORD, "&cStop Fish");
 		openInventory = ItemStackUtils.createItem(Material.CHEST, "&cOpen Robot's Inventory");
 		gettGUIAction().add(new GUIAction(itemFollow) {
 
 			@Override
 			public void actionNow(GUI gui, Player player) {
-				((GUIRobotHunter) gui).follow(player);
+				((GUIRobotFisher) gui).follow(player);
 			}
 		});
 		gettGUIAction().add(new GUIAction(openInventory) {
@@ -42,28 +42,28 @@ public class GUIRobotHunter extends GUI{
 			@Override
 			public void actionNow(GUI gui, Player player) {
 				player.closeInventory();
-				player.openInventory(((GUIRobotHunter)gui).getRobot().getInventory());
+				player.openInventory(((GUIRobotFisher)gui).getRobot().getInventory());
 			}
 		});
 		gettGUIAction().add(new GUIAction(itemNoFollow) {
 
 			@Override
 			public void actionNow(GUI gui, Player player) {
-				((GUIRobotHunter) gui).noFollow(player);
+				((GUIRobotFisher) gui).noFollow(player);
 			}
 		});
-		gettGUIAction().add(new GUIAction(itemHunt) {
+		gettGUIAction().add(new GUIAction(itemFish) {
 
 			@Override
 			public void actionNow(GUI gui, Player player) {
-				((GUIRobotHunter) gui).Hunt();
+				((GUIRobotFisher) gui).Fish();
 			}
 		});
-		gettGUIAction().add(new GUIAction(itemNoHunt) {
+		gettGUIAction().add(new GUIAction(itemNoFish) {
 
 			@Override
 			public void actionNow(GUI gui, Player player) {
-				((GUIRobotHunter) gui).noHunt();
+				((GUIRobotFisher) gui).noFish();
 			}
 		});
 		for (int i = 0; i < 27; i++) {
@@ -79,14 +79,14 @@ public class GUIRobotHunter extends GUI{
 			});
 		}
 		getInventory().setItem(13, openInventory);
-		getInventory().setItem(14, (robot.isHunting()) ? itemNoHunt : itemHunt);
+		getInventory().setItem(14, (robot.isFishing()) ? itemNoFish : itemFish);
 		getInventory().setItem(12, (robot.isFollowing()) ? itemNoFollow : itemFollow);
 	}
 
 	public void follow(Entity p) {
 		robot.setFollow(p);
-		if(robot.isHunting())
-			noHunt();
+		if(robot.isFishing())
+			noFish();
 		getInventory().setItem(12, itemNoFollow);
 	}
 
@@ -95,16 +95,16 @@ public class GUIRobotHunter extends GUI{
 		getInventory().setItem(12, itemFollow);
 	}
 
-	public void Hunt() {
-		robot.setHunting(true);
+	public void Fish() {
+		robot.setFishing(true);
 		if(robot.isFollowing())
 			noFollow(robot.getFollowTarget());
-		getInventory().setItem(14, itemNoHunt);
+		getInventory().setItem(14, itemNoFish);
 	}
 
-	public void noHunt() {
-		robot.setHunting(false);
-		getInventory().setItem(14, itemHunt);
+	public void noFish() {
+		robot.setFishing(false);
+		getInventory().setItem(14, itemFish);
 	}
 
 }
