@@ -83,6 +83,7 @@ public class BreederPathFinder extends BasicPathfinder {
 							if(a instanceof Ageable&&((Ageable)a).canBreed()&&a.getType()==age.getType()) {
 								((Ageable)a).setBreed(true);
 								age.setBreed(true);
+								break;
 							}
 						}
 						
