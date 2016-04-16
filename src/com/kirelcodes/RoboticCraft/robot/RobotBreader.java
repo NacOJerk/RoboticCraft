@@ -47,6 +47,12 @@ public class RobotBreader extends RobotBase{
 	public boolean isBreading() {
 		return isBreading;
 	}
+
+	public void setBreeding(boolean b) {
+		isBreading=b;
+		bread();
+		
+	}
 	
 	
 	
