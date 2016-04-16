@@ -106,6 +106,7 @@ public class GUIRobotFarmer extends GUI {
 				}
 			});
 		}
+		getInventory().setItem(3, Destroy);
 		getInventory().setItem(4, pos1);
 		getInventory().setItem(22, pos2);
 		getInventory().setItem(13, openInventory);

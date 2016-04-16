@@ -59,6 +59,7 @@ public class GUIRobotBasic extends GUI {
 				}
 			});
 		}
+		getInventory().setItem(12, Destroy);
 		getInventory().setItem(13, (robot.isFollowing()) ? itemNoFollow : itemFollow);
 	}
 

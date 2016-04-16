@@ -8,6 +8,7 @@ import org.bukkit.block.Block;
 import com.kirelcodes.RoboticCraft.robot.RobotFisher;
 import com.kirelcodes.RoboticCraft.utils.ItemStackUtils;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 
 public class FisherPathfinder extends BasicPathfinder {
@@ -50,9 +51,7 @@ public class FisherPathfinder extends BasicPathfinder {
 				for (int y = robot.getLocation().getBlockY() - radius; y < robot.getLocation().getY() + radius; y++) {
 					for (int z = robot.getLocation().getBlockZ() - radius; z < robot.getLocation().getZ()
 							+ radius; z++) {
-						if (robot.getWorld().getBlockAt(x, y, z).getType() == Material.WATER || robot.getWorld().getBlockAt(x, y, z).getType() == Material.STATIONARY_WATER) {
-							water.add(robot.getWorld().getBlockAt(x, y, z));
-						}
+						water.add(robot.getWorld().getBlockAt(x, y, z));
 					}
 				}
 			}
@@ -60,17 +59,26 @@ public class FisherPathfinder extends BasicPathfinder {
 		for (Block bs : water) {
 			if (bs == null)
 				continue;
-			target = bs;
-			break;
+			if (bs.getType() == Material.WATER || bs.getType() == Material.STATIONARY_WATER) {
+				target = bs;
+				Bukkit.broadcastMessage("" + target.getType());
+				try {
+					robot.setTargetLocation(bs.getLocation());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				break;
+			}
 		}
-		if (target == null)
-			return;
 		try {
+			System.out.println("s");
 			robot.setTargetLocation(target.getLocation());
+			System.out.println("o");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+		if (target == null)
+			return;
 		if ((clock % 300) != 0)
 			return;
 		Random rand = new Random();

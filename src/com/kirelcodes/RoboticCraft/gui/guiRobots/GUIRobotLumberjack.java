@@ -88,6 +88,7 @@ public class GUIRobotLumberjack extends GUI {
 				}
 			});
 		}
+		getInventory().setItem(3, Destroy);
 		getInventory().setItem(13, openInventory);
 		getInventory().setItem(14, (robot.isCutting()) ? itemNoCut : itemCut);
 		getInventory().setItem(12, (robot.isFollowing()) ? itemNoFollow : itemFollow);

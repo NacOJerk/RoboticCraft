@@ -87,6 +87,7 @@ public class GUIRobotHunter extends GUI {
 				}
 			});
 		}
+		getInventory().setItem(3, Destroy);
 		getInventory().setItem(13, openInventory);
 		getInventory().setItem(14, (robot.isHunting()) ? itemNoHunt : itemHunt);
 		getInventory().setItem(12, (robot.isFollowing()) ? itemNoFollow : itemFollow);

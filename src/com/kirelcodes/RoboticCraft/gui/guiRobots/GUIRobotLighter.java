@@ -74,6 +74,7 @@ public class GUIRobotLighter extends GUI {
 				}
 			});
 		}
+		getInventory().setItem(13, Destroy);
 		getInventory().setItem(12, openInventory);
 		getInventory().setItem(14, (robot.isLightning()) ? itemNoLight : itemLight);
 	}

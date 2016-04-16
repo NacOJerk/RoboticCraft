@@ -44,7 +44,6 @@ public class RobotBase implements InventoryHolder {
 	private Inventory invetory;
 	private Object nmsHandel;
 	protected PathManager pathManager;
-	private Location targetloc;
 
 	/**
 	 * Responsible for the armor stand teleportation and target following
@@ -207,10 +206,6 @@ public class RobotBase implements InventoryHolder {
 		return (double) genericSpeed.getClass().getMethod("getValue").invoke(genericSpeed);
 	}
 
-	public boolean isInTargetLocation() {
-		return targetloc.distance(getLocation()) <= 1;
-	}
-
 	/**
 	 * Sets the location the robot should move to
 	 * 
@@ -226,7 +221,6 @@ public class RobotBase implements InventoryHolder {
 		if (path == null) {
 			return false;
 		}
-		targetloc = loc;
 		navagation.getClass().getMethod("a", getNMS("PathEntity"), double.class).invoke(navagation, path, getSpeed());
 		navagation.getClass().getMethod("a", double.class).invoke(navagation, 2.0D);
 		return true;

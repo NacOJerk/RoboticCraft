@@ -87,6 +87,7 @@ public class GUIRobotFisher extends GUI {
 				}
 			});
 		}
+		getInventory().setItem(3, Destroy);
 		getInventory().setItem(13, openInventory);
 		getInventory().setItem(14, (robot.isFishing()) ? itemNoFish : itemFish);
 		getInventory().setItem(12, (robot.isFollowing()) ? itemNoFollow : itemFollow);

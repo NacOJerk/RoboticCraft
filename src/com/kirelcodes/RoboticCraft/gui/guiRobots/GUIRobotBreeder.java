@@ -88,6 +88,7 @@ public class GUIRobotBreeder extends GUI{
 				}
 			});
 		}
+		getInventory().setItem(3, Destroy);
 		getInventory().setItem(13, openInventory);
 		getInventory().setItem(14, (robot.isBreading()) ? itemNoBreed : itemBreed);
 		getInventory().setItem(12, (robot.isFollowing()) ? itemNoFollow : itemFollow);
