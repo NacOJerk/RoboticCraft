@@ -30,11 +30,16 @@ public class GUIListener implements Listener{
 		if(!(e.getWhoClicked() instanceof Player))
 			return;
 		Player player = (Player) e.getWhoClicked();
+		GUIAction guiAc = null;
 		for(GUIAction guiAction : gui.gettGUIAction()){
 			if(!guiAction.isSame(item))
 				continue;
-			guiAction.actionNow(gui, player);
+			guiAc = guiAction;
 			break;
 		}
+		if(guiAc == null)
+			return;
+		e.setCancelled(true);
+		guiAc.actionNow(gui, player);
 	}
 }

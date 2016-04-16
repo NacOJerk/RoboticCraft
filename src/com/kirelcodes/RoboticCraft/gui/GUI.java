@@ -49,6 +49,11 @@ public abstract class GUI implements InventoryHolder {
 
 	public abstract GUI getGUI();
 
+	public void openGUI(Player p){
+		p.openInventory(getInventory());
+	}
+	
+	
 	@Override
 	public Inventory getInventory() {
 		return inventory;
