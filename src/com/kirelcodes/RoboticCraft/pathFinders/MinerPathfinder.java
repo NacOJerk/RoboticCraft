@@ -15,9 +15,6 @@ public class MinerPathfinder extends BasicPathfinder {
 
 	public MinerPathfinder(RobotMiner robot) {
 		this.robot = robot;
-		currentHeight = robot.getLocation().getBlockY();
-		blockIterator = 0;
-		stairIterator = 0;
 	}
 
 	@Override
@@ -28,6 +25,9 @@ public class MinerPathfinder extends BasicPathfinder {
 	@Override
 	public void onStart() {
 		previus = robot.getStartBlock();
+		currentHeight = robot.getLocation().getBlockY();
+		blockIterator = 0;
+		stairIterator = 0;
 	}
 
 	@Override
