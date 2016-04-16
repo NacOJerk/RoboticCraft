@@ -29,8 +29,8 @@ public class GUIRobotFisher extends GUI {
 		Destroy = ItemStackUtils.createItem(Material.BARRIER, "&cDESTROY ROBOT");
 		itemFollow = ItemStackUtils.createItem(Material.COMPASS, "&aFollow");
 		itemNoFollow = ItemStackUtils.createItem(Material.COMPASS, "&cStop Follow");
-		itemFish = ItemStackUtils.createItem(Material.DIAMOND_SWORD, "&aFish");
-		itemNoFish = ItemStackUtils.createItem(Material.DIAMOND_SWORD, "&cStop Fish");
+		itemFish = ItemStackUtils.createItem(Material.FISHING_ROD, "&aFish");
+		itemNoFish = ItemStackUtils.createItem(Material.FISHING_ROD, "&cStop Fish");
 		openInventory = ItemStackUtils.createItem(Material.CHEST, "&cOpen Robot's Inventory");
 		gettGUIAction().add(new GUIAction(itemFollow) {
 

@@ -49,7 +49,7 @@ public class FisherPathfinder extends BasicPathfinder {
 				for (int y = robot.getLocation().getBlockY() - radius; y < robot.getLocation().getY() + radius; y++) {
 					for (int z = robot.getLocation().getBlockZ() - radius; z < robot.getLocation().getZ()
 							+ radius; z++) {
-						if (robot.getWorld().getBlockAt(x, y, z).getType() == Material.WATER) {
+						if (robot.getWorld().getBlockAt(x, y, z).getType() == Material.WATER || robot.getWorld().getBlockAt(x, y, z).getType() == Material.STATIONARY_WATER) {
 							water.add(robot.getWorld().getBlockAt(x, y, z));
 						}
 					}
