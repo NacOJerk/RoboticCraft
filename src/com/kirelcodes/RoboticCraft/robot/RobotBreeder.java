@@ -6,13 +6,13 @@ import org.bukkit.entity.Ageable;
 import org.bukkit.entity.Entity;
 import org.bukkit.inventory.ItemStack;
 
-import com.kirelcodes.RoboticCraft.pathFinders.BreaderPathFinder;
+import com.kirelcodes.RoboticCraft.pathFinders.BreederPathFinder;
 
-public class RobotBreader extends RobotBase{
+public class RobotBreeder extends RobotBase{
 	
 	private boolean isBreading=false;
 	
-	public RobotBreader(Location loc) {
+	public RobotBreeder(Location loc) {
 		super(loc);
 		getArmorStand().setItemInHand(new ItemStack(Material.WHEAT));
 		
@@ -20,7 +20,7 @@ public class RobotBreader extends RobotBase{
 	@Override
 	protected void addPaths() {
 		super.addPaths();
-		pathManager.addPath(new BreaderPathFinder(this));
+		pathManager.addPath(new BreederPathFinder(this));
 	}
 	public void bread() {
 		Ageable a1 = null;
@@ -50,8 +50,9 @@ public class RobotBreader extends RobotBase{
 
 	public void setBreeding(boolean b) {
 		isBreading=b;
-		bread();
-		
+		if(b){
+			bread();
+		}
 	}
 	
 	

@@ -5,17 +5,17 @@ import java.util.List;
 import org.bukkit.entity.Ageable;
 import org.bukkit.entity.Entity;
 
-import com.kirelcodes.RoboticCraft.robot.RobotBreader;
+import com.kirelcodes.RoboticCraft.robot.RobotBreeder;
 
-public class BreaderPathFinder extends BasicPathfinder {
+public class BreederPathFinder extends BasicPathfinder {
 	
 	private double nearX=4;
 	private double nearY=4;
 	private double nearZ=4;
 	
-	private RobotBreader robot;
+	private RobotBreeder robot;
 
-	public BreaderPathFinder(RobotBreader robot) {
+	public BreederPathFinder(RobotBreeder robot) {
 		this.robot=robot;
 	}
 	@Override

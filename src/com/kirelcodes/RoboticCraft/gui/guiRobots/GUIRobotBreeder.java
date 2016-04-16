@@ -9,19 +9,19 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import com.kirelcodes.RoboticCraft.gui.GUI;
-import com.kirelcodes.RoboticCraft.robot.RobotBreader;
+import com.kirelcodes.RoboticCraft.robot.RobotBreeder;
 import com.kirelcodes.RoboticCraft.utils.ItemStackUtils;
 
 public class GUIRobotBreeder extends GUI{
 
-	private RobotBreader robot;
+	private RobotBreeder robot;
 	private ItemStack itemFollow, itemNoFollow, itemBreed, itemNoBreed, openInventory, Destroy;
 
-	public RobotBreader getRobot() {
+	public RobotBreeder getRobot() {
 		return robot;
 	}
 
-	public GUIRobotBreeder(RobotBreader robot) {
+	public GUIRobotBreeder(RobotBreeder robot) {
 		setSize(27);
 		setTitle("&cBreeder Robot GUI");
 		instalizeInventory();
