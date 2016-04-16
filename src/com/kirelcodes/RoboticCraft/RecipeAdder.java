@@ -49,9 +49,9 @@ public class RecipeAdder {
 		items.add(remoteHunter);
 		remoteLighter = ItemStackUtils.createItem(Material.END_CRYSTAL, "&cRemote Control Lighter", ChatColor.AQUA + "Remote for the lighter robot");
 		items.add(remoteLighter);
-		remoteLumberjack = ItemStackUtils.createItem(Material.END_CRYSTAL, "&cRemote Lumberjack Basic", ChatColor.AQUA + "Remote for the lumberjack robot");
+		remoteLumberjack = ItemStackUtils.createItem(Material.END_CRYSTAL, "&cRemote Control Lumberjack", ChatColor.AQUA + "Remote for the lumberjack robot");
 		items.add(remoteLumberjack);
-		remoteMiner = ItemStackUtils.createItem(Material.END_CRYSTAL, "&cRemote Miner Basic", ChatColor.AQUA + "Remote for the miner robot");
+		remoteMiner = ItemStackUtils.createItem(Material.END_CRYSTAL, "&cRemote Control Miner", ChatColor.AQUA + "Remote for the miner robot");
 		items.add(remoteMiner);
 		remoteFisher = ItemStackUtils.createItem(Material.END_CRYSTAL, "&cRemote Fisher Basic", ChatColor.AQUA + "Remote for the fisher robot");
 		items.add(remoteFisher);

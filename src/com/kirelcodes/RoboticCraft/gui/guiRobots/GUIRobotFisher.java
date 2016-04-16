@@ -44,6 +44,7 @@ public class GUIRobotFisher extends GUI {
 			@Override
 			public void actionNow(GUI gui, Player player) {
 				((GUIRobotFisher) gui).getRobot().destroy();
+				player.closeInventory();
 			}
 		});
 		gettGUIAction().add(new GUIAction(openInventory) {

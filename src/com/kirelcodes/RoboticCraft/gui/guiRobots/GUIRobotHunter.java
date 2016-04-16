@@ -44,6 +44,7 @@ public class GUIRobotHunter extends GUI {
 			@Override
 			public void actionNow(GUI gui, Player player) {
 				((GUIRobotHunter) gui).getRobot().destroy();
+				player.closeInventory();
 			}
 		});
 		gettGUIAction().add(new GUIAction(openInventory) {

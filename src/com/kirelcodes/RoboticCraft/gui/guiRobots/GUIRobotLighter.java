@@ -46,6 +46,7 @@ public class GUIRobotLighter extends GUI {
 			@Override
 			public void actionNow(GUI gui, Player player) {
 				((GUIRobotLighter) gui).getRobot().destroy();
+				player.closeInventory();
 			}
 		});
 		gettGUIAction().add(new GUIAction(itemLight) {
