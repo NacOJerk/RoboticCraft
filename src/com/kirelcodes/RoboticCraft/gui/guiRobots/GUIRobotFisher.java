@@ -13,18 +13,20 @@ import com.kirelcodes.RoboticCraft.utils.ItemStackUtils;
 
 import net.md_5.bungee.api.ChatColor;
 
-public class GUIRobotFisher extends GUI{
+public class GUIRobotFisher extends GUI {
 	private RobotFisher robot;
-	private ItemStack itemFollow, itemNoFollow, itemFish, itemNoFish, openInventory;
+	private ItemStack itemFollow, itemNoFollow, itemFish, itemNoFish, Destroy, openInventory;
 
-	public RobotFisher getRobot(){
+	public RobotFisher getRobot() {
 		return robot;
 	}
+
 	public GUIRobotFisher(RobotFisher robot) {
 		setSize(27);
 		setTitle("&cFisher Robot GUI");
 		instalizeInventory();
 		this.robot = robot;
+		Destroy = ItemStackUtils.createItem(Material.BARRIER, "&cDESTROY ROBOT");
 		itemFollow = ItemStackUtils.createItem(Material.COMPASS, "&aFollow");
 		itemNoFollow = ItemStackUtils.createItem(Material.COMPASS, "&cStop Follow");
 		itemFish = ItemStackUtils.createItem(Material.DIAMOND_SWORD, "&aFish");
@@ -37,12 +39,19 @@ public class GUIRobotFisher extends GUI{
 				((GUIRobotFisher) gui).follow(player);
 			}
 		});
+		gettGUIAction().add(new GUIAction(Destroy) {
+
+			@Override
+			public void actionNow(GUI gui, Player player) {
+				robot.destroy();
+			}
+		});
 		gettGUIAction().add(new GUIAction(openInventory) {
 
 			@Override
 			public void actionNow(GUI gui, Player player) {
 				player.closeInventory();
-				player.openInventory(((GUIRobotFisher)gui).getRobot().getInventory());
+				player.openInventory(((GUIRobotFisher) gui).getRobot().getInventory());
 			}
 		});
 		gettGUIAction().add(new GUIAction(itemNoFollow) {
@@ -85,7 +94,7 @@ public class GUIRobotFisher extends GUI{
 
 	public void follow(Entity p) {
 		robot.setFollow(p);
-		if(robot.isFishing())
+		if (robot.isFishing())
 			noFish();
 		getInventory().setItem(12, itemNoFollow);
 	}
@@ -97,7 +106,7 @@ public class GUIRobotFisher extends GUI{
 
 	public void Fish() {
 		robot.setFishing(true);
-		if(robot.isFollowing())
+		if (robot.isFollowing())
 			noFollow(robot.getFollowTarget());
 		getInventory().setItem(14, itemNoFish);
 	}

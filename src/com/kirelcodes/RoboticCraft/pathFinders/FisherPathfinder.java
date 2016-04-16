@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import org.bukkit.block.Block;
-import org.bukkit.entity.Cow;
 
 import com.kirelcodes.RoboticCraft.robot.RobotFisher;
 import com.kirelcodes.RoboticCraft.utils.ItemStackUtils;
@@ -43,7 +42,6 @@ public class FisherPathfinder extends BasicPathfinder {
 
 	@Override
 	public void updateTask() {
-		Cow cow;
 		int radius = 20;
 		ArrayList<Block> water = new ArrayList<Block>();
 		if (target == null) {
@@ -71,7 +69,7 @@ public class FisherPathfinder extends BasicPathfinder {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		if ((clock % 300) != 0)
 			return;
 		Random rand = new Random();

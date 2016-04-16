@@ -13,20 +13,21 @@ import com.kirelcodes.RoboticCraft.utils.ItemStackUtils;
 
 import net.md_5.bungee.api.ChatColor;
 
-public class GUIRobotLumberjack extends GUI{
-
+public class GUIRobotLumberjack extends GUI {
 
 	private RobotLumberjack robot;
-	private ItemStack itemFollow, itemNoFollow, itemCut, itemNoCut, openInventory;
+	private ItemStack Destroy, itemFollow, itemNoFollow, itemCut, itemNoCut, openInventory;
 
-	public RobotLumberjack getRobot(){
+	public RobotLumberjack getRobot() {
 		return robot;
 	}
+
 	public GUIRobotLumberjack(RobotLumberjack robot) {
 		setSize(27);
 		setTitle("&cLumberjack Robot GUI");
 		instalizeInventory();
 		this.robot = robot;
+		Destroy = ItemStackUtils.createItem(Material.BARRIER, "&cDESTROY ROBOT");
 		itemFollow = ItemStackUtils.createItem(Material.COMPASS, "&aFollow");
 		itemNoFollow = ItemStackUtils.createItem(Material.COMPASS, "&cStop Follow");
 		itemCut = ItemStackUtils.createItem(Material.GOLD_AXE, "&aCut");
@@ -39,12 +40,19 @@ public class GUIRobotLumberjack extends GUI{
 				((GUIRobotLumberjack) gui).follow(player);
 			}
 		});
+		gettGUIAction().add(new GUIAction(Destroy) {
+
+			@Override
+			public void actionNow(GUI gui, Player player) {
+				robot.destroy();
+			}
+		});
 		gettGUIAction().add(new GUIAction(openInventory) {
 
 			@Override
 			public void actionNow(GUI gui, Player player) {
 				player.closeInventory();
-				player.openInventory(((GUIRobotLumberjack)gui).getRobot().getInventory());
+				player.openInventory(((GUIRobotLumberjack) gui).getRobot().getInventory());
 			}
 		});
 		gettGUIAction().add(new GUIAction(itemNoFollow) {
@@ -87,7 +95,7 @@ public class GUIRobotLumberjack extends GUI{
 
 	public void follow(Entity p) {
 		robot.setFollow(p);
-		if(robot.isCutting())
+		if (robot.isCutting())
 			noCut();
 		getInventory().setItem(12, itemNoFollow);
 	}
@@ -99,7 +107,7 @@ public class GUIRobotLumberjack extends GUI{
 
 	public void Cut() {
 		robot.setCutting(true);
-		if(robot.isFollowing())
+		if (robot.isFollowing())
 			noFollow(robot.getFollowTarget());
 		getInventory().setItem(14, itemNoCut);
 	}
@@ -108,6 +116,5 @@ public class GUIRobotLumberjack extends GUI{
 		robot.setCutting(false);
 		getInventory().setItem(14, itemCut);
 	}
-
 
 }

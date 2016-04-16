@@ -16,16 +16,18 @@ import net.md_5.bungee.api.ChatColor;
 public class GUIRobotMiner extends GUI {
 
 	private RobotMiner robot;
-	private ItemStack itemFollow, itemNoFollow, itemMine, itemNoMine, openInventory;
+	private ItemStack Destroy, itemFollow, itemNoFollow, itemMine, itemNoMine, openInventory;
 
-	public RobotMiner getRobot(){
+	public RobotMiner getRobot() {
 		return robot;
 	}
+
 	public GUIRobotMiner(RobotMiner robot) {
 		setSize(27);
 		setTitle("&cMiner Robot GUI");
 		instalizeInventory();
 		this.robot = robot;
+		Destroy = ItemStackUtils.createItem(Material.BARRIER, "&cDESTROY ROBOT");
 		itemFollow = ItemStackUtils.createItem(Material.COMPASS, "&aFollow");
 		itemNoFollow = ItemStackUtils.createItem(Material.COMPASS, "&cStop Follow");
 		itemMine = ItemStackUtils.createItem(Material.DIAMOND_PICKAXE, "&aMine");
@@ -38,12 +40,19 @@ public class GUIRobotMiner extends GUI {
 				((GUIRobotMiner) gui).follow(player);
 			}
 		});
+		gettGUIAction().add(new GUIAction(Destroy) {
+
+			@Override
+			public void actionNow(GUI gui, Player player) {
+				robot.destroy();
+			}
+		});
 		gettGUIAction().add(new GUIAction(openInventory) {
 
 			@Override
 			public void actionNow(GUI gui, Player player) {
 				player.closeInventory();
-				player.openInventory(((GUIRobotMiner)gui).getRobot().getInventory());
+				player.openInventory(((GUIRobotMiner) gui).getRobot().getInventory());
 			}
 		});
 		gettGUIAction().add(new GUIAction(itemNoFollow) {
@@ -86,7 +95,7 @@ public class GUIRobotMiner extends GUI {
 
 	public void follow(Entity p) {
 		robot.setFollow(p);
-		if(robot.isMining())
+		if (robot.isMining())
 			noMine();
 		getInventory().setItem(12, itemNoFollow);
 	}
@@ -99,7 +108,7 @@ public class GUIRobotMiner extends GUI {
 	public void Mine() {
 		robot.setStartBlock(robot.getLocation());
 		robot.setMining(true);
-		if(robot.isFollowing())
+		if (robot.isFollowing())
 			noFollow(robot.getFollowTarget());
 		getInventory().setItem(14, itemNoMine);
 	}

@@ -16,16 +16,18 @@ import net.md_5.bungee.api.ChatColor;
 public class GUIRobotFarmer extends GUI {
 
 	private RobotFarmer robot;
-	private ItemStack itemFollow, itemNoFollow, itemFarm, itemNoFarm, openInventory, pos1, pos2;
+	private ItemStack itemFollow, itemNoFollow, itemFarm, itemNoFarm, openInventory, Destroy, pos1, pos2;
 
-	public RobotFarmer getRobot(){
+	public RobotFarmer getRobot() {
 		return robot;
 	}
+
 	public GUIRobotFarmer(RobotFarmer robot) {
 		setSize(27);
 		setTitle("&cFarmer Robot GUI");
 		instalizeInventory();
 		this.robot = robot;
+		Destroy = ItemStackUtils.createItem(Material.BARRIER, "&cDESTROY ROBOT");
 		itemFollow = ItemStackUtils.createItem(Material.COMPASS, "&aFollow");
 		itemNoFollow = ItemStackUtils.createItem(Material.COMPASS, "&cStop Follow");
 		itemFarm = ItemStackUtils.createItem(Material.DIAMOND_HOE, "&aFarm");
@@ -40,12 +42,19 @@ public class GUIRobotFarmer extends GUI {
 				((GUIRobotFarmer) gui).follow(player);
 			}
 		});
+		gettGUIAction().add(new GUIAction(Destroy) {
+
+			@Override
+			public void actionNow(GUI gui, Player player) {
+				robot.destroy();
+			}
+		});
 		gettGUIAction().add(new GUIAction(openInventory) {
 
 			@Override
 			public void actionNow(GUI gui, Player player) {
 				player.closeInventory();
-				player.openInventory(((GUIRobotFarmer)gui).getRobot().getInventory());
+				player.openInventory(((GUIRobotFarmer) gui).getRobot().getInventory());
 			}
 		});
 		gettGUIAction().add(new GUIAction(itemNoFollow) {
@@ -73,7 +82,7 @@ public class GUIRobotFarmer extends GUI {
 
 			@Override
 			public void actionNow(GUI gui, Player player) {
-				((GUIRobotFarmer)gui).getRobot().setMarkOne(player.getLocation());
+				((GUIRobotFarmer) gui).getRobot().setMarkOne(player.getLocation());
 				player.sendMessage(ChatColor.AQUA + "[Robot] Setted pos1");
 			}
 		});
@@ -81,7 +90,7 @@ public class GUIRobotFarmer extends GUI {
 
 			@Override
 			public void actionNow(GUI gui, Player player) {
-				((GUIRobotFarmer)gui).getRobot().setMarkTwo(player.getLocation());
+				((GUIRobotFarmer) gui).getRobot().setMarkTwo(player.getLocation());
 				player.sendMessage(ChatColor.AQUA + "[Robot] Setted pos2");
 			}
 		});
@@ -106,7 +115,7 @@ public class GUIRobotFarmer extends GUI {
 
 	public void follow(Entity p) {
 		robot.setFollow(p);
-		if(robot.isFarming())
+		if (robot.isFarming())
 			noFarm();
 		getInventory().setItem(12, itemNoFollow);
 	}
@@ -118,7 +127,7 @@ public class GUIRobotFarmer extends GUI {
 
 	public void Farm() {
 		robot.setFarming(true);
-		if(robot.isFollowing())
+		if (robot.isFollowing())
 			noFollow(robot.getFollowTarget());
 		getInventory().setItem(14, itemNoFarm);
 	}

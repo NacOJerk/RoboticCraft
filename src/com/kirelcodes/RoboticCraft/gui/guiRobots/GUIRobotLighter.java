@@ -15,7 +15,7 @@ import net.md_5.bungee.api.ChatColor;
 public class GUIRobotLighter extends GUI {
 
 	private RobotLighter robot;
-	private ItemStack /*itemFollow, itemNoFollow,*/ itemLight, itemNoLight, openInventory;
+	private ItemStack Destroy, itemLight, itemNoLight, openInventory;
 
 	public RobotLighter getRobot() {
 		return robot;
@@ -26,8 +26,10 @@ public class GUIRobotLighter extends GUI {
 		setTitle("&cMiner Robot GUI");
 		instalizeInventory();
 		this.robot = robot;
-		//itemFollow = ItemStackUtils.createItem(Material.COMPASS, "&aFollow");
-		//itemNoFollow = ItemStackUtils.createItem(Material.COMPASS, "&cStop Follow");
+		// itemFollow = ItemStackUtils.createItem(Material.COMPASS, "&aFollow");
+		// itemNoFollow = ItemStackUtils.createItem(Material.COMPASS, "&cStop
+		// Follow");
+		Destroy = ItemStackUtils.createItem(Material.BARRIER, "&cDESTROY ROBOT");
 		itemLight = ItemStackUtils.createItem(Material.TORCH, "&aLight");
 		itemNoLight = ItemStackUtils.createItem(Material.TORCH, "&cStop Light");
 		openInventory = ItemStackUtils.createItem(Material.CHEST, "&cOpen Robot's Inventory");
@@ -37,6 +39,13 @@ public class GUIRobotLighter extends GUI {
 			public void actionNow(GUI gui, Player player) {
 				player.closeInventory();
 				player.openInventory(((GUIRobotLighter) gui).getRobot().getInventory());
+			}
+		});
+		gettGUIAction().add(new GUIAction(Destroy) {
+
+			@Override
+			public void actionNow(GUI gui, Player player) {
+				robot.destroy();
 			}
 		});
 		gettGUIAction().add(new GUIAction(itemLight) {
@@ -69,17 +78,14 @@ public class GUIRobotLighter extends GUI {
 		getInventory().setItem(14, (robot.isLightning()) ? itemNoLight : itemLight);
 	}
 
-	/*public void follow(Entity p) {
-		robot.setFollow(p);
-		if (robot.isLightning())
-			noLight();
-		getInventory().setItem(12, itemNoFollow);
-	}
-
-	public void noFollow(Entity p) {
-		robot.cancelFollow();
-		getInventory().setItem(12, itemFollow);
-	}*/
+	/*
+	 * public void follow(Entity p) { robot.setFollow(p); if
+	 * (robot.isLightning()) noLight(); getInventory().setItem(12,
+	 * itemNoFollow); }
+	 * 
+	 * public void noFollow(Entity p) { robot.cancelFollow();
+	 * getInventory().setItem(12, itemFollow); }
+	 */
 
 	public void Light(Player p) {
 		robot.setLightning(true);

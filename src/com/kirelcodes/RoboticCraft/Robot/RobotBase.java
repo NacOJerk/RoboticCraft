@@ -44,6 +44,8 @@ public class RobotBase implements InventoryHolder {
 	private Inventory invetory;
 	private Object nmsHandel;
 	protected PathManager pathManager;
+	private Location targetloc;
+
 	/**
 	 * Responsible for the armor stand teleportation and target following
 	 * 
@@ -53,12 +55,11 @@ public class RobotBase implements InventoryHolder {
 	public class RobotTask implements Runnable {
 		private int ID;
 		// private int mark; not needed
-		//private int stuckCalc; 
-		//private Location previus;
+		// private int stuckCalc;
+		// private Location previus;
 
 		public RobotTask() {
-			this.ID = Bukkit.getScheduler().scheduleSyncRepeatingTask(
-					RoboticCraft.getInstance(), this, 0L, 1L);
+			this.ID = Bukkit.getScheduler().scheduleSyncRepeatingTask(RoboticCraft.getInstance(), this, 0L, 1L);
 			// mark = 0;
 		}
 
@@ -96,23 +97,23 @@ public class RobotBase implements InventoryHolder {
 		this.chick.setMaxHealth(Integer.MAX_VALUE);
 		this.chick.setHealth(this.chick.getMaxHealth());
 		final Chicken fchick = chick;
-		Bukkit.getScheduler().scheduleSyncDelayedTask(
-				RoboticCraft.getInstance(), new Runnable() {
-					public void run() {
-						try {
-							clearChicken();
-						} catch (Exception e) {
-							fchick.remove();
-							return;
-						}
-					}
-				}, 2L);
-		this.armorStand = (ArmorStand) getWorld().spawnEntity(getLocation(),
-				EntityType.ARMOR_STAND);
+		Bukkit.getScheduler().scheduleSyncDelayedTask(RoboticCraft.getInstance(), new Runnable() {
+			public void run() {
+				try {
+					clearChicken();
+				} catch (Exception e) {
+					fchick.remove();
+					return;
+				}
+			}
+		}, 2L);
+		this.armorStand = (ArmorStand) getWorld().spawnEntity(getLocation(), EntityType.ARMOR_STAND);
 		this.armorStand.setBasePlate(false);
 		this.armorStand.setArms(true);
 		try {
-			this.armorStand.setHelmet(ItemStackUtils.getSkullFromURL("http://textures.minecraft.net/texture/c510d9b61ca333d2946c61a26cb17e374d4adb573b46afdebaf89f65ba5d4ae2", "Robot"));
+			this.armorStand.setHelmet(ItemStackUtils.getSkullFromURL(
+					"http://textures.minecraft.net/texture/c510d9b61ca333d2946c61a26cb17e374d4adb573b46afdebaf89f65ba5d4ae2",
+					"Robot"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -122,19 +123,21 @@ public class RobotBase implements InventoryHolder {
 		setFuel(100);
 		this.pathManager = new PathManager();
 		addPaths();
-		this.invetory = Bukkit.createInventory(this, 9 * 3 , ChatColor.RED + "Robot's Inventory");
+		this.invetory = Bukkit.createInventory(this, 9 * 3, ChatColor.RED + "Robot's Inventory");
 		this.robotTask = new RobotTask();
 		this.ID = RobotCenter.addRobot(this);
 		getArmorStand().setCustomName(ChatColor.MAGIC + "NacOJerkGalShaked-" + ID);
 		getArmorStand().setCustomNameVisible(false);
 	}
+
 	/**
 	 * Adds the paths to the code
 	 */
-	protected void addPaths(){
+	protected void addPaths() {
 		pathManager.addPath(new RandomStrollPathfinder(this));
 		pathManager.addPath(new FollowPathfinder(this));
 	}
+
 	/**
 	 * 
 	 * @return the location of the navigator (chicken)
@@ -154,8 +157,7 @@ public class RobotBase implements InventoryHolder {
 	 */
 	private Object getNMSHandle() throws Exception {
 
-		return (nmsHandel == null) ? (nmsHandel = chick.getClass()
-				.getMethod("getHandle").invoke(chick)) : nmsHandel;
+		return (nmsHandel == null) ? (nmsHandel = chick.getClass().getMethod("getHandle").invoke(chick)) : nmsHandel;
 	}
 
 	/**
@@ -165,22 +167,17 @@ public class RobotBase implements InventoryHolder {
 	 * @throws Exception
 	 */
 	private void clearChicken() throws Exception {
-		//chick.setCanPickupItems(true);
+		// chick.setCanPickupItems(true);
 		chick.setCustomName(ChatColor.MAGIC + "" + getID());
 		chick.setCustomNameVisible(false);
 		Object goalSelector = getField(getNMSHandle(), "goalSelector");
-		LinkedHashSet<?> goalSelectorA = (LinkedHashSet<?>) getDeclaredField(
-				goalSelector, "b");
-		LinkedHashSet<?> goalSelectorB = (LinkedHashSet<?>) getDeclaredField(
-				goalSelector, "c");
+		LinkedHashSet<?> goalSelectorA = (LinkedHashSet<?>) getDeclaredField(goalSelector, "b");
+		LinkedHashSet<?> goalSelectorB = (LinkedHashSet<?>) getDeclaredField(goalSelector, "c");
 		goalSelectorA.clear();
 		goalSelectorB.clear();
-		getNMSHandle().getClass()
-				.getMethod("setSize", float.class, float.class)
-				.invoke(getNMSHandle(), 0.5F, 1.975F);
+		getNMSHandle().getClass().getMethod("setSize", float.class, float.class).invoke(getNMSHandle(), 0.5F, 1.975F);
 
-		getNMSHandle().getClass().getMethod("setInvisible", boolean.class)
-				.invoke(getNMSHandle(), true);
+		getNMSHandle().getClass().getMethod("setInvisible", boolean.class).invoke(getNMSHandle(), true);
 
 	}
 
@@ -192,13 +189,10 @@ public class RobotBase implements InventoryHolder {
 	 * @throws Exception
 	 */
 	public void setSpeed(double speed) throws Exception {
-		Object MOVEMENT_SPEED = getNMS("GenericAttributes").getField(
-				"MOVEMENT_SPEED").get(null);
-		Object genericSpeed = getNMSHandle().getClass()
-				.getMethod("getAttributeInstance", getNMS("IAttribute"))
+		Object MOVEMENT_SPEED = getNMS("GenericAttributes").getField("MOVEMENT_SPEED").get(null);
+		Object genericSpeed = getNMSHandle().getClass().getMethod("getAttributeInstance", getNMS("IAttribute"))
 				.invoke(getNMSHandle(), MOVEMENT_SPEED);
-		genericSpeed.getClass().getMethod("setValue", double.class)
-				.invoke(genericSpeed, speed);
+		genericSpeed.getClass().getMethod("setValue", double.class).invoke(genericSpeed, speed);
 	}
 
 	/**
@@ -207,13 +201,14 @@ public class RobotBase implements InventoryHolder {
 	 * @throws Exception
 	 */
 	public double getSpeed() throws Exception {
-		Object MOVEMENT_SPEED = getNMS("GenericAttributes").getField(
-				"MOVEMENT_SPEED").get(null);
-		Object genericSpeed = getNMSHandle().getClass()
-				.getMethod("getAttributeInstance", getNMS("IAttribute"))
+		Object MOVEMENT_SPEED = getNMS("GenericAttributes").getField("MOVEMENT_SPEED").get(null);
+		Object genericSpeed = getNMSHandle().getClass().getMethod("getAttributeInstance", getNMS("IAttribute"))
 				.invoke(getNMSHandle(), MOVEMENT_SPEED);
-		return (double) genericSpeed.getClass().getMethod("getValue")
-				.invoke(genericSpeed);
+		return (double) genericSpeed.getClass().getMethod("getValue").invoke(genericSpeed);
+	}
+
+	public boolean isInTargetLocation() {
+		return targetloc.distance(getLocation()) <= 1;
 	}
 
 	/**
@@ -223,20 +218,17 @@ public class RobotBase implements InventoryHolder {
 	 * @return did it start or not
 	 * @throws Exception
 	 */
+
 	public boolean setTargetLocation(Location loc) throws Exception {
-		Object navagation = getNMSHandle().getClass()
-				.getMethod("getNavigation").invoke(getNMSHandle());
-		Object path = navagation.getClass()
-				.getMethod("a", double.class, double.class, double.class)
-				.invoke(navagation, loc.getX(), loc.getY(), loc.getZ());
+		Object navagation = getNMSHandle().getClass().getMethod("getNavigation").invoke(getNMSHandle());
+		Object path = navagation.getClass().getMethod("a", double.class, double.class, double.class).invoke(navagation,
+				loc.getX(), loc.getY(), loc.getZ());
 		if (path == null) {
 			return false;
 		}
-		navagation.getClass()
-				.getMethod("a", getNMS("PathEntity"), double.class)
-				.invoke(navagation, path, getSpeed());
-		navagation.getClass().getMethod("a", double.class)
-				.invoke(navagation, 2.0D);
+		targetloc = loc;
+		navagation.getClass().getMethod("a", getNMS("PathEntity"), double.class).invoke(navagation, path, getSpeed());
+		navagation.getClass().getMethod("a", double.class).invoke(navagation, 2.0D);
 		return true;
 	}
 
@@ -325,7 +317,7 @@ public class RobotBase implements InventoryHolder {
 		Chest chest = (Chest) getLocation().getBlock().getState();
 		chest.getBlockInventory().addItem(RecipeAdder.getItem(this));
 		remove();
-		
+
 	}
 
 	/**
@@ -349,27 +341,19 @@ public class RobotBase implements InventoryHolder {
 
 	public static Chicken getSilentChicken(Location loc) throws Exception {
 		Object nbtTAG = getNMS("NBTTagCompound").getConstructor().newInstance();
-		nbtTAG.getClass()
-				.getDeclaredMethod("setString", String.class, String.class)
-				.invoke(nbtTAG, "id", "Chicken");
-		nbtTAG.getClass()
-				.getDeclaredMethod("setBoolean", String.class, boolean.class)
-				.invoke(nbtTAG, "Silent", true);
-		Object world = loc.getWorld().getClass().getMethod("getHandle")
-				.invoke(loc.getWorld());
-		Object entity = getNMS("ChunkRegionLoader").getMethod("a",
-				nbtTAG.getClass(), getNMS("World"), double.class, double.class,
-				double.class, boolean.class).invoke(null, nbtTAG, world,
-				loc.getX(), loc.getY(), loc.getZ(), true);
-		entity.getClass()
-				.getMethod("setPosition", double.class, double.class,
-						double.class)
-				.invoke(entity, loc.getX(), loc.getY(), loc.getZ());
-		Object craftChicken = entity.getClass().getMethod("getBukkitEntity")
-				.invoke(entity);
+		nbtTAG.getClass().getDeclaredMethod("setString", String.class, String.class).invoke(nbtTAG, "id", "Chicken");
+		nbtTAG.getClass().getDeclaredMethod("setBoolean", String.class, boolean.class).invoke(nbtTAG, "Silent", true);
+		Object world = loc.getWorld().getClass().getMethod("getHandle").invoke(loc.getWorld());
+		Object entity = getNMS("ChunkRegionLoader").getMethod("a", nbtTAG.getClass(), getNMS("World"), double.class,
+				double.class, double.class, boolean.class)
+				.invoke(null, nbtTAG, world, loc.getX(), loc.getY(), loc.getZ(), true);
+		entity.getClass().getMethod("setPosition", double.class, double.class, double.class).invoke(entity, loc.getX(),
+				loc.getY(), loc.getZ());
+		Object craftChicken = entity.getClass().getMethod("getBukkitEntity").invoke(entity);
 		return (Chicken) craftChicken;
 	}
-	public void setStuck(boolean stuck){
+
+	public void setStuck(boolean stuck) {
 		this.isStuck = stuck;
 	}
 }

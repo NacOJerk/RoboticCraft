@@ -13,13 +13,14 @@ import com.kirelcodes.RoboticCraft.utils.ItemStackUtils;
 
 import net.md_5.bungee.api.ChatColor;
 
-public class GUIRobotHunter extends GUI{
+public class GUIRobotHunter extends GUI {
 	private RobotHunter robot;
-	private ItemStack itemFollow, itemNoFollow, itemHunt, itemNoHunt, openInventory;
+	private ItemStack itemFollow, itemNoFollow, itemHunt, itemNoHunt, openInventory, Destroy;
 
-	public RobotHunter getRobot(){
+	public RobotHunter getRobot() {
 		return robot;
 	}
+
 	public GUIRobotHunter(RobotHunter robot) {
 		setSize(27);
 		setTitle("&cHunter Robot GUI");
@@ -30,6 +31,7 @@ public class GUIRobotHunter extends GUI{
 		itemHunt = ItemStackUtils.createItem(Material.DIAMOND_SWORD, "&aHunt");
 		itemNoHunt = ItemStackUtils.createItem(Material.DIAMOND_SWORD, "&cStop Hunt");
 		openInventory = ItemStackUtils.createItem(Material.CHEST, "&cOpen Robot's Inventory");
+		Destroy = ItemStackUtils.createItem(Material.BARRIER, "&cDESTROY ROBOT");
 		gettGUIAction().add(new GUIAction(itemFollow) {
 
 			@Override
@@ -37,12 +39,19 @@ public class GUIRobotHunter extends GUI{
 				((GUIRobotHunter) gui).follow(player);
 			}
 		});
+		gettGUIAction().add(new GUIAction(Destroy) {
+
+			@Override
+			public void actionNow(GUI gui, Player player) {
+				robot.destroy();
+			}
+		});
 		gettGUIAction().add(new GUIAction(openInventory) {
 
 			@Override
 			public void actionNow(GUI gui, Player player) {
 				player.closeInventory();
-				player.openInventory(((GUIRobotHunter)gui).getRobot().getInventory());
+				player.openInventory(((GUIRobotHunter) gui).getRobot().getInventory());
 			}
 		});
 		gettGUIAction().add(new GUIAction(itemNoFollow) {
@@ -85,7 +94,7 @@ public class GUIRobotHunter extends GUI{
 
 	public void follow(Entity p) {
 		robot.setFollow(p);
-		if(robot.isHunting())
+		if (robot.isHunting())
 			noHunt();
 		getInventory().setItem(12, itemNoFollow);
 	}
@@ -97,7 +106,7 @@ public class GUIRobotHunter extends GUI{
 
 	public void Hunt() {
 		robot.setHunting(true);
-		if(robot.isFollowing())
+		if (robot.isFollowing())
 			noFollow(robot.getFollowTarget());
 		getInventory().setItem(14, itemNoHunt);
 	}
