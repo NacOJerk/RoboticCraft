@@ -8,7 +8,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
-import com.kirelcodes.GUI.GUIAction;
+import com.kirelcodes.RoboticCraft.gui.GUI.GUIAction;
 
 public class GUIListener implements Listener{
 	
