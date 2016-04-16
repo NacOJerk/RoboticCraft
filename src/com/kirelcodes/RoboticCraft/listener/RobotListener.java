@@ -15,14 +15,13 @@ import com.kirelcodes.RoboticCraft.RecipeAdder;
 import com.kirelcodes.RoboticCraft.gui.GUIGet;
 import com.kirelcodes.RoboticCraft.robot.RobotBase;
 import com.kirelcodes.RoboticCraft.robot.RobotCenter;
-import com.kirelcodes.RoboticCraft.robot.RobotMiner;
 
 import static com.kirelcodes.RoboticCraft.utils.NBTRobotId.*;
 public class RobotListener implements Listener {
 	public RobotListener(Plugin p) {
 		Bukkit.getPluginManager().registerEvents(this, p);
 	}
-
+	/*
 	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void intaractAtArmor(PlayerArmorStandManipulateEvent e) {
@@ -46,7 +45,7 @@ public class RobotListener implements Listener {
 			GUIGet.getGUI(RobotCenter.getRobot(ID)).openGUI(e.getPlayer());;
 		}
 	}
-	
+	*/
 	
 	@EventHandler
 	public void rightClickSpawner(PlayerInteractEvent e){
