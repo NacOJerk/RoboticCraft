@@ -71,8 +71,8 @@ public class LighterPathfinder extends BasicPathfinder {
 				return;
 			// Place the torches
 			if (this.robot.getInventory().contains(Material.TORCH)
-					&& !(this.robot.getLocation().clone().subtract(0, 1, 0)
-							.getBlock().isLiquid())
+					&& (this.robot.getLocation().clone().subtract(0, 1, 0)
+							.getBlock().getType().isSolid()))
 				if (this.robot.getLocation().getBlock().getType() == Material.AIR) {
 					this.robot.getLocation().getBlock().setType(Material.TORCH);
 					for (ItemStack is : robot.getInventory().getContents()) {
