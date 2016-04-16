@@ -30,9 +30,7 @@ public class RobotListener implements Listener{
 		if(e.getPlayerItem().getType()==Material.GOLDEN_CARROT){
 			if(RobotCenter.getRobot(ID) instanceof RobotMiner){
 				((RobotMiner)RobotCenter.getRobot(ID)).egg();
-				if(e.getPlayerItem().getAmount()==1){
-					
-				}else{
+				if(e.getPlayerItem().getAmount()!=1){
 					e.getPlayer().setItemInHand(null);
 				}
 			}
