@@ -1,14 +1,11 @@
 package com.kirelcodes.RoboticCraft;
 
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.kirelcodes.RoboticCraft.gui.GUIListener;
 import com.kirelcodes.RoboticCraft.listener.RobotListener;
 import com.kirelcodes.RoboticCraft.robot.RobotBase;
 import com.kirelcodes.RoboticCraft.robot.RobotCenter;
-import com.kirelcodes.RoboticCraft.robot.RobotLumberjack;
 
 public class RoboticCraft extends JavaPlugin {
 	private static RoboticCraft robotiCraft = null;
@@ -19,16 +16,13 @@ public class RoboticCraft extends JavaPlugin {
 		robotiCraft = this;
 		controllerManager = new GUIListener(this);
 		new RobotListener(this);
-		for (Player p : Bukkit.getOnlinePlayers()) {
-			new RobotLumberjack(p.getLocation());
-			break;
-		}
+		RecipeAdder.addAll();
 	}
 
 	@Override
 	public void onDisable() {
 		for (RobotBase robot : RobotCenter.getRobots()) {
-			robot.remove();
+			robot.destroy();
 		}
 	}
 

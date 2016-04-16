@@ -28,8 +28,8 @@ public class GUIRobotFarmer extends GUI {
 		this.robot = robot;
 		itemFollow = ItemStackUtils.createItem(Material.COMPASS, "&aFollow");
 		itemNoFollow = ItemStackUtils.createItem(Material.COMPASS, "&cStop Follow");
-		itemFarm = ItemStackUtils.createItem(Material.DIAMOND_PICKAXE, "&aFarm");
-		itemNoFarm = ItemStackUtils.createItem(Material.DIAMOND_PICKAXE, "&cStop Farm");
+		itemFarm = ItemStackUtils.createItem(Material.DIAMOND_HOE, "&aFarm");
+		itemNoFarm = ItemStackUtils.createItem(Material.DIAMOND_HOE, "&cStop Farm");
 		pos1 = ItemStackUtils.createItem(Material.DIRT, 2, "&aset Pos1");
 		pos2 = ItemStackUtils.createItem(Material.DIRT, 2, "&aset Pos2");
 		openInventory = ItemStackUtils.createItem(Material.CHEST, "&cOpen Robot's Inventory");
@@ -73,14 +73,16 @@ public class GUIRobotFarmer extends GUI {
 
 			@Override
 			public void actionNow(GUI gui, Player player) {
-				robot.setMarkOne(player.getLocation());
+				((GUIRobotFarmer)gui).getRobot().setMarkOne(player.getLocation());
+				player.sendMessage(ChatColor.AQUA + "[Robot] Setted pos1");
 			}
 		});
 		gettGUIAction().add(new GUIAction(pos2) {
 
 			@Override
 			public void actionNow(GUI gui, Player player) {
-				robot.setMarkTwo(player.getLocation());
+				((GUIRobotFarmer)gui).getRobot().setMarkTwo(player.getLocation());
+				player.sendMessage(ChatColor.AQUA + "[Robot] Setted pos2");
 			}
 		});
 		for (int i = 0; i < 27; i++) {

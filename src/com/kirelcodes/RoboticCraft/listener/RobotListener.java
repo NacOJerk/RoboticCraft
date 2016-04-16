@@ -7,13 +7,17 @@ import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerArmorStandManipulateEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
-import com.kirelcodes.RoboticCraft.gui.guiRobots.GUIRobotLumberjack;
+import com.kirelcodes.RoboticCraft.RecipeAdder;
+import com.kirelcodes.RoboticCraft.gui.GUIGet;
+import com.kirelcodes.RoboticCraft.robot.RobotBase;
 import com.kirelcodes.RoboticCraft.robot.RobotCenter;
-import com.kirelcodes.RoboticCraft.robot.RobotLumberjack;
 import com.kirelcodes.RoboticCraft.robot.RobotMiner;
 
+import static com.kirelcodes.RoboticCraft.utils.NBTRobotId.*;
 public class RobotListener implements Listener {
 	public RobotListener(Plugin p) {
 		Bukkit.getPluginManager().registerEvents(this, p);
@@ -39,11 +43,48 @@ public class RobotListener implements Listener {
 				}
 			}
 		} else {
-			/*
-			 * Inventory inven = RobotCenter.getRobot(ID).getInventory();
-			 * e.getPlayer().openInventory(inven);
-			 */
-			new GUIRobotLumberjack((RobotLumberjack) RobotCenter.getRobot(ID)).openGUI(e.getPlayer());
+			GUIGet.getGUI(RobotCenter.getRobot(ID)).openGUI(e.getPlayer());;
 		}
 	}
+	
+	
+	@EventHandler
+	public void rightClickSpawner(PlayerInteractEvent e){
+		if(!e.hasItem())
+			return;
+		ItemStack item = e.getItem();
+		if(!RecipeAdder.containsItem(item))
+			return;
+		try {
+			if(hasID(item))
+				return;
+			RobotBase robot = RecipeAdder.getRobot(item, e.getPlayer().getLocation());
+			ItemStack cloneItem = e.getItem();
+			e.getPlayer().getInventory().remove(item);
+			cloneItem = setID(cloneItem, robot.getID());
+			RecipeAdder.addRemote(cloneItem);
+			e.getPlayer().getInventory().addItem(cloneItem);
+			e.getPlayer().updateInventory();
+		} catch (Exception e1) {
+			return;
+		}
+	}
+	
+	@EventHandler
+	public void rightClickRemote(PlayerInteractEvent e){
+		if(!e.hasItem())
+			return;
+		ItemStack item = e.getItem();
+		if(!RecipeAdder.containsItem(item))
+			return;
+		try {
+			if(!hasID(item))
+				return;
+			int ID = getID(item);
+			GUIGet.getGUI(RobotCenter.getRobot(ID)).openGUI(e.getPlayer());;
+		} catch (Exception e1) {
+			return;
+		}
+	}
+	
 }

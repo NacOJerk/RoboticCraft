@@ -9,6 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.block.Chest;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Chicken;
 import org.bukkit.entity.Entity;
@@ -17,6 +18,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
+import com.kirelcodes.RoboticCraft.RecipeAdder;
 import com.kirelcodes.RoboticCraft.RoboticCraft;
 import com.kirelcodes.RoboticCraft.pathFinders.FollowPathfinder;
 import com.kirelcodes.RoboticCraft.pathFinders.PathManager;
@@ -319,8 +321,11 @@ public class RobotBase implements InventoryHolder {
 	 * Destroys the robot and drops an armor remove (Robot remove)
 	 */
 	public void destroy() {
-		// Should be replaced to drop the armor remote here
+		getLocation().getBlock().setType(Material.CHEST);
+		Chest chest = (Chest) getLocation().getBlock().getState();
+		chest.getBlockInventory().addItem(RecipeAdder.getItem(this));
 		remove();
+		
 	}
 
 	/**
