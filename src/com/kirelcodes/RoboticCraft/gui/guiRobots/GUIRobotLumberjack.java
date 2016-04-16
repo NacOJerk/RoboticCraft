@@ -58,14 +58,14 @@ public class GUIRobotLumberjack extends GUI{
 
 			@Override
 			public void actionNow(GUI gui, Player player) {
-				((GUIRobotLumberjack) gui).Mine();
+				((GUIRobotLumberjack) gui).Cut();
 			}
 		});
 		gettGUIAction().add(new GUIAction(itemNoCut) {
 
 			@Override
 			public void actionNow(GUI gui, Player player) {
-				((GUIRobotLumberjack) gui).noMine();
+				((GUIRobotLumberjack) gui).noCut();
 			}
 		});
 		for (int i = 0; i < 27; i++) {
@@ -88,7 +88,7 @@ public class GUIRobotLumberjack extends GUI{
 	public void follow(Entity p) {
 		robot.setFollow(p);
 		if(robot.isCutting())
-			noMine();
+			noCut();
 		getInventory().setItem(12, itemNoFollow);
 	}
 
@@ -97,14 +97,14 @@ public class GUIRobotLumberjack extends GUI{
 		getInventory().setItem(12, itemFollow);
 	}
 
-	public void Mine() {
+	public void Cut() {
 		robot.setCutting(true);
 		if(robot.isFollowing())
 			noFollow(robot.getFollowTarget());
 		getInventory().setItem(14, itemNoCut);
 	}
 
-	public void noMine() {
+	public void noCut() {
 		robot.setCutting(false);
 		getInventory().setItem(14, itemCut);
 	}
