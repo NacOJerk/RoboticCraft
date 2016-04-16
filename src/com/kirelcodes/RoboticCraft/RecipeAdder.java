@@ -10,6 +10,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 
 import com.kirelcodes.RoboticCraft.robot.RobotBase;
+import com.kirelcodes.RoboticCraft.robot.RobotBreeder;
 import com.kirelcodes.RoboticCraft.robot.RobotFarmer;
 import com.kirelcodes.RoboticCraft.robot.RobotFisher;
 import com.kirelcodes.RoboticCraft.robot.RobotHunter;
@@ -20,7 +21,7 @@ import com.kirelcodes.RoboticCraft.utils.ItemStackUtils;
 
 public class RecipeAdder {
 	private static ItemStack remoteBase, remoteFarmer, remoteHunter,
-			remoteLighter, remoteLumberjack, remoteMiner , remoteFisher;
+			remoteLighter, remoteLumberjack, remoteMiner , remoteFisher , remoteBreeder;
 	private static ArrayList<ItemStack> items;
 	
 	public static void addAll(){
@@ -33,6 +34,7 @@ public class RecipeAdder {
 		addRecipeLumberjackRobot();
 		addRecipeMinerRobot();
 		addRecipeFisherRobot();
+		addRecipeBreederRobot();
 	}
 	
 	
@@ -53,7 +55,8 @@ public class RecipeAdder {
 		items.add(remoteMiner);
 		remoteFisher = ItemStackUtils.createItem(Material.END_CRYSTAL, "&cRemote Fisher Basic", ChatColor.AQUA + "Remote for the fisher robot");
 		items.add(remoteFisher);
-
+		remoteBreeder = ItemStackUtils.createItem(Material.END_CRYSTAL, "&cRemote Breeder Basic", ChatColor.AQUA + "Remote for the breeder robot");
+		items.add(remoteBreeder);
 	}
 	public static boolean containsItem(ItemStack item){
 		for(ItemStack itemC : items)
@@ -86,6 +89,9 @@ public class RecipeAdder {
 		if(robot.getClass().getName().equalsIgnoreCase(RobotFisher.class.getName())){
 			return remoteFisher;
 		}
+		if(robot.getClass().getName().equalsIgnoreCase(RobotBreeder.class.getName())){
+			return remoteBreeder;
+		}
 		return null;
 	}
 	public static RobotBase getRobot(ItemStack item , Location loc){
@@ -103,6 +109,8 @@ public class RecipeAdder {
 			return new RobotMiner(loc);
 		if(remoteFisher.isSimilar(item))
 			return new RobotFisher(loc);
+		if(remoteBreeder.isSimilar(item))
+			return new RobotBreeder(loc);
 		return null;
 	}
 	
@@ -161,5 +169,13 @@ public class RecipeAdder {
 				.setIngredient('S', Material.ARMOR_STAND)
 				.setIngredient('G', Material.GOLD_BLOCK)
 				.setIngredient('A', Material.FISHING_ROD));
+	}
+	public static void addRecipeBreederRobot() {
+		Bukkit.addRecipe(new ShapedRecipe(remoteBreeder)
+				.shape("GAG", "DSD", "DDD")
+				.setIngredient('D', Material.DIAMOND_BLOCK)
+				.setIngredient('S', Material.ARMOR_STAND)
+				.setIngredient('G', Material.GOLD_BLOCK)
+				.setIngredient('A', Material.WHEAT));
 	}
 }

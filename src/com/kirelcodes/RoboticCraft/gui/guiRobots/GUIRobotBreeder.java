@@ -44,7 +44,7 @@ public class GUIRobotBreeder extends GUI{
 
 			@Override
 			public void actionNow(GUI gui, Player player) {
-				robot.destroy();
+				((GUIRobotBreeder) gui).follow(player);
 			}
 		});
 		gettGUIAction().add(new GUIAction(openInventory) {

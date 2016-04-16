@@ -40,6 +40,8 @@ public class RobotBreeder extends RobotBase{
 				}
 			}
 		}
+		if(a1 == null || a2 == null)
+			return;
 		a1.setBreed(true);
 		a2.setBreed(true);
 	}

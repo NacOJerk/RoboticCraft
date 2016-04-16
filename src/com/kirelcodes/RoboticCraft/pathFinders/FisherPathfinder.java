@@ -26,7 +26,8 @@ public class FisherPathfinder extends BasicPathfinder {
 
 	@Override
 	public void onStart() {
-		clock = 0;
+		clock = 1;
+		target = null;
 	}
 
 	@Override
