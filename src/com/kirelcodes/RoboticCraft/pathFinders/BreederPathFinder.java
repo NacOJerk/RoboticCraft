@@ -1,10 +1,10 @@
 package com.kirelcodes.RoboticCraft.pathFinders;
 
-import java.util.List;
-
 import org.bukkit.entity.Ageable;
 import org.bukkit.entity.Entity;
+import org.bukkit.scheduler.BukkitRunnable;
 
+import com.kirelcodes.RoboticCraft.RoboticCraft;
 import com.kirelcodes.RoboticCraft.robot.RobotBreeder;
 
 public class BreederPathFinder extends BasicPathfinder {
@@ -33,6 +33,7 @@ public class BreederPathFinder extends BasicPathfinder {
 
 	@Override
 	public void updateTask() {
+		/**
 		if((clock % 600) != 0)
 			return;
 		Ageable a1 = null;
@@ -60,6 +61,34 @@ public class BreederPathFinder extends BasicPathfinder {
 						break;
 					}
 				}
+			}
+			
+		}
+		**/
+		Ageable a1=null;
+		double distance=0;
+		for(Entity e : robot.getArmorStand().getNearbyEntities(nearX, nearY, nearZ)) {
+			if(e instanceof Ageable&&((Ageable)e).canBreed()) {
+				a1=(Ageable)e;
+				try {
+					robot.setTargetLocation(e.getLocation());
+				} catch (Exception e1) {e1.printStackTrace();}
+				distance=e.getLocation().distance(robot.getLocation());
+				final Ageable age=a1;
+				new BukkitRunnable() {
+					
+					@Override
+					public void run() {
+						for(Entity a : robot.getArmorStand().getNearbyEntities(nearX, nearY, nearZ)) {
+							if(a instanceof Ageable&&((Ageable)a).canBreed()&&a.getType()==age.getType()) {
+								((Ageable)a).setBreed(true);
+								age.setBreed(true);
+							}
+						}
+						
+					}
+				}.runTaskLater(RoboticCraft.getInstance(), (long) (20*distance));
+				break;
 			}
 		}
 	}
