@@ -22,7 +22,7 @@ public class RobotBreeder extends RobotBase{
 		super.addPaths();
 		pathManager.addPath(new BreederPathFinder(this));
 	}
-	public void bread() {
+	public void breed() {
 		Ageable a1 = null;
 		Ageable a2 = null;
 		for(Entity e : getArmorStand().getNearbyEntities(10, 10, 10)) {
@@ -53,7 +53,7 @@ public class RobotBreeder extends RobotBase{
 	public void setBreeding(boolean b) {
 		isBreading=b;
 		if(b){
-			bread();
+			breed();
 		}
 	}
 	

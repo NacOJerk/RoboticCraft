@@ -14,7 +14,6 @@ public class BreederPathFinder extends BasicPathfinder {
 	private double nearZ=4;
 	private int clock;
 	private RobotBreeder robot;
-
 	public BreederPathFinder(RobotBreeder robot) {
 		this.robot=robot;
 	}
@@ -33,7 +32,7 @@ public class BreederPathFinder extends BasicPathfinder {
 
 	@Override
 	public void updateTask() {
-		/**
+		/*
 		if((clock % 600) != 0)
 			return;
 		Ageable a1 = null;
@@ -64,7 +63,7 @@ public class BreederPathFinder extends BasicPathfinder {
 			}
 			
 		}
-		**/
+		*/
 		Ageable a1=null;
 		double distance=0;
 		for(Entity e : robot.getArmorStand().getNearbyEntities(nearX, nearY, nearZ)) {
@@ -81,8 +80,7 @@ public class BreederPathFinder extends BasicPathfinder {
 					public void run() {
 						for(Entity a : robot.getArmorStand().getNearbyEntities(nearX, nearY, nearZ)) {
 							if(a instanceof Ageable&&((Ageable)a).canBreed()&&a.getType()==age.getType()) {
-								((Ageable)a).setBreed(true);
-								age.setBreed(true);
+								robot.breed();
 								break;
 							}
 						}

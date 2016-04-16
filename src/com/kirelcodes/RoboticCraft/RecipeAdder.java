@@ -33,8 +33,8 @@ public class RecipeAdder {
 		addRecipeLighterRobot();
 		addRecipeLumberjackRobot();
 		addRecipeMinerRobot();
-		addRecipeFisherRobot();
-		addRecipeBreederRobot();
+		//addRecipeFisherRobot();
+		//addRecipeBreederRobot();
 	}
 	
 	
