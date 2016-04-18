@@ -4,6 +4,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Ageable;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import com.kirelcodes.RoboticCraft.pathFinders.BreederPathFinder;
@@ -12,8 +13,8 @@ public class RobotBreeder extends RobotBase{
 	
 	private boolean isBreading=false;
 	
-	public RobotBreeder(Location loc) {
-		super(loc);
+	public RobotBreeder(Location loc, Player p) {
+		super(loc, p.getUniqueId());
 		getArmorStand().setItemInHand(new ItemStack(Material.WHEAT));
 		
 	}

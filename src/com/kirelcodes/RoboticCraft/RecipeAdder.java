@@ -6,6 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 
@@ -100,23 +101,23 @@ public class RecipeAdder {
 		}
 		return null;
 	}
-	public static RobotBase getRobot(ItemStack item , Location loc){
+	public static RobotBase getRobot(ItemStack item , Player p){
 		if(remoteBase.isSimilar(item))
-			return new RobotBase(loc);
+			return new RobotBase(p.getLocation(), p);
 		if(remoteFarmer.isSimilar(item))
-			return new RobotFarmer(loc);
+			return new RobotFarmer(p.getLocation(), p);
 		if(remoteHunter.isSimilar(item))
-			return new RobotHunter(loc);
+			return new RobotHunter(p.getLocation(), p);
 		if(remoteLighter.isSimilar(item))
-			return new RobotLighter(loc);
+			return new RobotLighter(p.getLocation(), p);
 		if(remoteLumberjack.isSimilar(item))
-			return new RobotLumberjack(loc);
+			return new RobotLumberjack(p.getLocation(), p);
 		if(remoteMiner.isSimilar(item))
-			return new RobotMiner(loc);
+			return new RobotMiner(p.getLocation(), p);
 		if(remoteFisher.isSimilar(item))
-			return new RobotFisher(loc);
+			return new RobotFisher(p.getLocation(), p);
 		if(remoteBreeder.isSimilar(item))
-			return new RobotBreeder(loc);
+			return new RobotBreeder(p.getLocation(), p);
 		return null;
 	}
 	

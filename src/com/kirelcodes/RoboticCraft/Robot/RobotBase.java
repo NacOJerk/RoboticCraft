@@ -1,8 +1,14 @@
 package com.kirelcodes.RoboticCraft.robot;
 
+import static com.kirelcodes.RoboticCraft.utils.NMSClassInteracter.getDeclaredField;
+import static com.kirelcodes.RoboticCraft.utils.NMSClassInteracter.getField;
+import static com.kirelcodes.RoboticCraft.utils.NMSClassInteracter.getNMS;
+import static com.kirelcodes.RoboticCraft.utils.NMSClassInteracter.getVersion;
+
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.UUID;
 
 import net.md_5.bungee.api.ChatColor;
 
@@ -15,6 +21,7 @@ import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Chicken;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
@@ -25,8 +32,6 @@ import com.kirelcodes.RoboticCraft.pathFinders.FollowPathfinder;
 import com.kirelcodes.RoboticCraft.pathFinders.PathManager;
 import com.kirelcodes.RoboticCraft.pathFinders.RandomStrollPathfinder;
 import com.kirelcodes.RoboticCraft.utils.ItemStackUtils;
-
-import static com.kirelcodes.RoboticCraft.utils.NMSClassInteracter.*;
 
 /**
  * 
@@ -44,6 +49,7 @@ public class RobotBase implements InventoryHolder {
 	private RobotTask robotTask;
 	private Inventory invetory;
 	private Object nmsHandel;
+	private UUID owner;
 	protected PathManager pathManager;
 
 	/**
@@ -87,8 +93,10 @@ public class RobotBase implements InventoryHolder {
 	 * 
 	 * @param loc
 	 *            the location where the robot would be spawned
+	 * @param owner
+	 * 	
 	 */
-	public RobotBase(Location loc) {
+	public RobotBase(Location loc, UUID owner) {
 		Chicken chick = null;
 		if (getVersion().contains("9")) {
 			try {
@@ -139,6 +147,22 @@ public class RobotBase implements InventoryHolder {
 		getArmorStand().setCustomName(
 				ChatColor.MAGIC + "NacOJerkGalShaked-" + ID);
 		getArmorStand().setCustomNameVisible(false);
+		this.owner = owner;
+		if(RoboticCraft.usingWorldGuard())
+			if(!RoboticCraft.getWorldGuard().canBuild(Bukkit.getPlayer(getOwner()), loc))
+				destroy();
+	}
+	
+	/**
+	 * Spawns the robot
+	 * 
+	 * @param loc
+	 *            the location where the robot would be spawned
+	 * @param owner
+	 * 	
+	 */
+	public RobotBase(Location loc, Player owner) {
+		this(loc, owner.getUniqueId());
 	}
 
 	/**
@@ -399,5 +423,9 @@ public class RobotBase implements InventoryHolder {
 
 	public void setStuck(boolean stuck) {
 		this.isStuck = stuck;
+	}
+	
+	public UUID getOwner(){
+		return owner;
 	}
 }

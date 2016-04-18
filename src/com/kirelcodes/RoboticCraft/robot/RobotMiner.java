@@ -20,8 +20,8 @@ public class RobotMiner extends RobotBase {
 	private boolean isMining;
 	private boolean onDelay = false;
 	private boolean isEasterEgg = false;
-	public RobotMiner(Location loc) {
-		super(loc);
+	public RobotMiner(Location loc, Player p) {
+		super(loc, p.getUniqueId());
 		getArmorStand().setItemInHand(new ItemStack(Material.DIAMOND_PICKAXE));
 		try {
 			getArmorStand().setHelmet(ItemStackUtils.getSkullFromURL("http://textures.minecraft.net/texture/b0b7d537b2616e69d4de323d8a83a0b8a61bc7e249e5ef10f9d91f6bf7b3", "Robot"));

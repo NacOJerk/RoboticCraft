@@ -6,6 +6,7 @@ import java.util.List;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import com.kirelcodes.RoboticCraft.pathFinders.FarmerPathFinder;
@@ -15,8 +16,8 @@ public class RobotFarmer extends RobotBase {
 	private Location mark1, mark2;
 	private boolean isFarming;
 
-	public RobotFarmer(Location loc) {
-		super(loc);
+	public RobotFarmer(Location loc, Player p) {
+		super(loc, p.getUniqueId());
 		getArmorStand().setItemInHand(new ItemStack(Material.DIAMOND_HOE));
 		try {
 			getArmorStand().setHelmet(ItemStackUtils.getSkullFromURL("http://textures.minecraft.net/texture/5a921c75cd645aa753d89e1c14097bfeca22a497829edd6fc7a875956a1282", "Robot"));

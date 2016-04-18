@@ -60,8 +60,7 @@ public class RobotListener implements Listener {
 		try {
 			if (hasID(item))
 				return;
-			RobotBase robot = RecipeAdder.getRobot(item, e.getPlayer()
-					.getLocation());
+			RobotBase robot = RecipeAdder.getRobot(item, e.getPlayer());
 			ItemStack cloneItem = e.getItem();
 			e.getPlayer().getInventory().remove(item);
 			cloneItem = setID(cloneItem, robot.getID());

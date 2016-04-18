@@ -3,6 +3,7 @@ package com.kirelcodes.RoboticCraft.robot;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -14,8 +15,8 @@ public class RobotLumberjack extends RobotBase {
 	@SuppressWarnings("unused")
 	private boolean onDelay = false;
 
-	public RobotLumberjack(Location loc) {
-		super(loc);
+	public RobotLumberjack(Location loc, Player p) {
+		super(loc, p.getUniqueId());
 		getArmorStand().setItemInHand(new ItemStack(Material.DIAMOND_AXE));
 	}
 
