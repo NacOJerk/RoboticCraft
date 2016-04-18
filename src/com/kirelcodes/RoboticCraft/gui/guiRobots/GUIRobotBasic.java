@@ -47,7 +47,7 @@ public class GUIRobotBasic extends GUI {
 			}
 		});
 		for (int i = 0; i < 27; i++) {
-			ItemStack item = ItemStackUtils.createItem(Material.STAINED_GLASS_PANE, new Random().nextInt(16),
+			ItemStack item = ItemStackUtils.createItem(Material.STAINED_GLASS_PANE, 0,
 					ChatColor.BLACK + "DONT CLICK ME");
 			getInventory().setItem(i, item);
 			gettGUIAction().add(new GUIAction(item) {
