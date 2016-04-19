@@ -1,7 +1,5 @@
 package com.kirelcodes.RoboticCraft.gui.guiRobots;
 
-import java.util.Random;
-
 import net.md_5.bungee.api.ChatColor;
 
 import org.bukkit.Material;

@@ -150,7 +150,7 @@ public class RobotBase implements InventoryHolder {
 		this.owner = owner;
 		if(RoboticCraft.usingWorldGuard())
 			if(!RoboticCraft.getWorldGuard().canBuild(Bukkit.getPlayer(getOwner()), loc))
-				destroy();
+				remove();
 	}
 	
 	/**
