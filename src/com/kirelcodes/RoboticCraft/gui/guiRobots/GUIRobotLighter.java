@@ -23,7 +23,7 @@ public class GUIRobotLighter extends GUI {
 
 	public GUIRobotLighter(RobotLighter robot) {
 		setSize(27);
-		setTitle("&cMiner Robot GUI");
+		setTitle("&cLighter Robot GUI");
 		instalizeInventory();
 		this.robot = robot;
 		// itemFollow = ItemStackUtils.createItem(Material.COMPASS, "&aFollow");

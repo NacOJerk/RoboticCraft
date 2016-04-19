@@ -83,7 +83,6 @@ public class RobotListener implements Listener {
 				return;
 			int ID = getID(item);
 			GUIGet.getGUI(RobotCenter.getRobot(ID)).openGUI(e.getPlayer());
-			;
 		} catch (Exception e1) {
 			return;
 		}
