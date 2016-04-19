@@ -10,7 +10,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
-import com.kirelcodes.RoboticCraft.RecipeAdder;
+import com.kirelcodes.RoboticCraft.RobotItem;
 import com.kirelcodes.RoboticCraft.gui.GUIGet;
 import com.kirelcodes.RoboticCraft.robot.RobotBase;
 import com.kirelcodes.RoboticCraft.robot.RobotCenter;
@@ -55,16 +55,15 @@ public class RobotListener implements Listener {
 		if (!e.hasItem())
 			return;
 		ItemStack item = e.getItem();
-		if (!RecipeAdder.containsItem(item))
+		if (!RobotItem.containsItem(item))
 			return;
 		try {
 			if (hasID(item))
 				return;
-			RobotBase robot = RecipeAdder.getRobot(item, e.getPlayer());
+			RobotBase robot = RobotItem.getRobot(item, e.getPlayer());
 			ItemStack cloneItem = e.getItem();
 			e.getPlayer().getInventory().remove(item);
 			cloneItem = setID(cloneItem, robot.getID());
-			RecipeAdder.addRemote(cloneItem);
 			e.getPlayer().getInventory().addItem(cloneItem);
 			e.getPlayer().updateInventory();
 		} catch (Exception e1) {
@@ -77,7 +76,7 @@ public class RobotListener implements Listener {
 		if (!e.hasItem())
 			return;
 		ItemStack item = e.getItem();
-		if (!RecipeAdder.containsItem(item))
+		if (!RobotItem.containsItem(item))
 			return;
 		try {
 			if (!hasID(item))

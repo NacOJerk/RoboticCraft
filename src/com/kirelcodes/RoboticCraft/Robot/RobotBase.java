@@ -26,7 +26,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
-import com.kirelcodes.RoboticCraft.RecipeAdder;
+import com.kirelcodes.RoboticCraft.RobotItem;
 import com.kirelcodes.RoboticCraft.RoboticCraft;
 import com.kirelcodes.RoboticCraft.pathFinders.FollowPathfinder;
 import com.kirelcodes.RoboticCraft.pathFinders.PathManager;
@@ -368,7 +368,7 @@ public class RobotBase implements InventoryHolder {
 	public void destroy() {
 		getLocation().getBlock().setType(Material.CHEST);
 		Chest chest = (Chest) getLocation().getBlock().getState();
-		chest.getBlockInventory().addItem(RecipeAdder.getItem(this));
+		chest.getBlockInventory().addItem(RobotItem.getItem(this.getClass()));
 		remove();
 
 	}
