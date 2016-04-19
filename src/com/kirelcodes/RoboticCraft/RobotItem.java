@@ -37,7 +37,7 @@ public class RobotItem {
 	
 	public static ItemStack getItem(Class<? extends RobotBase> clazz){
 		for(RobotItem robotItem : robotItems){
-			if(robotItem.getClass().getName().equalsIgnoreCase(clazz.getName()))
+			if(robotItem.getRobotClass().getName().equalsIgnoreCase(clazz.getName()))
 				return robotItem.getItem();
 		}
 		return null;
