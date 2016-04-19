@@ -6,6 +6,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 
 import com.kirelcodes.RoboticCraft.robot.RobotBase;
+import com.kirelcodes.RoboticCraft.robot.RobotCollector;
 import com.kirelcodes.RoboticCraft.robot.RobotFarmer;
 import com.kirelcodes.RoboticCraft.robot.RobotFisher;
 import com.kirelcodes.RoboticCraft.robot.RobotHunter;
@@ -17,7 +18,7 @@ import com.kirelcodes.RoboticCraft.utils.NMSClassInteracter;
 
 public class RecipeAdder {
 	private static ItemStack remoteBase, remoteFarmer, remoteHunter,
-			remoteLighter, remoteLumberjack, remoteMiner , remoteFisher , remoteBreeder;
+			remoteLighter, remoteLumberjack, remoteMiner , remoteFisher , remoteBreeder, remoteCollector;
 	
 	public static void addAll(){
 		initializeItem();
@@ -28,13 +29,14 @@ public class RecipeAdder {
 		new RobotItem(RobotLumberjack.class, remoteLumberjack, addRecipeLumberjackRobot());
 		new RobotItem(RobotMiner.class, remoteMiner, addRecipeMinerRobot());
 		new RobotItem(RobotFisher.class, remoteFisher, addRecipeFisherRobot());
+		new RobotItem(RobotCollector.class, remoteCollector, addRecipeCollectorRobot());
 	}
 		
 	public static void initializeItem(){
 		Material m = null;
-		if(NMSClassInteracter.getVersion().contains("9")){
+		if(NMSClassInteracter.getVersion().contains("9"))
 			m = Material.END_CRYSTAL;
-		}else
+		else
 			m = Material.WATCH;
 		remoteBase = ItemStackUtils.createItem(m, "&cRemote Control Basic", ChatColor.AQUA + "Remote for the basic robot");
 		remoteFarmer = ItemStackUtils.createItem(m, "&cRemote Control Farmer", ChatColor.AQUA + "Remote for the farmer robot");
@@ -42,8 +44,9 @@ public class RecipeAdder {
 		remoteLighter = ItemStackUtils.createItem(m, "&cRemote Control Lighter", ChatColor.AQUA + "Remote for the lighter robot");
 		remoteLumberjack = ItemStackUtils.createItem(m, "&cRemote Control Lumberjack", ChatColor.AQUA + "Remote for the lumberjack robot");
 		remoteMiner = ItemStackUtils.createItem(m, "&cRemote Control Miner", ChatColor.AQUA + "Remote for the miner robot");
-		remoteFisher = ItemStackUtils.createItem(m, "&cRemote Fisher Basic", ChatColor.AQUA + "Remote for the fisher robot");
-		remoteBreeder = ItemStackUtils.createItem(m, "&cRemote Breeder Basic", ChatColor.AQUA + "Remote for the breeder robot");
+		remoteFisher = ItemStackUtils.createItem(m, "&cRemote Control Fisher", ChatColor.AQUA + "Remote for the fisher robot");
+		remoteBreeder = ItemStackUtils.createItem(m, "&cRemote Control Breeder", ChatColor.AQUA + "Remote for the breeder robot");
+		remoteCollector = ItemStackUtils.createItem(m, "&cRemote Control Collector", ChatColor.AQUA + "Remote for the collector robot");
 	}
 	
 	public static ShapedRecipe addRecipeBasicRobot() {
@@ -109,5 +112,13 @@ public class RecipeAdder {
 				.setIngredient('S', Material.ARMOR_STAND)
 				.setIngredient('G', Material.GOLD_BLOCK)
 				.setIngredient('A', Material.WHEAT);
+	}
+	public static ShapedRecipe addRecipeCollectorRobot() {
+		return new ShapedRecipe(remoteCollector)
+				.shape("GAG", "DSD", "DDD")
+				.setIngredient('D', Material.DIAMOND_BLOCK)
+				.setIngredient('S', Material.ARMOR_STAND)
+				.setIngredient('G', Material.GOLD_BLOCK)
+				.setIngredient('A', Material.HOPPER);
 	}
 }
