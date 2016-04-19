@@ -4,11 +4,9 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import org.bukkit.block.Block;
+import org.bukkit.inventory.ItemStack;
 
 import com.kirelcodes.RoboticCraft.robot.RobotFisher;
-import com.kirelcodes.RoboticCraft.utils.ItemStackUtils;
-
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 
 public class FisherPathfinder extends BasicPathfinder {
@@ -36,7 +34,8 @@ public class FisherPathfinder extends BasicPathfinder {
 		clock++;
 		if (target == null)
 			return;
-		if (target.getType() == Material.AIR || (target.getY() - robot.getLocation().getY()) > 5)
+		if (target.getType() == Material.AIR
+				|| (target.getY() - robot.getLocation().getY()) > 5)
 			target = null;
 		if (target == null || robot == null)
 			return;
@@ -47,11 +46,10 @@ public class FisherPathfinder extends BasicPathfinder {
 		int radius = 20;
 		ArrayList<Block> water = new ArrayList<Block>();
 		if (target == null) {
-			for (int x = robot.getLocation().getBlockX() - radius; x < robot.getLocation().getX() + radius; x++) {
-				for (int y = robot.getLocation().getBlockY() - radius; y < robot.getLocation().getY() + radius; y++) {
-					for (int z = robot.getLocation().getBlockZ() - radius; z < robot.getLocation().getZ()
-							+ radius; z++) {
-						water.add(robot.getWorld().getBlockAt(x, y, z));
+			for (int y = radius; y > -radius; y--) {
+				for (int x = radius; x > -radius; x--) {
+					for (int z = radius; z > -radius; z--) {
+						water.add(robot.getLocation().clone().add(x, y, z).getBlock());
 					}
 				}
 			}
@@ -59,9 +57,10 @@ public class FisherPathfinder extends BasicPathfinder {
 		for (Block bs : water) {
 			if (bs == null)
 				continue;
-			if (bs.getType() == Material.WATER || bs.getType() == Material.STATIONARY_WATER) {
+			if (bs.getType() == Material.WATER
+					|| bs.getType() == Material.STATIONARY_WATER) {
 				target = bs;
-				Bukkit.broadcastMessage("" + target.getType());
+				//Bukkit.broadcastMessage("" + target.getType());
 				try {
 					robot.setTargetLocation(bs.getLocation());
 				} catch (Exception e) {
@@ -70,19 +69,23 @@ public class FisherPathfinder extends BasicPathfinder {
 				break;
 			}
 		}
+		if (target == null)
+			return;
+		if(!(target.getType() == Material.WATER || target.getType() == Material.STATIONARY_WATER))
+			return;
 		try {
-			System.out.println("s");
 			robot.setTargetLocation(target.getLocation());
-			System.out.println("o");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		if (target == null)
+		if(target.getLocation().distance(robot.getLocation()) > 4)
 			return;
 		if ((clock % 300) != 0)
 			return;
 		Random rand = new Random();
-		robot.getInventory().addItem(ItemStackUtils.createItem(Material.RAW_FISH, rand.nextInt(4), "Raw Fish"));
+		short s = (short) rand.nextInt(3);
+		ItemStack fish = new ItemStack(Material.RAW_FISH, 1, s);
+		robot.getInventory().addItem(fish);
 		clock = 0;
 	}
 }

@@ -42,8 +42,8 @@ public class RecipeAdder {
 		remoteLighter = ItemStackUtils.createItem(m, "&cRemote Control Lighter", ChatColor.AQUA + "Remote for the lighter robot");
 		remoteLumberjack = ItemStackUtils.createItem(m, "&cRemote Control Lumberjack", ChatColor.AQUA + "Remote for the lumberjack robot");
 		remoteMiner = ItemStackUtils.createItem(m, "&cRemote Control Miner", ChatColor.AQUA + "Remote for the miner robot");
-		remoteFisher = ItemStackUtils.createItem(m, "&cRemote Fisher Basic", ChatColor.AQUA + "Remote for the fisher robot");
-		remoteBreeder = ItemStackUtils.createItem(m, "&cRemote Breeder Basic", ChatColor.AQUA + "Remote for the breeder robot");
+		remoteFisher = ItemStackUtils.createItem(m, "&cRemote Control Fisher", ChatColor.AQUA + "Remote for the fisher robot");
+		remoteBreeder = ItemStackUtils.createItem(m, "&cRemote Control Breeder", ChatColor.AQUA + "Remote for the breeder robot");
 	}
 	
 	public static ShapedRecipe addRecipeBasicRobot() {
