@@ -28,7 +28,8 @@ public class GUIRobotBasic extends GUI {
 		followPos = 14;
 		destroyPos = 3;
 		for (int i = 0; i < 27; i++) {
-			ItemStack item = ItemStackUtils.createItem(Material.STAINED_GLASS_PANE, 0, ChatColor.BLACK + "DONT CLICK ME");
+			ItemStack item = ItemStackUtils.createItem(Material.STAINED_GLASS_PANE, 0,
+					ChatColor.BLACK + "DONT CLICK ME");
 			gettGUIAction().add(new GUIAction(item) {
 
 				@Override

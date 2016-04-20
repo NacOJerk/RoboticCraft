@@ -1,6 +1,7 @@
 package com.kirelcodes.RoboticCraft.gui.guiRobots;
 
 import org.bukkit.Material;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -40,8 +41,8 @@ public class GUIRobotHunter extends GUIRobotBasic {
 		});
 		setRemovePos(3);
 		setChestPos(13);
-		getInventory().setItem(14, (robot.isHunting()) ? itemNoHunt : itemHunt);
 		setFollowPos(12);
+		getInventory().setItem(14, (robot.isHunting()) ? itemNoHunt : itemHunt);
 	}
 
 	public void Hunt() {
@@ -50,7 +51,11 @@ public class GUIRobotHunter extends GUIRobotBasic {
 			noFollow(robot.getFollowTarget());
 		getInventory().setItem(14, itemNoHunt);
 	}
-
+	@Override
+	public void follow(Entity p) {
+		super.follow(p);
+		noHunt();
+	}
 	public void noHunt() {
 		robot.setHunting(false);
 		getInventory().setItem(14, itemHunt);

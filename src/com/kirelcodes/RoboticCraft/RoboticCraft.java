@@ -25,7 +25,6 @@ public class RoboticCraft extends JavaPlugin {
 	private static boolean usingWorldGuard = false;
 	private static WorldGuardPlugin worldGuard;
 	private static boolean usingFactions = false;
-	public static BaseConfig speeds = new BaseConfig("speeds");
 	
 	@Override
 	public void onEnable() {

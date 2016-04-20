@@ -7,28 +7,48 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import com.kirelcodes.RoboticCraft.RoboticCraft;
 
-
-
-
 public class AnimationCycle {
 	private ArrayList<AnimationFrame> frames = new ArrayList<>();
-	public AnimationCycle(AnimationFrame ... frames){
-		for(AnimationFrame frame : frames)
+	private ArrayList<ArmorStand> endless = new ArrayList<>();
+	public AnimationCycle(AnimationFrame... frames) {
+		for (AnimationFrame frame : frames)
 			this.frames.add(frame);
 	}
-	public ArrayList<AnimationFrame> getFrames(){
+
+	public ArrayList<AnimationFrame> getFrames() {
 		return frames;
 	}
-	public void runAnimation(ArmorStand armor , long delay){
+
+	public void runAnimation(ArmorStand armor, long delay) {
 		new BukkitRunnable() {
 			int i = 0;
+
 			@Override
 			public void run() {
-				if(i == frames.size())
+				if (i == frames.size())
 					cancel();
 				frames.get(i).setLocations(armor);
 			}
 		}.runTaskTimer(RoboticCraft.getInstance(), 0L, delay);
 	}
-	
+
+	public void runAnimationCycle(ArmorStand armor, long delay) {
+		endless.add(armor);
+		new BukkitRunnable() {
+			int i = 0;
+
+			@Override
+			public void run() {
+				if(!endless.contains(armor))
+					cancel();
+				if (i == frames.size())
+					i = 0;
+				frames.get(i).setLocations(armor);
+			}
+		}.runTaskTimer(RoboticCraft.getInstance(), 0L, delay);
+	}
+
+	public void cancelTask(ArmorStand armor){
+		endless.remove(armor);
+	}
 }

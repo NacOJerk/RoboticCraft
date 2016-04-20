@@ -78,7 +78,7 @@ public class GUIRobotLighter extends GUI {
 		robot.setFollow(p);
 		getInventory().setItem(14, itemNoLight);
 	}
-
+	
 	public void noLight() {
 		robot.setLightning(false);
 		robot.cancelFollow();
