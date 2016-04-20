@@ -1,6 +1,7 @@
 package com.kirelcodes.RoboticCraft.gui.guiRobots;
 
 import org.bukkit.Material;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -54,6 +55,12 @@ public class GUIRobotLumberjack extends GUIRobotBasic {
 		if (robot.isFollowing())
 			noFollow(robot.getFollowTarget());
 		getInventory().setItem(14, itemNoCut);
+	}
+
+	@Override
+	public void follow(Entity p) {
+		super.follow(p);
+		noCut();
 	}
 
 	public void noCut() {

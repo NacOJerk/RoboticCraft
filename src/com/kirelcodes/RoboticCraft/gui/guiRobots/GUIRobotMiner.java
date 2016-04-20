@@ -1,6 +1,7 @@
 package com.kirelcodes.RoboticCraft.gui.guiRobots;
 
 import org.bukkit.Material;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -52,7 +53,11 @@ public class GUIRobotMiner extends GUIRobotBasic {
 			noFollow(robot.getFollowTarget());
 		getInventory().setItem(14, itemNoMine);
 	}
-
+	@Override
+	public void follow(Entity p) {
+		super.follow(p);
+		noMine();
+	}
 	public void noMine() {
 		robot.setMining(false);
 		getInventory().setItem(14, itemMine);

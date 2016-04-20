@@ -9,6 +9,7 @@ import com.kirelcodes.RoboticCraft.gui.guiRobots.GUIRobotBasic;
 import com.kirelcodes.RoboticCraft.gui.guiRobots.GUIRobotFarmer;
 import com.kirelcodes.RoboticCraft.gui.guiRobots.GUIRobotFisher;
 import com.kirelcodes.RoboticCraft.gui.guiRobots.GUIRobotHunter;
+import com.kirelcodes.RoboticCraft.gui.guiRobots.GUIRobotCollector;
 import com.kirelcodes.RoboticCraft.gui.guiRobots.GUIRobotLighter;
 import com.kirelcodes.RoboticCraft.gui.guiRobots.GUIRobotLumberjack;
 import com.kirelcodes.RoboticCraft.gui.guiRobots.GUIRobotMiner;
@@ -19,6 +20,7 @@ import com.kirelcodes.RoboticCraft.robot.RobotHunter;
 import com.kirelcodes.RoboticCraft.robot.RobotLighter;
 import com.kirelcodes.RoboticCraft.robot.RobotLumberjack;
 import com.kirelcodes.RoboticCraft.robot.RobotMiner;
+import com.kirelcodes.RoboticCraft.robot.RobotCollector;
 import com.kirelcodes.RoboticCraft.utils.ItemStackUtils;
 import com.kirelcodes.RoboticCraft.utils.NMSClassInteracter;
 
@@ -35,7 +37,7 @@ public class RecipeAdder {
 		new RobotItem(RobotLumberjack.class, remoteLumberjack, addRecipeLumberjackRobot() , GUIRobotLumberjack.class);
 		new RobotItem(RobotMiner.class, remoteMiner, addRecipeMinerRobot() , GUIRobotMiner.class);
 		new RobotItem(RobotFisher.class, remoteFisher, addRecipeFisherRobot() , GUIRobotFisher.class);
-	//	new RobotItem(RobotCollector.class, remoteCollector, addRecipeCollectorRobot());
+		new RobotItem(RobotCollector.class, remoteCollector, addRecipeCollectorRobot(), GUIRobotCollector.class);
 	}
 		
 	public static void initializeItem(){

@@ -1,6 +1,7 @@
 package com.kirelcodes.RoboticCraft.gui.guiRobots;
 
 import org.bukkit.Material;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -49,7 +50,11 @@ public class GUIRobotFisher extends GUIRobotBasic {
 			noFollow(robot.getFollowTarget());
 		getInventory().setItem(14, itemNoFish);
 	}
-
+	@Override
+	public void follow(Entity p) {
+		super.follow(p);
+		noFish();
+	}
 	public void noFish() {
 		robot.setFishing(false);
 		getInventory().setItem(14, itemFish);

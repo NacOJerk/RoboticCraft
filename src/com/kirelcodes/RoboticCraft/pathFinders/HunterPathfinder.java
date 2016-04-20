@@ -3,6 +3,7 @@ package com.kirelcodes.RoboticCraft.pathFinders;
 import java.util.ArrayList;
 
 import org.bukkit.Location;
+import org.bukkit.entity.Chicken;
 import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Ocelot;
@@ -30,8 +31,7 @@ public class HunterPathfinder extends BasicPathfinder {
 
 	@Override
 	public void afterTask() {
-		if (target == null || target.isDead()
-				|| target.getLocation().distance(robot.getLocation()) > 25)
+		if (target == null || target.isDead() || target.getLocation().distance(robot.getLocation()) > 25)
 			target = null;
 	}
 
@@ -39,18 +39,18 @@ public class HunterPathfinder extends BasicPathfinder {
 	public void onStart() {
 		this.attackTimer = 0;
 	}
+
 	@Override
 	public void updateTask() {
 		boolean found = false;
 		if (target == null) {
 			ArrayList<Entity> nearby = new ArrayList<Entity>();
-			nearby.addAll(this.robot.getWorld().getNearbyEntities(
-					this.robot.getLocation(), 10.0, 10.0, 10.0));
+			nearby.addAll(this.robot.getWorld().getNearbyEntities(this.robot.getLocation(), 10.0, 10.0, 10.0));
 			if (nearby.isEmpty())
 				return;
 			for (Entity e : nearby) {
-				if (e instanceof Player || e instanceof Wolf
-						|| e instanceof Ocelot || e.equals(robot.getNavigator()) || e.equals(robot.getArmorStand()))
+				if (e instanceof Player || e instanceof Wolf || e instanceof Chicken || e instanceof Ocelot
+						|| e.equals(robot.getNavigator()) || e.equals(robot.getArmorStand()))
 					continue;
 				if (e instanceof Damageable) {
 					target = e;
@@ -58,10 +58,12 @@ public class HunterPathfinder extends BasicPathfinder {
 					break;
 				}
 			}
-			if(!found){
+			if (!found) {
 				try {
 					this.robot.setTargetLocation(startBlock);
-				} catch (Exception e) {	this.robot.setHunting(false); }
+				} catch (Exception e) {
+					this.robot.setHunting(false);
+				}
 			}
 		}
 		if (target == null)
@@ -71,9 +73,7 @@ public class HunterPathfinder extends BasicPathfinder {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		if (!this.robot.getWorld()
-				.getNearbyEntities(this.robot.getLocation(), 2, 2, 2)
-				.contains(target)) {
+		if (!this.robot.getWorld().getNearbyEntities(this.robot.getLocation(), 2, 2, 2).contains(target)) {
 			return;
 		}
 		attackTimer++;
@@ -81,11 +81,12 @@ public class HunterPathfinder extends BasicPathfinder {
 			if (((Damageable) this.target).getHealth() <= 7)
 				attackTimer = 0;
 			/*
-			((Damageable) this.target).setHealth(((((Damageable) this.target)
-					.getHealth() - 7) <= 0) ? 0 : ((Damageable) this.target)
-					.getHealth() - 7);*/
-			((Damageable) this.target).damage(7 , robot.getNavigator());
-			if(((Damageable) this.target).getHealth() == 0 || ((Damageable) this.target).isDead()){
+			 * ((Damageable) this.target).setHealth(((((Damageable) this.target)
+			 * .getHealth() - 7) <= 0) ? 0 : ((Damageable) this.target)
+			 * .getHealth() - 7);
+			 */
+			((Damageable) this.target).damage(7, robot.getNavigator());
+			if (((Damageable) this.target).getHealth() == 0 || ((Damageable) this.target).isDead()) {
 				target = null;
 			}
 		}
