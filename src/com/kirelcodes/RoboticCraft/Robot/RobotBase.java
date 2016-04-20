@@ -12,9 +12,8 @@ import java.util.List;
 import java.util.StringJoiner;
 import java.util.UUID;
 
-import org.bukkit.ChatColor;
-
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -34,6 +33,11 @@ import com.kirelcodes.RoboticCraft.pathFinders.FollowPathfinder;
 import com.kirelcodes.RoboticCraft.pathFinders.PathManager;
 import com.kirelcodes.RoboticCraft.pathFinders.RandomStrollPathfinder;
 import com.kirelcodes.RoboticCraft.utils.ItemStackUtils;
+import com.massivecraft.factions.entity.BoardColl;
+import com.massivecraft.factions.entity.Faction;
+import com.massivecraft.factions.entity.FactionColl;
+import com.massivecraft.factions.entity.MPlayer;
+import com.massivecraft.massivecore.ps.PS;
 
 /**
  * 
@@ -156,6 +160,14 @@ public class RobotBase implements InventoryHolder {
 			if (!RoboticCraft.getWorldGuard().canBuild(
 					Bukkit.getPlayer(getOwner()), loc))
 				remove();
+		if(RoboticCraft.usingFactions()){
+			Faction facL = BoardColl.get().getFactionAt(PS.valueOf(loc));
+			if(facL.getId().equals(FactionColl.get().getNone().getId())){
+				MPlayer mplayer = MPlayer.get(owner);
+				if(facL.getId()!=mplayer.getFactionId())
+					remove();
+			}
+		}
 	}
 
 	/**

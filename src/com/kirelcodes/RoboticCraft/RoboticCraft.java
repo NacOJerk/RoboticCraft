@@ -23,6 +23,7 @@ public class RoboticCraft extends JavaPlugin {
 	private GUIListener controllerManager;
 	private static boolean usingWorldGuard = false;
 	private static WorldGuardPlugin worldGuard;
+	private static boolean usingFactions = false;
 	public static BaseConfig speeds = new BaseConfig("speeds");
 	
 	@Override
@@ -40,7 +41,12 @@ public class RoboticCraft extends JavaPlugin {
 		controllerManager = new GUIListener(this);
 		new RobotListener(this);
 		RecipeAdder.addAll();
+		
+		//World Guard
 		worldGuard = setupWorldGuard();
+		//Factions
+		setupFactions();
+		
 		RobotCenter.getID();
 		for (World w : getServer().getWorlds()) {
 			for (Entity en : w.getEntities()) {
@@ -97,9 +103,19 @@ public class RoboticCraft extends JavaPlugin {
 		usingWorldGuard = true;
 		return (WorldGuardPlugin) plugin;
 	}
+	
+	private void setupFactions(){
+		if(getServer().getPluginManager().getPlugin("Factions")!=null){
+			usingFactions = true;
+		}
+	}
 
 	public static boolean usingWorldGuard() {
 		return usingWorldGuard;
+	}
+	
+	public static boolean usingFactions() {
+		return usingFactions;
 	}
 
 	public static WorldGuardPlugin getWorldGuard() {
