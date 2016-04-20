@@ -9,6 +9,7 @@ import org.bukkit.entity.Ocelot;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
 
+import com.kirelcodes.RoboticCraft.configs.ConfigManager;
 import com.kirelcodes.RoboticCraft.robot.RobotHunter;
 
 public class HunterPathfinder extends BasicPathfinder {
@@ -76,7 +77,7 @@ public class HunterPathfinder extends BasicPathfinder {
 			return;
 		}
 		attackTimer++;
-		if (attackTimer % 15 == 0) {
+		if (attackTimer % (ConfigManager.getHuntSpeed()) == 0) {
 			if (((Damageable) this.target).getHealth() <= 7)
 				attackTimer = 0;
 			/*

@@ -35,7 +35,7 @@ public class BaseConfig {
 		}
 	}
 
-	public void saveDeafultConfig() {
+	public void saveDefaultConfig() {
 		if (baseConfigFile == null)
 			baseConfigFile = new File(RoboticCraft.getInstance().getDataFolder(), configName + ".yml");
 		if (!baseConfigFile.exists())
@@ -50,7 +50,7 @@ public class BaseConfig {
 
 	public BaseConfig(String name) {
 		this.configName = name;
-		saveDeafultConfig();
 		reloadConfig();
+		saveDefaultConfig();
 	}
 }
