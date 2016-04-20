@@ -11,6 +11,8 @@ import org.bukkit.entity.Entity;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.bekvon.bukkit.residence.Residence;
+import com.bekvon.bukkit.residence.api.ResidenceApi;
 import com.kirelcodes.RoboticCraft.configs.Configs;
 import com.kirelcodes.RoboticCraft.gui.GUIListener;
 import com.kirelcodes.RoboticCraft.listener.RobotListener;
@@ -24,6 +26,8 @@ public class RoboticCraft extends JavaPlugin {
 	private static boolean usingWorldGuard = false;
 	private static WorldGuardPlugin worldGuard;
 	private static boolean usingFactions = false;
+	private static boolean usingResidence = false;
+	private static ResidenceApi residence;
 	
 	@Override
 	public void onEnable() {
@@ -43,6 +47,8 @@ public class RoboticCraft extends JavaPlugin {
 		worldGuard = setupWorldGuard();
 		//Factions
 		setupFactions();
+		//Residence
+		residence = setupResidence();
 		
 		RobotCenter.getID();
 		for (World w : getServer().getWorlds()) {
@@ -106,6 +112,15 @@ public class RoboticCraft extends JavaPlugin {
 			usingFactions = true;
 		}
 	}
+	
+	private ResidenceApi setupResidence() {
+		Plugin resPlug = getServer().getPluginManager().getPlugin("Residence");
+	    if (resPlug != null) {
+	    	usingResidence = true;
+	        return Residence.getAPI();  
+	    }
+	    return null;
+	}
 
 	public static boolean usingWorldGuard() {
 		return usingWorldGuard;
@@ -114,9 +129,17 @@ public class RoboticCraft extends JavaPlugin {
 	public static boolean usingFactions() {
 		return usingFactions;
 	}
+	
+	public static boolean usingResidence() {
+		return usingResidence;
+	}
 
 	public static WorldGuardPlugin getWorldGuard() {
 		return worldGuard;
+	}
+	
+	public static ResidenceApi getResidence() {
+		return residence;
 	}
 
 }

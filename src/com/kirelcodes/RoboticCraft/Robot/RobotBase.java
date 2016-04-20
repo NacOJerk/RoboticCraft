@@ -29,6 +29,7 @@ import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.EulerAngle;
 
+import com.bekvon.bukkit.residence.api.ResidenceApi;
 import com.kirelcodes.RoboticCraft.RoboticCraft;
 import com.kirelcodes.RoboticCraft.pathFinders.FollowPathfinder;
 import com.kirelcodes.RoboticCraft.pathFinders.PathManager;
@@ -473,11 +474,9 @@ public class RobotBase implements InventoryHolder {
 	
 	@SuppressWarnings("deprecation")
 	public void guiDestroy(Player p){
-		List<ItemStack> add = new ArrayList<>();
 		for(ItemStack stack : getInventory().getContents())
 			if(stack!=null)
-				add.add(stack);
-		p.getInventory().addItem((ItemStack[]) add.toArray());
+				p.getInventory().addItem(stack);
 		p.setItemInHand(NBTRobotId.clearNBT(p.getItemInHand()));
 		remove();
 	}
@@ -573,6 +572,11 @@ public class RobotBase implements InventoryHolder {
 				MPlayer mplayer = MPlayer.get(owner);
 				if (facL.getId() != mplayer.getFactionId())
 					return false;
+			}
+		}
+		if(RoboticCraft.usingResidence()){
+			if(ResidenceApi.getPlayerManager().getResidenceList(Bukkit.getOfflinePlayer(owner).getName()).contains(ResidenceApi.getResidenceManager().getNameByLoc(loc))){
+				
 			}
 		}
 		return true;
