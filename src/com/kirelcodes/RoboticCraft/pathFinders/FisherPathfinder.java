@@ -48,11 +48,7 @@ public class FisherPathfinder extends BasicPathfinder {
 		ArrayList<Block> water = new ArrayList<Block>();
 		if (target == null) {
 			for (int y = radius; y > -radius; y--) {
-				for (int x = radius; x > -radius; x--) {
-					for (int z = radius; z > -radius; z--) {
-						water.add(robot.getLocation().clone().add(x, y, z).getBlock());
-					}
-				}
+				water.addAll(robot.getNearbyBlocks(robot.getLocation().clone().add(0, radius, 0), 20));
 			}
 		}
 		for (Block bs : water) {

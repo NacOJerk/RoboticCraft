@@ -333,10 +333,13 @@ public class RobotBase implements InventoryHolder {
 	 * @return
 	 */
 	public List<Block> getNearbyBlocks(int raduis) {
+		return getNearbyBlocks(getLocation(), raduis);
+	}
+	public List<Block> getNearbyBlocks(Location loc , int raduis) {
 		List<Block> circle = new ArrayList<>();
-		circle.add(getLocation().getBlock());
+		circle.add(loc.getBlock());
 		for(int i = 0 ; i < raduis ; i++)
-			circle.addAll(getCircle(getLocation(), i + 1));
+			circle.addAll(getCircle(loc, i + 1));
 		return circle;
 	}
 
