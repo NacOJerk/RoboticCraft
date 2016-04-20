@@ -11,6 +11,6 @@ public class ConfigManager {
 		return Configs.SPEED.getConfig().getDouble("HuntDelay");
 	}
 	public static double getFishTime(){
-		return Configs.SPEED.getConfig().getDouble("FishingTime");
+		return Configs.SPEED.getConfig().getDouble("FishingTime") * 20;
 	}
 }
