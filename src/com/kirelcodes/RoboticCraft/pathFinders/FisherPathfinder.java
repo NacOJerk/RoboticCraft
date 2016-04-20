@@ -6,6 +6,7 @@ import java.util.Random;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 
+import com.kirelcodes.RoboticCraft.configs.ConfigManager;
 import com.kirelcodes.RoboticCraft.robot.RobotFisher;
 import org.bukkit.Material;
 
@@ -13,7 +14,7 @@ public class FisherPathfinder extends BasicPathfinder {
 	private RobotFisher robot;
 	private Block target;
 	private int clock;
-
+	private double time = ConfigManager.getFishTime();
 	public FisherPathfinder(RobotFisher robot) {
 		this.robot = robot;
 	}
@@ -80,7 +81,7 @@ public class FisherPathfinder extends BasicPathfinder {
 		}
 		if(target.getLocation().distance(robot.getLocation()) > 4)
 			return;
-		if ((clock % 300) != 0)
+		if ((clock % time) != 0)
 			return;
 		Random rand = new Random();
 		short s = (short) rand.nextInt(3);

@@ -6,6 +6,7 @@
 # DrPiggy, xShakedDev   #
 #########################
 
-BlockMine: 1
-LogMine: 1
-HuntDelay: 1
+BlockMine: 1 # 1 second to break each block
+LogMine: 1 # 1 second to break each block
+HuntDelay: 1 # 1 second between hits
+FishingTime: 15 # 15 seconds per fish
