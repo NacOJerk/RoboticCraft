@@ -42,8 +42,8 @@ public class GUIRobotFisher extends GUIRobotBasic {
 		});
 		setRemovePos(3);
 		setChestPos(13);
-		getInventory().setItem(14, (robot.isFishing()) ? itemNoFish : itemFish);
 		setFollowPos(12);
+		getInventory().setItem(14, (robot.isFishing()) ? itemNoFish : itemFish);
 	}
 
 	public void Fish() {

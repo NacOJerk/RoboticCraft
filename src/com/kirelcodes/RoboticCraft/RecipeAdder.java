@@ -50,7 +50,7 @@ public class RecipeAdder {
 		new RobotItem(RobotFarmer.class, remoteFarmer, addRecipeFarmerRobot() , GUIRobotFarmer.class);
 		new RobotItem(RobotHunter.class, remoteHunter, addRecipeHunterRobot() , GUIRobotHunter.class);
 		new RobotItem(RobotLighter.class, remoteLighter, addRecipeLighterRobot() , GUIRobotLighter.class);
-		new RobotItem(RobotLumberjack.class, remoteLumberjack, addRecipeLumberjackRobot() , GUIRobotLumberjack.class);
+		//new RobotItem(RobotLumberjack.class, remoteLumberjack, addRecipeLumberjackRobot() , GUIRobotLumberjack.class);
 		new RobotItem(RobotMiner.class, remoteMiner, addRecipeMinerRobot() , GUIRobotMiner.class);
 		new RobotItem(RobotFisher.class, remoteFisher, addRecipeFisherRobot() , GUIRobotFisher.class);
 		new RobotItem(RobotCollector.class, remoteCollector, addRecipeCollectorRobot(), GUIRobotCollector.class);

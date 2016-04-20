@@ -45,8 +45,8 @@ public class GUIRobotBreeder extends GUIRobotBasic {
 		});
 		setRemovePos(3);
 		setChestPos(13);
-		getInventory().setItem(14, (robot.isBreading()) ? itemNoBreed : itemBreed);
 		setFollowPos(12);
+		getInventory().setItem(14, (robot.isBreading()) ? itemNoBreed : itemBreed);
 	}
 
 	public void Breed() {

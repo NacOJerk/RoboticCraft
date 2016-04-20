@@ -167,7 +167,7 @@ public class RobotBase implements InventoryHolder {
 		this.armorStand.setChestplate(new ItemStack(Material.IRON_CHESTPLATE));
 		this.armorStand.setMarker(true);
 		setFuel(100);
-		this.pathManager = new PathManager();
+		this.pathManager = new PathManager(this);
 		addPaths();
 		this.invetory = Bukkit.createInventory(this, 9 * 3, ChatColor.RED
 				+ "Robot's Inventory");
@@ -471,11 +471,11 @@ public class RobotBase implements InventoryHolder {
 						getInventory().getContents()[i]);
 		remove();
 	}
-	
+
 	@SuppressWarnings("deprecation")
-	public void guiDestroy(Player p){
-		for(ItemStack stack : getInventory().getContents())
-			if(stack!=null)
+	public void guiDestroy(Player p) {
+		for (ItemStack stack : getInventory().getContents())
+			if (stack != null)
 				p.getInventory().addItem(stack);
 		p.setItemInHand(NBTRobotId.clearNBT(p.getItemInHand()));
 		remove();
@@ -521,7 +521,22 @@ public class RobotBase implements InventoryHolder {
 	}
 
 	public HashMap<Integer, ItemStack> addItem(ItemStack... item) {
-		return getInventory().addItem(item);
+		HashMap<Integer, ItemStack> items = getInventory().addItem(item);
+		if (getFuel() != 100) {
+			for (ItemStack itemH : getInventory().getContents()) {
+				if(itemH == null)
+					continue;
+				if (itemH.getType() == Material.COAL_BLOCK) {
+					if(itemH.getAmount() == 1)
+						getInventory().remove(itemH);
+					else
+						itemH.setAmount(itemH.getAmount() - 1);
+					setFuel((getFuel() + 1) >= 100 ? 100 : getFuel() + 1);
+					break;
+				}
+			}
+		}
+		return items;
 	}
 
 	public static Chicken getSilentChicken(Location loc) throws Exception {
@@ -574,9 +589,15 @@ public class RobotBase implements InventoryHolder {
 					return false;
 			}
 		}
-		if(ResidenceApi.getResidenceManager().getByLoc(loc)!=null)
-			if(RoboticCraft.usingResidence())
-				if(!ResidenceApi.getPlayerManager().getResidenceList(Bukkit.getOfflinePlayer(owner).getName()).contains(ResidenceApi.getResidenceManager().getNameByLoc(loc)))
+		if (ResidenceApi.getResidenceManager().getByLoc(loc) != null)
+			if (RoboticCraft.usingResidence())
+				if (!ResidenceApi
+						.getPlayerManager()
+						.getResidenceList(
+								Bukkit.getOfflinePlayer(owner).getName())
+						.contains(
+								ResidenceApi.getResidenceManager()
+										.getNameByLoc(loc)))
 					return false;
 		return true;
 	}

@@ -5,15 +5,18 @@ import java.util.ArrayList;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import com.kirelcodes.RoboticCraft.RoboticCraft;
+import com.kirelcodes.RoboticCraft.robot.RobotBase;
 
 
 public class PathManager extends BukkitRunnable{
 	private ArrayList<BasicPathfinder> paths;
 	private ArrayList<BasicPathfinder> running;
-	public PathManager(){
+	private RobotBase robot;
+	public PathManager(RobotBase robot){
 		paths = new ArrayList<>();
 		running = new ArrayList<>();
 		runTaskTimer(RoboticCraft.getInstance(), 0L, 1L);
+		this.robot = robot;
 	}
 	public void addPath(BasicPathfinder path){
 		paths.add(path);
@@ -24,7 +27,10 @@ public class PathManager extends BukkitRunnable{
 	}
 	@Override
 	public void run() {
+		if(!robot.hasFuel())
+			return;
 		for(BasicPathfinder path : paths){
+			
 			if(!running.contains(path)){
 				if(path.shouldStart()){
 					running.add(path);

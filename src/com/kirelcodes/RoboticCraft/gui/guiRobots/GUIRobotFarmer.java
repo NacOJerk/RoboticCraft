@@ -68,8 +68,8 @@ public class GUIRobotFarmer extends GUIRobotBasic {
 		getInventory().setItem(4, pos1);
 		getInventory().setItem(22, pos2);
 		setChestPos(13);
-		getInventory().setItem(14, (robot.isFarming()) ? itemNoFarm : itemFarm);
 		setFollowPos(12);
+		getInventory().setItem(14, (robot.isFarming()) ? itemNoFarm : itemFarm);
 	}
 
 
