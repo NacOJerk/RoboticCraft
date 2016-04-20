@@ -45,14 +45,14 @@ public class NBTRobotId {
 		return (int) nbtTag.getClass().getMethod("getInt", String.class)
 				.invoke(nbtTag, "RobotID");
 	}
-	public static ItemStack setFuel(ItemStack item, int ID) throws Exception {
+	public static ItemStack setFuel(ItemStack item, int fuel) throws Exception {
 		Object nmsIS = asNMSCopy(item);
 		boolean hasNBTC = (boolean) nmsIS.getClass().getMethod("hasTag")
 				.invoke(nmsIS);
 		Object nbtTag = (hasNBTC) ? nmsIS.getClass().getMethod("getTag")
 				.invoke(nmsIS) : getNMS("NBTTagCompound").getConstructor()
 				.newInstance();
-		Object nbtInt = getNMS("NBTTagInt").getConstructor(int.class).newInstance(ID);
+		Object nbtInt = getNMS("NBTTagInt").getConstructor(int.class).newInstance(fuel);
 		nbtTag.getClass().getMethod("set", String.class, getNMS("NBTBase"))
 				.invoke(nbtTag, "RobotFuel", nbtInt);
 		nmsIS.getClass().getMethod("setTag", nbtTag.getClass())

@@ -56,6 +56,12 @@ public class RobotBase implements InventoryHolder {
 			.setLeftLeg(new EulerAngle(0, 0, 0))
 			.setRightHand(new EulerAngle(0, 0, 0))
 			.setRightLeg(new EulerAngle(0, 0, 0));
+	protected AnimationFrame off = new AnimationFrame()
+			.setBody(new EulerAngle(0, 0, 0)).setHead(new EulerAngle(1, 0, 0))
+			.setLeftHand(new EulerAngle(0, 0, 0))
+			.setLeftLeg(new EulerAngle(0, 0, 0))
+			.setRightHand(new EulerAngle(0, 0, 0))
+			.setRightLeg(new EulerAngle(0, 0, 0));
 	private Chicken chick;
 	private ArmorStand armorStand;
 	private boolean isStuck;
@@ -68,7 +74,7 @@ public class RobotBase implements InventoryHolder {
 	private Object nmsHandel;
 	private UUID owner;
 	protected PathManager pathManager;
-	private Location targetLocation, previus;
+	private Location targetLocation, previus, previusFuel;
 
 	/**
 	 * Responsible for the armor stand teleportation and target following
@@ -78,7 +84,7 @@ public class RobotBase implements InventoryHolder {
 	 */
 	public class RobotTask implements Runnable {
 		private int ID;
-
+		private int delay;
 		// private int mark; not needed
 		// private int stuckCalc;
 		// private Location previus;
@@ -87,16 +93,27 @@ public class RobotBase implements InventoryHolder {
 			this.ID = Bukkit.getScheduler().scheduleSyncRepeatingTask(
 					RoboticCraft.getInstance(), this, 0L, 1L);
 			// mark = 0;
+			delay = 0;
 		}
 
 		@Override
 		public void run() {
+			if((delay % 100) == 0){
+				goThroughInventory();
+			}
+			delay ++ ;
 			if (!hasFuel()) {
 				try {
 					setTargetLocation(getLocation());
 				} catch (Exception e) {
 					// Error thrower here
 				}
+			}
+			if (!hasFuel()) {
+				AnimationManager.walk.cancelTask(getArmorStand());
+				AnimationManager.mine.cancelTask(getArmorStand());
+				off.setLocations(getArmorStand());
+				return;
 			}
 			if (onTargetLocation()) {
 				AnimationManager.walk.cancelTask(getArmorStand());
@@ -105,6 +122,10 @@ public class RobotBase implements InventoryHolder {
 			if (previus.distanceSquared(getLocation()) < 1) {
 				AnimationManager.walk.cancelTask(getArmorStand());
 				deafult.setLocations(getArmorStand());
+			}
+			if (previusFuel.distanceSquared(getLocation()) >= 15) {
+				previusFuel = getLocation();
+				setFuel(getFuel() - 1);
 			}
 			getArmorStand().teleport(getLocation());
 			previus = getLocation();
@@ -178,6 +199,7 @@ public class RobotBase implements InventoryHolder {
 		getArmorStand().setCustomNameVisible(false);
 		this.previus = getLocation();
 		this.owner = owner;
+		this.previusFuel = getLocation();
 		if (!checkAllowed(loc))
 			remove();
 
@@ -335,39 +357,38 @@ public class RobotBase implements InventoryHolder {
 	public List<Block> getNearbyBlocks(int raduis) {
 		return getNearbyBlocks(getLocation(), raduis);
 	}
-	public List<Block> getNearbyBlocks(Location loc , int raduis) {
+
+	public List<Block> getNearbyBlocks(Location loc, int raduis) {
 		List<Block> circle = new ArrayList<>();
 		circle.add(loc.getBlock());
-		for(int i = 0 ; i < raduis ; i++)
+		for (int i = 0; i < raduis; i++)
 			circle.addAll(getCircle(loc, i + 1));
 		return circle;
 	}
 
-	public List<Block> getCircle(Location loc , int i ){
+	public List<Block> getCircle(Location loc, int i) {
 		List<Block> circle = new ArrayList<>();
 		Location relavtive = loc.clone();
 		relavtive.add(i, 0, i);
-		for(int x = 0; x < i * 2; x++){
+		for (int x = 0; x < i * 2; x++) {
 			relavtive.subtract(1, 0, 0);
 			circle.add(relavtive.getBlock());
 		}
-		for(int z = 0; z < i * 2; z++){
+		for (int z = 0; z < i * 2; z++) {
 			relavtive.subtract(0, 0, 1);
 			circle.add(relavtive.getBlock());
 		}
-		for(int x = 0; x < i * 2; x++){
+		for (int x = 0; x < i * 2; x++) {
 			relavtive.add(1, 0, 0);
 			circle.add(relavtive.getBlock());
 		}
-		for(int z = 0; z < i * 2; z++){
+		for (int z = 0; z < i * 2; z++) {
 			relavtive.add(0, 0, 1);
 			circle.add(relavtive.getBlock());
 		}
 		return circle;
 	}
-	
 
-	
 	/**
 	 * 
 	 * @return the navigator (Chicken)
@@ -479,7 +500,13 @@ public class RobotBase implements InventoryHolder {
 		for (ItemStack stack : getInventory().getContents())
 			if (stack != null)
 				p.getInventory().addItem(stack);
-		p.setItemInHand(NBTRobotId.clearNBT(p.getItemInHand()));
+		ItemStack item =p.getItemInHand();
+		p.setItemInHand(new ItemStack(Material.AIR));
+		try{
+			p.setItemInHand(NBTRobotId.setFuel(NBTRobotId.clearNBT(item), getFuel()));
+		}catch(Exception e){
+			
+		}
 		remove();
 	}
 
@@ -524,12 +551,16 @@ public class RobotBase implements InventoryHolder {
 
 	public HashMap<Integer, ItemStack> addItem(ItemStack... item) {
 		HashMap<Integer, ItemStack> items = getInventory().addItem(item);
+		goThroughInventory();
+		return items;
+	}
+	public void goThroughInventory(){
 		if (getFuel() != 100) {
 			for (ItemStack itemH : getInventory().getContents()) {
-				if(itemH == null)
+				if (itemH == null)
 					continue;
 				if (itemH.getType() == Material.COAL_BLOCK) {
-					if(itemH.getAmount() == 1)
+					if (itemH.getAmount() == 1)
 						getInventory().remove(itemH);
 					else
 						itemH.setAmount(itemH.getAmount() - 1);
@@ -538,9 +569,7 @@ public class RobotBase implements InventoryHolder {
 				}
 			}
 		}
-		return items;
 	}
-
 	public static Chicken getSilentChicken(Location loc) throws Exception {
 		Object nbtTAG = getNMS("NBTTagCompound").getConstructor().newInstance();
 		nbtTAG.getClass()
@@ -591,17 +620,17 @@ public class RobotBase implements InventoryHolder {
 					return false;
 			}
 		}
-		if(RoboticCraft.usingResidence()){
-		if (ResidenceApi.getResidenceManager().getByLoc(loc) != null)
-			if (RoboticCraft.usingResidence())
-				if (!ResidenceApi
-						.getPlayerManager()
-						.getResidenceList(
-								Bukkit.getOfflinePlayer(owner).getName())
-						.contains(
-								ResidenceApi.getResidenceManager()
-										.getNameByLoc(loc)))
-					return false;
+		if (RoboticCraft.usingResidence()) {
+			if (ResidenceApi.getResidenceManager().getByLoc(loc) != null)
+				if (RoboticCraft.usingResidence())
+					if (!ResidenceApi
+							.getPlayerManager()
+							.getResidenceList(
+									Bukkit.getOfflinePlayer(owner).getName())
+							.contains(
+									ResidenceApi.getResidenceManager()
+											.getNameByLoc(loc)))
+						return false;
 		}
 		return true;
 	}

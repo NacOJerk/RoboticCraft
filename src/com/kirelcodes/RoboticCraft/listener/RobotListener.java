@@ -1,5 +1,11 @@
 package com.kirelcodes.RoboticCraft.listener;
 
+import static com.kirelcodes.RoboticCraft.utils.NBTRobotId.getFuel;
+import static com.kirelcodes.RoboticCraft.utils.NBTRobotId.getID;
+import static com.kirelcodes.RoboticCraft.utils.NBTRobotId.hasFuel;
+import static com.kirelcodes.RoboticCraft.utils.NBTRobotId.hasID;
+import static com.kirelcodes.RoboticCraft.utils.NBTRobotId.setID;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -18,9 +24,8 @@ import com.kirelcodes.RoboticCraft.RobotItem;
 import com.kirelcodes.RoboticCraft.gui.GUIGet;
 import com.kirelcodes.RoboticCraft.robot.RobotBase;
 import com.kirelcodes.RoboticCraft.robot.RobotCenter;
+import com.kirelcodes.RoboticCraft.utils.NBTRobotId;
 import com.kirelcodes.RoboticCraft.utils.NMSClassInteracter;
-
-import static com.kirelcodes.RoboticCraft.utils.NBTRobotId.*;
 
 public class RobotListener implements Listener {
 	public RobotListener(Plugin p) {
@@ -33,18 +38,19 @@ public class RobotListener implements Listener {
 		if (NMSClassInteracter.getVersion().contains("8"))
 			return;
 		if (e.getPlayer().getItemInHand().getType() == Material.END_CRYSTAL) {
-			if(e.getPlayer().getItemInHand() == null)
+			if (e.getPlayer().getItemInHand() == null)
 				return;
-			if(!e.getPlayer().getItemInHand().hasItemMeta())
+			if (!e.getPlayer().getItemInHand().hasItemMeta())
 				return;
-			if(!e.getPlayer().getItemInHand().getItemMeta().hasDisplayName())
+			if (!e.getPlayer().getItemInHand().getItemMeta().hasDisplayName())
 				return;
-			if (e.getPlayer().getItemInHand().getItemMeta().getDisplayName().contains("§cRemote Control")) {
+			if (e.getPlayer().getItemInHand().getItemMeta().getDisplayName()
+					.contains("§cRemote Control")) {
 				e.setCancelled(true);
 			}
 		}
 	}
-	
+
 	@EventHandler
 	public void intaractAtArmor(PlayerArmorStandManipulateEvent e) {
 
@@ -64,12 +70,18 @@ public class RobotListener implements Listener {
 		try {
 			if (hasID(item))
 				return;
+			ItemStack itemC = item;
+			item = NBTRobotId.clearNBT(item);
 			RobotBase robot = RobotItem.getRobot(item, e.getPlayer());
+			if (hasFuel(itemC)) {
+				robot.setFuel(getFuel(itemC));
+			}
 			ItemStack cloneItem = e.getItem();
-			e.getPlayer().getInventory().remove(item);
+			e.getPlayer().getInventory().remove(itemC);
 			cloneItem = setID(cloneItem, robot.getID());
 			e.getPlayer().getInventory().addItem(cloneItem);
 			e.getPlayer().updateInventory();
+
 		} catch (Exception e1) {
 			e1.printStackTrace();
 			return;
@@ -87,7 +99,7 @@ public class RobotListener implements Listener {
 			if (!hasID(item))
 				return;
 			int ID = getID(item);
-			if(!RobotCenter.exists(ID))
+			if (!RobotCenter.exists(ID))
 				return;
 			GUIGet.getGUI(RobotCenter.getRobot(ID)).openGUI(e.getPlayer());
 		} catch (Exception e1) {
@@ -96,18 +108,19 @@ public class RobotListener implements Listener {
 	}
 
 	@EventHandler
-	public void onChunckLoad(ChunkLoadEvent e){
-		for(Entity en : e.getChunk().getEntities()){
-			if(!(en instanceof ArmorStand))
+	public void onChunckLoad(ChunkLoadEvent e) {
+		for (Entity en : e.getChunk().getEntities()) {
+			if (!(en instanceof ArmorStand))
 				continue;
 			ArmorStand armor = (ArmorStand) en;
-			if(armor.isCustomNameVisible())
+			if (armor.isCustomNameVisible())
 				continue;
-			if(armor.getCustomName() == null)
+			if (armor.getCustomName() == null)
 				continue;
-			if(!ChatColor.stripColor(armor.getCustomName()).startsWith("{NacOSearilize"))
+			if (!ChatColor.stripColor(armor.getCustomName()).startsWith(
+					"{NacOSearilize"))
 				continue;
-			if(armor.getLocation().getBlock().getType() != Material.CHEST)
+			if (armor.getLocation().getBlock().getType() != Material.CHEST)
 				continue;
 			Chest chest = (Chest) armor.getLocation().getBlock().getState();
 			try {
