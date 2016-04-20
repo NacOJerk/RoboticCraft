@@ -332,40 +332,39 @@ public class RobotBase implements InventoryHolder {
 	 * @param raduis
 	 * @return
 	 */
-	public List<Block> getNearbyBlocks(int radius) {
-		ArrayList<Block> blocks = new ArrayList<>();
-		for (int x = getLocation().getBlockX() - radius; x < getLocation()
-				.getX() + radius; x++) {
-			for (int y = getLocation().getBlockY() - radius; y < getLocation()
-					.getY() + radius; y++) {
-				for (int z = getLocation().getBlockZ() - radius; z < getLocation()
-						.getZ() + radius; z++) {
-					blocks.add(getLocation().getWorld().getBlockAt(x, y, z));
-				}
-			}
-		}
-		return blocks;
+	public List<Block> getNearbyBlocks(int raduis) {
+		List<Block> circle = new ArrayList<>();
+		circle.add(getLocation().getBlock());
+		for(int i = 0 ; i < raduis ; i++)
+			circle.addAll(getCircle(getLocation(), i + 1));
+		return circle;
 	}
 
-	public List<Location> orderDistance(List<Location> locations) {
-		Location target = getLocation();
-		int size = locations.size();
-		List<Location> ordered = new ArrayList<>();
-		while (ordered.size() < size) {
-			Location closest = locations.get(0);
-			double closestDist = closest.distance(target);
-			for (Location loc : locations) {
-				if (loc.distance(target) < closestDist) {
-					closestDist = loc.distance(target);
-					closest = loc;
-				}
-			}
-			ordered.add(closest);
-			locations.remove(closest);
+	public List<Block> getCircle(Location loc , int i ){
+		List<Block> circle = new ArrayList<>();
+		Location relavtive = loc.clone();
+		relavtive.add(i, 0, i);
+		for(int x = 0; x < i * 2; x++){
+			relavtive.subtract(1, 0, 0);
+			circle.add(relavtive.getBlock());
 		}
-		return ordered;
+		for(int z = 0; z < i * 2; z++){
+			relavtive.subtract(0, 0, 1);
+			circle.add(relavtive.getBlock());
+		}
+		for(int x = 0; x < i * 2; x++){
+			relavtive.add(1, 0, 0);
+			circle.add(relavtive.getBlock());
+		}
+		for(int z = 0; z < i * 2; z++){
+			relavtive.add(0, 0, 1);
+			circle.add(relavtive.getBlock());
+		}
+		return circle;
 	}
+	
 
+	
 	/**
 	 * 
 	 * @return the navigator (Chicken)
