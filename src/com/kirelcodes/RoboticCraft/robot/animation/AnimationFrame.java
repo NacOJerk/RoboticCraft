@@ -5,16 +5,8 @@ import org.bukkit.util.EulerAngle;
 
 public class AnimationFrame {
 	private EulerAngle head , body ,leftHand , rightHand , leftLeg, rightLeg;
-	private ArmorStand armor;
-	public AnimationFrame(ArmorStand armor){
-		this.armor = armor;
-	}
 	public AnimationFrame(){
 	
-	}
-	public AnimationFrame setArmorStand(ArmorStand armor){
-		this.armor = armor;
-		return this;
 	}
 	public AnimationFrame setHead(EulerAngle head){
 		this.head = head;
@@ -40,9 +32,6 @@ public class AnimationFrame {
 		this.rightHand = rightLeg;
 		return this;
 	}
-	public ArmorStand getArmorStand(){
-		return armor;
-	}
 	public EulerAngle getHead(){
 		return head;
 	}
@@ -60,5 +49,13 @@ public class AnimationFrame {
 	}
 	public EulerAngle getRightLeg(){
 		return rightLeg;
+	}
+	public void setLocations(ArmorStand armor){
+		armor.setHeadPose((getHead() == null) ? armor.getHeadPose() : getHead());
+		armor.setBodyPose((getBody() == null) ? armor.getBodyPose() : getBody());
+		armor.setLeftArmPose((getLeftHand() == null) ? armor.getLeftArmPose() : getLeftHand());
+		armor.setRightArmPose((getRightHand() == null) ? armor.getRightArmPose() : getRightHand());
+		armor.setLeftLegPose((getLeftLeg() == null) ? armor.getLeftLegPose() : getLeftLeg());
+		armor.setRightLegPose((getRightLeg() == null) ? armor.getRightLegPose() : getRightLeg());
 	}
 }	
