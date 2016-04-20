@@ -5,6 +5,13 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 
+import com.kirelcodes.RoboticCraft.gui.guiRobots.GUIRobotBasic;
+import com.kirelcodes.RoboticCraft.gui.guiRobots.GUIRobotFarmer;
+import com.kirelcodes.RoboticCraft.gui.guiRobots.GUIRobotFisher;
+import com.kirelcodes.RoboticCraft.gui.guiRobots.GUIRobotHunter;
+import com.kirelcodes.RoboticCraft.gui.guiRobots.GUIRobotLighter;
+import com.kirelcodes.RoboticCraft.gui.guiRobots.GUIRobotLumberjack;
+import com.kirelcodes.RoboticCraft.gui.guiRobots.GUIRobotMiner;
 import com.kirelcodes.RoboticCraft.robot.RobotBase;
 import com.kirelcodes.RoboticCraft.robot.RobotFarmer;
 import com.kirelcodes.RoboticCraft.robot.RobotFisher;
@@ -17,17 +24,18 @@ import com.kirelcodes.RoboticCraft.utils.NMSClassInteracter;
 
 public class RecipeAdder {
 	private static ItemStack remoteBase, remoteFarmer, remoteHunter,
-			remoteLighter, remoteLumberjack, remoteMiner , remoteFisher , remoteBreeder;
+			remoteLighter, remoteLumberjack, remoteMiner , remoteFisher , remoteBreeder , remoteCollector;
 	
 	public static void addAll(){
 		initializeItem();
-		new RobotItem(RobotBase.class, remoteBase, addRecipeBasicRobot());
-		new RobotItem(RobotFarmer.class, remoteFarmer, addRecipeFarmerRobot());
-		new RobotItem(RobotHunter.class, remoteHunter, addRecipeHunterRobot());
-		new RobotItem(RobotLighter.class, remoteLighter, addRecipeLighterRobot());
-		new RobotItem(RobotLumberjack.class, remoteLumberjack, addRecipeLumberjackRobot());
-		new RobotItem(RobotMiner.class, remoteMiner, addRecipeMinerRobot());
-		new RobotItem(RobotFisher.class, remoteFisher, addRecipeFisherRobot());
+		new RobotItem(RobotBase.class, remoteBase, addRecipeBasicRobot() , GUIRobotBasic.class);
+		new RobotItem(RobotFarmer.class, remoteFarmer, addRecipeFarmerRobot() , GUIRobotFarmer.class);
+		new RobotItem(RobotHunter.class, remoteHunter, addRecipeHunterRobot() , GUIRobotHunter.class);
+		new RobotItem(RobotLighter.class, remoteLighter, addRecipeLighterRobot() , GUIRobotLighter.class);
+		new RobotItem(RobotLumberjack.class, remoteLumberjack, addRecipeLumberjackRobot() , GUIRobotLumberjack.class);
+		new RobotItem(RobotMiner.class, remoteMiner, addRecipeMinerRobot() , GUIRobotMiner.class);
+		new RobotItem(RobotFisher.class, remoteFisher, addRecipeFisherRobot() , GUIRobotFisher.class);
+	//	new RobotItem(RobotCollector.class, remoteCollector, addRecipeCollectorRobot());
 	}
 		
 	public static void initializeItem(){
@@ -44,6 +52,7 @@ public class RecipeAdder {
 		remoteMiner = ItemStackUtils.createItem(m, "&cRemote Control Miner", ChatColor.AQUA + "Remote for the miner robot");
 		remoteFisher = ItemStackUtils.createItem(m, "&cRemote Control Fisher", ChatColor.AQUA + "Remote for the fisher robot");
 		remoteBreeder = ItemStackUtils.createItem(m, "&cRemote Control Breeder", ChatColor.AQUA + "Remote for the breeder robot");
+		remoteCollector = ItemStackUtils.createItem(m, "&cRemote Control Collector", ChatColor.AQUA + "Remote for the collector robot");
 	}
 	
 	public static ShapedRecipe addRecipeBasicRobot() {
@@ -109,5 +118,13 @@ public class RecipeAdder {
 				.setIngredient('S', Material.ARMOR_STAND)
 				.setIngredient('G', Material.GOLD_BLOCK)
 				.setIngredient('A', Material.WHEAT);
+	}
+	public static ShapedRecipe addRecipeCollectorRobot() {
+		return new ShapedRecipe(remoteCollector)
+				.shape("GAG", "DSD", "DDD")
+				.setIngredient('D', Material.DIAMOND_BLOCK)
+				.setIngredient('S', Material.ARMOR_STAND)
+				.setIngredient('G', Material.GOLD_BLOCK)
+				.setIngredient('A', Material.HOPPER);
 	}
 }

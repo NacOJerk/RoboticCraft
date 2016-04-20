@@ -55,8 +55,10 @@ public class LumberjackPathfinder extends BasicPathfinder {
 
 	@Override
 	public void updateTask() {
-		List<Block> blocks = new ArrayList<Block>();
-		if (target == null) {
+		List<Block> blocks = new ArrayList<>();
+		if(target == null)
+			blocks = robot.getNearbyBlocks(10);
+		/*if (target == null) {
 			int radius = 10;
 			for (int x = robot.getLocation().getBlockX() - radius; x < robot
 					.getLocation().getX() + radius; x++) {
@@ -69,7 +71,7 @@ public class LumberjackPathfinder extends BasicPathfinder {
 					}
 				}
 			}
-		}
+		}*/
 		for (Block b : blocks) {
 			if (b == null)
 				continue;

@@ -13,8 +13,8 @@ import com.kirelcodes.RoboticCraft.utils.ItemStackUtils;
 
 public class GUIRobotBasic extends GUI {
 	private RobotBase robot;
-	private ItemStack itemFollow, itemNoFollow, Destroy;
-
+	private ItemStack itemFollow, itemNoFollow, Destroy, openInventory;
+	private int chestPos , followPos , destroyPos;
 	public GUIRobotBasic(RobotBase robot) {
 		setSize(27);
 		setTitle("&cBasic Robot GUI");
@@ -23,6 +23,18 @@ public class GUIRobotBasic extends GUI {
 		Destroy = ItemStackUtils.createItem(Material.BARRIER, "&cDESTROY ROBOT");
 		itemFollow = ItemStackUtils.createItem(Material.COMPASS, "&aFollow");
 		itemNoFollow = ItemStackUtils.createItem(Material.COMPASS, "&cStop Follow");
+		openInventory = ItemStackUtils.createItem(Material.CHEST, "&cOpen Robot's Inventory");
+		chestPos = 14;
+		followPos = 12;
+		destroyPos = 3;
+		gettGUIAction().add(new GUIAction(openInventory) {
+
+			@Override
+			public void actionNow(GUI gui, Player player) {
+				player.closeInventory();
+				player.openInventory(((GUIRobotBasic) gui).getRobot().getInventory());
+			}
+		});
 		gettGUIAction().add(new GUIAction(itemFollow) {
 
 			@Override
@@ -44,35 +56,58 @@ public class GUIRobotBasic extends GUI {
 				((GUIRobotBasic) gui).noFollow(player);
 			}
 		});
+		ItemStack item = ItemStackUtils.createItem(Material.STAINED_GLASS_PANE, 0,
+				ChatColor.BLACK + "DONT CLICK ME");
+		gettGUIAction().add(new GUIAction(item) {
+
+			@Override
+			public void actionNow(GUI gui, Player player) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 		for (int i = 0; i < 27; i++) {
-			ItemStack item = ItemStackUtils.createItem(Material.STAINED_GLASS_PANE, 0,
-					ChatColor.BLACK + "DONT CLICK ME");
 			getInventory().setItem(i, item);
-			gettGUIAction().add(new GUIAction(item) {
-
-				@Override
-				public void actionNow(GUI gui, Player player) {
-					// TODO Auto-generated method stub
-
-				}
-			});
 		}
-		getInventory().setItem(12, Destroy);
-		getInventory().setItem(13, (robot.isFollowing()) ? itemNoFollow : itemFollow);
+		getInventory().setItem(chestPos, openInventory);
+		getInventory().setItem(destroyPos, Destroy);
+		getInventory().setItem(followPos, (robot.isFollowing()) ? itemNoFollow : itemFollow);
 	}
 
+	protected void setChestPos(int i){
+		ItemStack item = ItemStackUtils.createItem(Material.STAINED_GLASS_PANE, 0,
+				ChatColor.BLACK + "DONT CLICK ME");
+		getInventory().setItem(chestPos, item);
+		this.chestPos = i;
+		getInventory().setItem(chestPos, openInventory);
+	}
+	
+	protected void setRemovePos(int i){
+		ItemStack item = ItemStackUtils.createItem(Material.STAINED_GLASS_PANE, 0,
+				ChatColor.BLACK + "DONT CLICK ME");
+		getInventory().setItem(destroyPos, item);
+		this.destroyPos = i;
+		getInventory().setItem(destroyPos, Destroy);
+	}
+	
+	public void setFollowPos(int i){
+		ItemStack item = ItemStackUtils.createItem(Material.STAINED_GLASS_PANE, 0,
+				ChatColor.BLACK + "DONT CLICK ME");
+		getInventory().setItem(followPos, item);
+		this.destroyPos = i;
+		getInventory().setItem(followPos, (robot.isFollowing()) ? itemNoFollow : itemFollow);
+	}
 	protected RobotBase getRobot() {
-		// TODO Auto-generated method stub
 		return robot;
 	}
 
 	public void follow(Entity p) {
 		robot.setFollow(p);
-		getInventory().setItem(13, itemNoFollow);
+		getInventory().setItem(followPos, itemNoFollow);
 	}
 
 	public void noFollow(Entity p) {
 		robot.cancelFollow();
-		getInventory().setItem(13, itemFollow);
+		getInventory().setItem(followPos, itemFollow);
 	}
 }

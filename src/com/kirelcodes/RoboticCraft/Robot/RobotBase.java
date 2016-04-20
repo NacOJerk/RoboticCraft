@@ -5,6 +5,7 @@ import static com.kirelcodes.RoboticCraft.utils.NMSClassInteracter.getField;
 import static com.kirelcodes.RoboticCraft.utils.NMSClassInteracter.getNMS;
 import static com.kirelcodes.RoboticCraft.utils.NMSClassInteracter.getVersion;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -16,6 +17,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Chicken;
@@ -284,7 +286,23 @@ public class RobotBase implements InventoryHolder {
 				.invoke(navagation, 2.0D);
 		return true;
 	}
-
+	/**
+	 * Get blocks in a nearby radius
+	 * @param raduis
+	 * @return
+	 */
+	public List<Block> getNearbyBlocks(int radius){
+		ArrayList<Block> blocks = new ArrayList<>();
+		for(int x = 0 ; x <= radius ; x++){
+			for(int z = 0 ; z <= radius ; z++){
+				for(int y = 0 ; y<= radius; y++){
+					blocks.add(getLocation().getWorld().getBlockAt(getLocation().getBlockX() + x, getLocation().getBlockY() + y, getLocation().getBlockZ() + z));
+					blocks.add(getLocation().getWorld().getBlockAt(getLocation().getBlockX() - x, getLocation().getBlockY() - y, getLocation().getBlockZ() - z));
+				}
+			}
+		}
+		return blocks;
+	}
 	/**
 	 * 
 	 * @return the navigator (Chicken)

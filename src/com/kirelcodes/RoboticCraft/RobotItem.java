@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 
+import com.kirelcodes.RoboticCraft.gui.GUI;
 import com.kirelcodes.RoboticCraft.robot.RobotBase;
 import com.kirelcodes.RoboticCraft.utils.ItemStackUtils;
 
@@ -16,14 +17,16 @@ public class RobotItem {
 	private Class<? extends RobotBase> robotClass;
 	private ItemStack item;
 	private Recipe recipe;
+	private Class<? extends GUI> gui;
 
 	public RobotItem(Class<? extends RobotBase> robotClass, ItemStack item,
-			Recipe recipe) {
+			Recipe recipe , Class<? extends GUI> gui) {
 		this.robotClass = robotClass;
 		this.item = item;
 		this.recipe = recipe;
 		Bukkit.addRecipe(getRecipe());
 		robotItems.add(this);
+		this.gui = gui;
 	}
 	public Class<? extends RobotBase> getRobotClass(){
 		return robotClass;
@@ -34,7 +37,16 @@ public class RobotItem {
 	public Recipe getRecipe(){
 		return recipe;
 	}
-	
+	public Class<? extends GUI> getGUI(){
+		return gui;
+	}
+	public static GUI getGUI(RobotBase robot) throws Exception{
+		for(RobotItem robotItem : robotItems){
+			if(robotItem.getRobotClass().getName().equalsIgnoreCase(robot.getClass().getName()))
+				return robotItem.getGUI().getConstructor(robotItem.getRobotClass()).newInstance(robot);
+		}
+		return null;
+	}
 	public static ItemStack getItem(Class<? extends RobotBase> clazz){
 		for(RobotItem robotItem : robotItems){
 			if(robotItem.getRobotClass().getName().equalsIgnoreCase(clazz.getName()))
