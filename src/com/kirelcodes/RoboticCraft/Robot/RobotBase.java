@@ -589,6 +589,7 @@ public class RobotBase implements InventoryHolder {
 					return false;
 			}
 		}
+		if(RoboticCraft.usingResidence()){
 		if (ResidenceApi.getResidenceManager().getByLoc(loc) != null)
 			if (RoboticCraft.usingResidence())
 				if (!ResidenceApi
@@ -599,6 +600,7 @@ public class RobotBase implements InventoryHolder {
 								ResidenceApi.getResidenceManager()
 										.getNameByLoc(loc)))
 					return false;
+		}
 		return true;
 	}
 }

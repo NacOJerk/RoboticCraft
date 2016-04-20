@@ -71,6 +71,7 @@ public class RobotListener implements Listener {
 			e.getPlayer().getInventory().addItem(cloneItem);
 			e.getPlayer().updateInventory();
 		} catch (Exception e1) {
+			e1.printStackTrace();
 			return;
 		}
 	}
