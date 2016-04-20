@@ -12,6 +12,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import com.kirelcodes.RoboticCraft.RoboticCraft;
+import com.kirelcodes.RoboticCraft.configs.ConfigManager;
 import com.kirelcodes.RoboticCraft.pathFinders.MinerPathfinder;
 import com.kirelcodes.RoboticCraft.utils.BlockUtils;
 import com.kirelcodes.RoboticCraft.utils.ItemStackUtils;
@@ -72,7 +73,7 @@ public class RobotMiner extends RobotBase {
 				loc2.getBlock().setType(Material.AIR);
 				setOnDelay(false);
 			}
-		}.runTaskLater(RoboticCraft.getInstance(), (ee ? 1: (long) (BlockUtils.getMineTime(loc.getBlock())*35)));
+		}.runTaskLater(RoboticCraft.getInstance(), (ee ? 1: (long) (BlockUtils.getMineTime(loc.getBlock())*35 * ConfigManager.getMineSpeed())));
 	}
 	
 	public boolean isMining(){

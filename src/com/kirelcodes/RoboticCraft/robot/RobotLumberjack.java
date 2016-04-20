@@ -10,6 +10,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import com.kirelcodes.RoboticCraft.RoboticCraft;
+import com.kirelcodes.RoboticCraft.configs.ConfigManager;
 import com.kirelcodes.RoboticCraft.pathFinders.LumberjackPathfinder;
 
 public class RobotLumberjack extends RobotBase {
@@ -36,7 +37,7 @@ public class RobotLumberjack extends RobotBase {
 				b2.setType(Material.AIR);
 				setOnDelay(false);
 			}
-		}.runTaskLater(RoboticCraft.getInstance(), (long) 18);
+		}.runTaskLater(RoboticCraft.getInstance(), (long) (18 * ConfigManager.getLogSpeed()));
 	}
 
 	public void setOnDelay(boolean onDelay) {
