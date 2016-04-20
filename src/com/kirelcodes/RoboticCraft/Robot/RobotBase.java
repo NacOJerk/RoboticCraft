@@ -574,11 +574,10 @@ public class RobotBase implements InventoryHolder {
 					return false;
 			}
 		}
-		if(RoboticCraft.usingResidence()){
-			if(ResidenceApi.getPlayerManager().getResidenceList(Bukkit.getOfflinePlayer(owner).getName()).contains(ResidenceApi.getResidenceManager().getNameByLoc(loc))){
-				
-			}
-		}
+		if(ResidenceApi.getResidenceManager().getByLoc(loc)!=null)
+			if(RoboticCraft.usingResidence())
+				if(!ResidenceApi.getPlayerManager().getResidenceList(Bukkit.getOfflinePlayer(owner).getName()).contains(ResidenceApi.getResidenceManager().getNameByLoc(loc)))
+					return false;
 		return true;
 	}
 }

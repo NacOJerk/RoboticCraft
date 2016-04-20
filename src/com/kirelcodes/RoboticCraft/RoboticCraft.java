@@ -27,7 +27,6 @@ public class RoboticCraft extends JavaPlugin {
 	private static WorldGuardPlugin worldGuard;
 	private static boolean usingFactions = false;
 	private static boolean usingResidence = false;
-	private static ResidenceApi residence;
 	
 	@Override
 	public void onEnable() {
@@ -48,7 +47,7 @@ public class RoboticCraft extends JavaPlugin {
 		//Factions
 		setupFactions();
 		//Residence
-		residence = setupResidence();
+		setupResidence();
 		
 		RobotCenter.getID();
 		for (World w : getServer().getWorlds()) {
@@ -136,10 +135,6 @@ public class RoboticCraft extends JavaPlugin {
 
 	public static WorldGuardPlugin getWorldGuard() {
 		return worldGuard;
-	}
-	
-	public static ResidenceApi getResidence() {
-		return residence;
 	}
 
 }
