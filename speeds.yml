@@ -5,8 +5,11 @@
 # Authors: NacoJerk,    #
 # DrPiggy, xShakedDev   #
 #########################
-
-BlockMine: 1 # 1 second to break each block
-LogMine: 1 # 1 second to break each block
-HuntDelay: 1 # 1 second between hits
-FishingTime: 15 # 15 seconds per fish
+#Takes the default time and multiply it by your field
+BlockMine: 1
+#Same as above
+LogMine: 1
+#Same as above
+HuntDelay: 1
+#The amount of time it takes before the robot gets a fish (In seconds)
+FishingTime: 15

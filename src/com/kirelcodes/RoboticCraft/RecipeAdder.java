@@ -40,9 +40,9 @@ public class RecipeAdder {
 		new RobotItem(RobotLighter.class, remoteLighter,
 				addRecipeLighterRobot(), GUIRobotLighter.class)
 				.setPermission("RoboticCraft.RobotLighter");
-		new RobotItem(RobotLumberjack.class, remoteLumberjack,
+		/*new RobotItem(RobotLumberjack.class, remoteLumberjack,
 				addRecipeLumberjackRobot(), GUIRobotLumberjack.class)
-				.setPermission("RoboticCraft.RobotLumberjack");
+				.setPermission("RoboticCraft.RobotLumberjack");*/
 		new RobotItem(RobotMiner.class, remoteMiner, addRecipeMinerRobot(),
 				GUIRobotMiner.class).setPermission("RoboticCraft.RobotMiner");
 		;
