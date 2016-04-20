@@ -47,7 +47,7 @@ public class GUIRobotBasic extends GUI {
 
 			@Override
 			public void actionNow(GUI gui, Player player) {
-				((GUIRobotBasic) gui).getRobot().destroy();
+				((GUIRobotBasic) gui).getRobot().guiDestroy(player);
 			}
 		});
 		gettGUIAction().add(new GUIAction(itemNoFollow) {

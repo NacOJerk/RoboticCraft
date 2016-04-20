@@ -36,6 +36,7 @@ import com.kirelcodes.RoboticCraft.pathFinders.RandomStrollPathfinder;
 import com.kirelcodes.RoboticCraft.robot.animation.AnimationFrame;
 import com.kirelcodes.RoboticCraft.robot.animation.AnimationManager;
 import com.kirelcodes.RoboticCraft.utils.ItemStackUtils;
+import com.kirelcodes.RoboticCraft.utils.NBTRobotId;
 import com.massivecraft.factions.entity.BoardColl;
 import com.massivecraft.factions.entity.Faction;
 import com.massivecraft.factions.entity.FactionColl;
@@ -467,6 +468,17 @@ public class RobotBase implements InventoryHolder {
 			if (getInventory().getContents()[i] != null)
 				chesty.getBlockInventory().addItem(
 						getInventory().getContents()[i]);
+		remove();
+	}
+	
+	@SuppressWarnings("deprecation")
+	public void guiDestroy(Player p){
+		List<ItemStack> add = new ArrayList<>();
+		for(ItemStack stack : getInventory().getContents())
+			if(stack!=null)
+				add.add(stack);
+		p.getInventory().addItem((ItemStack[]) add.toArray());
+		p.setItemInHand(NBTRobotId.clearNBT(p.getItemInHand()));
 		remove();
 	}
 
