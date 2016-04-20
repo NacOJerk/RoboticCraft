@@ -3,7 +3,6 @@ package com.kirelcodes.RoboticCraft.pathFinders;
 import java.util.ArrayList;
 
 import org.bukkit.Location;
-import org.bukkit.entity.Chicken;
 import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Ocelot;
@@ -40,6 +39,7 @@ public class HunterPathfinder extends BasicPathfinder {
 	public void onStart() {
 		this.attackTimer = 0;
 	}
+
 	@Override
 	public void updateTask() {
 		boolean found = false;
@@ -50,8 +50,11 @@ public class HunterPathfinder extends BasicPathfinder {
 			if (nearby.isEmpty())
 				return;
 			for (Entity e : nearby) {
-				if (e instanceof Player || e instanceof Wolf
-						|| e instanceof Ocelot || e.equals(robot.getNavigator()) || e.equals(robot.getArmorStand()) || e instanceof Chicken)
+				if (e instanceof Player
+						|| e instanceof Wolf
+						|| e instanceof Ocelot
+						|| e.equals(robot.getNavigator())
+						|| e.equals(robot.getArmorStand()) || e.getCustomName() != null)
 					continue;
 				if (e instanceof Damageable) {
 					target = e;
@@ -59,10 +62,12 @@ public class HunterPathfinder extends BasicPathfinder {
 					break;
 				}
 			}
-			if(!found){
+			if (!found) {
 				try {
 					this.robot.setTargetLocation(startBlock);
-				} catch (Exception e) {	this.robot.setHunting(false); }
+				} catch (Exception e) {
+					this.robot.setHunting(false);
+				}
 			}
 		}
 		if (target == null)
@@ -82,11 +87,13 @@ public class HunterPathfinder extends BasicPathfinder {
 			if (((Damageable) this.target).getHealth() <= 7)
 				attackTimer = 0;
 			/*
-			((Damageable) this.target).setHealth(((((Damageable) this.target)
-					.getHealth() - 7) <= 0) ? 0 : ((Damageable) this.target)
-					.getHealth() - 7);*/
-			((Damageable) this.target).damage(7 , robot.getNavigator());
-			if(((Damageable) this.target).getHealth() == 0 || ((Damageable) this.target).isDead()){
+			 * ((Damageable) this.target).setHealth(((((Damageable) this.target)
+			 * .getHealth() - 7) <= 0) ? 0 : ((Damageable) this.target)
+			 * .getHealth() - 7);
+			 */
+			((Damageable) this.target).damage(7, robot.getNavigator());
+			if (((Damageable) this.target).getHealth() == 0
+					|| ((Damageable) this.target).isDead()) {
 				target = null;
 			}
 		}
