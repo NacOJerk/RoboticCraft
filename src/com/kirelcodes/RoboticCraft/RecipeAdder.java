@@ -32,28 +32,27 @@ public class RecipeAdder {
 	public static void addAll() {
 		initializeItem();
 		new RobotItem(RobotBase.class, remoteBase, addRecipeBasicRobot(),
-				GUIRobotBasic.class);
+				GUIRobotBasic.class).setPermission("RoboticCraft.RobotBase");
 		new RobotItem(RobotFarmer.class, remoteFarmer, addRecipeFarmerRobot(),
-				GUIRobotFarmer.class);
+				GUIRobotFarmer.class).setPermission("RoboticCraft.RobotFarmer");
 		new RobotItem(RobotHunter.class, remoteHunter, addRecipeHunterRobot(),
-				GUIRobotHunter.class);
+				GUIRobotHunter.class).setPermission("RoboticCraft.RobotHunter");
 		new RobotItem(RobotLighter.class, remoteLighter,
-				addRecipeLighterRobot(), GUIRobotLighter.class);
+				addRecipeLighterRobot(), GUIRobotLighter.class)
+				.setPermission("RoboticCraft.RobotLighter");
 		new RobotItem(RobotLumberjack.class, remoteLumberjack,
-				addRecipeLumberjackRobot(), GUIRobotLumberjack.class);
+				addRecipeLumberjackRobot(), GUIRobotLumberjack.class)
+				.setPermission("RoboticCraft.RobotLumberjack");
 		new RobotItem(RobotMiner.class, remoteMiner, addRecipeMinerRobot(),
-				GUIRobotMiner.class);
+				GUIRobotMiner.class).setPermission("RoboticCraft.RobotMiner");
+		;
 		new RobotItem(RobotFisher.class, remoteFisher, addRecipeFisherRobot(),
-				GUIRobotFisher.class);
-		// new RobotItem(RobotCollector.class, remoteCollector, addRecipeCollectorRobot(), GUIRobotCollector.class);
-		new RobotItem(RobotBase.class, remoteBase, addRecipeBasicRobot() , GUIRobotBasic.class);
-		new RobotItem(RobotFarmer.class, remoteFarmer, addRecipeFarmerRobot() , GUIRobotFarmer.class);
-		new RobotItem(RobotHunter.class, remoteHunter, addRecipeHunterRobot() , GUIRobotHunter.class);
-		new RobotItem(RobotLighter.class, remoteLighter, addRecipeLighterRobot() , GUIRobotLighter.class);
-		//new RobotItem(RobotLumberjack.class, remoteLumberjack, addRecipeLumberjackRobot() , GUIRobotLumberjack.class);
-		new RobotItem(RobotMiner.class, remoteMiner, addRecipeMinerRobot() , GUIRobotMiner.class);
-		new RobotItem(RobotFisher.class, remoteFisher, addRecipeFisherRobot() , GUIRobotFisher.class);
-		new RobotItem(RobotCollector.class, remoteCollector, addRecipeCollectorRobot(), GUIRobotCollector.class);
+				GUIRobotFisher.class).setPermission("RoboticCraft.RobotFisher");
+		;
+		new RobotItem(RobotCollector.class, remoteCollector,
+				addRecipeCollectorRobot(), GUIRobotCollector.class)
+				.setPermission("RoboticCraft.Collector");
+		;
 	}
 
 	public static void initializeItem() {

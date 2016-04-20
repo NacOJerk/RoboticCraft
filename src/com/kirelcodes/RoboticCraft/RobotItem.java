@@ -19,6 +19,8 @@ public class RobotItem {
 	private ItemStack item;
 	private Recipe recipe;
 	private Class<? extends GUI> gui;
+	private boolean hasPermission;
+	private String permission;
 
 	public RobotItem(Class<? extends RobotBase> robotClass, ItemStack item,
 			Recipe recipe , Class<? extends GUI> gui) {
@@ -40,6 +42,16 @@ public class RobotItem {
 	}
 	public Class<? extends GUI> getGUI(){
 		return gui;
+	}
+	public boolean hasPermission(){
+		return hasPermission;
+	}
+	public void setPermission(String permission){
+		hasPermission = true;
+		this.permission = permission;
+	}
+	public String getPermission(){
+		return this.permission;
 	}
 	public static GUI getGUI(RobotBase robot) throws Exception{
 		for(RobotItem robotItem : robotItems){
@@ -69,5 +81,20 @@ public class RobotItem {
 		}
 		return false;
 	}
-	
+	public static boolean hasPermission(ItemStack item){
+		for(RobotItem robot : robotItems){
+			if(ItemStackUtils.isSimmilarNoNBT(item, robot.getItem()))
+				return robot.hasPermission();
+		}
+		return false;
+	}
+	public static String getPermission(ItemStack item){
+		for(RobotItem robot : robotItems){
+			if(ItemStackUtils.isSimmilarNoNBT(item, robot.getItem()))
+				return robot.getPermission();
+		}
+		return "";
+
+	}
+
 }

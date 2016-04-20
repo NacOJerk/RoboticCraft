@@ -62,10 +62,14 @@ public class RobotListener implements Listener {
 
 	@EventHandler
 	public void rightClickSpawner(PlayerInteractEvent e) {
+		if(!e.getAction().name().contains("RIGHT"))
+			return;
 		if (!e.hasItem())
 			return;
 		ItemStack item = e.getItem();
 		if (!RobotItem.containsItem(item))
+			return;
+		if(!(RobotItem.hasPermission(item) && e.getPlayer().hasPermission(RobotItem.getPermission(item))))
 			return;
 		try {
 			if (hasID(item))
