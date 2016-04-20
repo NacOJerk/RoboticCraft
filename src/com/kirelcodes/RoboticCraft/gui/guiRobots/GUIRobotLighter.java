@@ -1,7 +1,5 @@
 package com.kirelcodes.RoboticCraft.gui.guiRobots;
 
-import java.util.Random;
-
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -26,9 +24,6 @@ public class GUIRobotLighter extends GUI {
 		setTitle("&cLighter Robot GUI");
 		instalizeInventory();
 		this.robot = robot;
-		// itemFollow = ItemStackUtils.createItem(Material.COMPASS, "&aFollow");
-		// itemNoFollow = ItemStackUtils.createItem(Material.COMPASS, "&cStop
-		// Follow");
 		Destroy = ItemStackUtils.createItem(Material.BARRIER, "&cDESTROY ROBOT");
 		itemLight = ItemStackUtils.createItem(Material.TORCH, "&aLight");
 		itemNoLight = ItemStackUtils.createItem(Material.TORCH, "&cStop Light");
@@ -63,31 +58,21 @@ public class GUIRobotLighter extends GUI {
 				((GUIRobotLighter) gui).noLight();
 			}
 		});
+		ItemStack item = ItemStackUtils.createItem(Material.STAINED_GLASS_PANE, 0, ChatColor.BLACK + "DONT CLICK ME");
+		gettGUIAction().add(new GUIAction(item) {
+
+			@Override
+			public void actionNow(GUI gui, Player player) {
+
+			}
+		});
 		for (int i = 0; i < 27; i++) {
-			ItemStack item = ItemStackUtils.createItem(Material.STAINED_GLASS_PANE, new Random().nextInt(16),
-					ChatColor.BLACK + "DONT CLICK ME");
 			getInventory().setItem(i, item);
-			gettGUIAction().add(new GUIAction(item) {
-
-				@Override
-				public void actionNow(GUI gui, Player player) {
-
-				}
-			});
 		}
-		getInventory().setItem(13, Destroy);
-		getInventory().setItem(12, openInventory);
+		getInventory().setItem(12, Destroy);
+		getInventory().setItem(13, openInventory);
 		getInventory().setItem(14, (robot.isLightning()) ? itemNoLight : itemLight);
 	}
-
-	/*
-	 * public void follow(Entity p) { robot.setFollow(p); if
-	 * (robot.isLightning()) noLight(); getInventory().setItem(12,
-	 * itemNoFollow); }
-	 * 
-	 * public void noFollow(Entity p) { robot.cancelFollow();
-	 * getInventory().setItem(12, itemFollow); }
-	 */
 
 	public void Light(Player p) {
 		robot.setLightning(true);
