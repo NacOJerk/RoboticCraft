@@ -31,7 +31,6 @@ public class RecipeAdder {
 
 	public static void addAll() {
 		initializeItem();
-<<<<<<< HEAD
 		new RobotItem(RobotBase.class, remoteBase, addRecipeBasicRobot(),
 				GUIRobotBasic.class);
 		new RobotItem(RobotFarmer.class, remoteFarmer, addRecipeFarmerRobot(),
@@ -47,7 +46,6 @@ public class RecipeAdder {
 		new RobotItem(RobotFisher.class, remoteFisher, addRecipeFisherRobot(),
 				GUIRobotFisher.class);
 		// new RobotItem(RobotCollector.class, remoteCollector, addRecipeCollectorRobot(), GUIRobotCollector.class);
-=======
 		new RobotItem(RobotBase.class, remoteBase, addRecipeBasicRobot() , GUIRobotBasic.class);
 		new RobotItem(RobotFarmer.class, remoteFarmer, addRecipeFarmerRobot() , GUIRobotFarmer.class);
 		new RobotItem(RobotHunter.class, remoteHunter, addRecipeHunterRobot() , GUIRobotHunter.class);
@@ -56,7 +54,6 @@ public class RecipeAdder {
 		new RobotItem(RobotMiner.class, remoteMiner, addRecipeMinerRobot() , GUIRobotMiner.class);
 		new RobotItem(RobotFisher.class, remoteFisher, addRecipeFisherRobot() , GUIRobotFisher.class);
 		new RobotItem(RobotCollector.class, remoteCollector, addRecipeCollectorRobot(), GUIRobotCollector.class);
->>>>>>> origin/master
 	}
 
 	public static void initializeItem() {
