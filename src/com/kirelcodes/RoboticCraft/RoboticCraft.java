@@ -11,7 +11,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.kirelcodes.RoboticCraft.configs.BaseConfig;
+import com.kirelcodes.RoboticCraft.configs.Configs;
 import com.kirelcodes.RoboticCraft.gui.GUIListener;
 import com.kirelcodes.RoboticCraft.listener.RobotListener;
 import com.kirelcodes.RoboticCraft.robot.RobotBase;
@@ -23,15 +23,16 @@ public class RoboticCraft extends JavaPlugin {
 	private GUIListener controllerManager;
 	private static boolean usingWorldGuard = false;
 	private static WorldGuardPlugin worldGuard;
+<<<<<<< HEAD
 	private static boolean usingFactions = false;
 	public static BaseConfig speeds = new BaseConfig("speeds");
+=======
+>>>>>>> origin/master
 	
 	@Override
 	public void onEnable() {
-	
-		speeds.getConfig();
-		speeds.saveDeafultConfig();
 		robotiCraft = this;
+		Configs.SPEED.getClass();
 		try {
 			Metrics metrics = new Metrics(this);
 			metrics.start();
