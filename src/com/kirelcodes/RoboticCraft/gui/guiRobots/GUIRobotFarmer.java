@@ -24,7 +24,6 @@ public class GUIRobotFarmer extends GUIRobotBasic {
 		super(robot);
 		setSize(27);
 		setTitle("&cFarmer Robot GUI");
-		instalizeInventory();
 		this.robot = robot;
 		itemFarm = ItemStackUtils.createItem(Material.DIAMOND_HOE, "&aFarm");
 		itemNoFarm = ItemStackUtils.createItem(Material.DIAMOND_HOE,

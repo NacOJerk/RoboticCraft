@@ -22,7 +22,6 @@ public class GUIRobotMiner extends GUIRobotBasic {
 		super(robot);
 		setSize(27);
 		setTitle("&cMiner Robot GUI");
-		instalizeInventory();
 		this.robot = robot;
 		itemMine = ItemStackUtils.createItem(Material.DIAMOND_PICKAXE, "&aMine");
 		itemNoMine = ItemStackUtils.createItem(Material.DIAMOND_PICKAXE, "&cStop Mine");

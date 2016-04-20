@@ -22,7 +22,6 @@ public class GUIRobotLighter extends GUI {
 	public GUIRobotLighter(RobotLighter robot) {
 		setSize(27);
 		setTitle("&cLighter Robot GUI");
-		instalizeInventory();
 		this.robot = robot;
 		Destroy = ItemStackUtils.createItem(Material.BARRIER, "&cDESTROY ROBOT");
 		itemLight = ItemStackUtils.createItem(Material.TORCH, "&aLight");

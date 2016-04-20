@@ -22,7 +22,6 @@ public class GUIRobotBreeder extends GUIRobotBasic {
 		super(robot);
 		setSize(27);
 		setTitle("&cBreeder Robot GUI");
-		instalizeInventory();
 		this.robot = robot;
 		itemBreed = ItemStackUtils.createItem(Material.WHEAT, "&aBreed");
 		itemNoBreed = ItemStackUtils.createItem(Material.WHEAT, "&cStop Breed");

@@ -22,7 +22,6 @@ public class GUIRobotLumberjack extends GUIRobotBasic {
 		super(robot);
 		setSize(27);
 		setTitle("&cLumberjack Robot GUI");
-		instalizeInventory();
 		this.robot = robot;
 		itemCut = ItemStackUtils.createItem(Material.GOLD_AXE, "&aCut");
 		itemNoCut = ItemStackUtils.createItem(Material.GOLD_AXE, "&cStop Cut");
@@ -45,8 +44,9 @@ public class GUIRobotLumberjack extends GUIRobotBasic {
 
 		setRemovePos(3);
 		setChestPos(13);
-		getInventory().setItem(14, (robot.isCutting()) ? itemNoCut : itemCut);
 		setFollowPos(12);
+		getInventory().setItem(14, (robot.isCutting()) ? itemNoCut : itemCut);
+
 	}
 
 	public void Cut() {

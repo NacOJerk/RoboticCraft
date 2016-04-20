@@ -39,7 +39,7 @@ public class LumberjackPathfinder extends BasicPathfinder {
 			target = null;
 		if (target == null || robot == null)
 			return;
-		if ((target.getY() - robot.getLocation().getY()) > 5)
+		if ((target.getY() - robot.getLocation().getY()) >= 5)
 			blackList.add(target);
 	}
 

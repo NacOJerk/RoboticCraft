@@ -21,7 +21,6 @@ public class GUIRobotHunter extends GUIRobotBasic {
 		super(robot);
 		setSize(27);
 		setTitle("&cHunter Robot GUI");
-		instalizeInventory();
 		this.robot = robot;
 		itemHunt = ItemStackUtils.createItem(Material.DIAMOND_SWORD, "&aHunt");
 		itemNoHunt = ItemStackUtils.createItem(Material.DIAMOND_SWORD, "&cStop Hunt");

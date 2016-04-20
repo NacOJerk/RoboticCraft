@@ -26,16 +26,16 @@ public class GUIRobotBasic extends GUI {
 		openInventory = ItemStackUtils.createItem(Material.CHEST, "&cOpen Robot's Inventory");
 		chestPos = 13;
 		followPos = 14;
-		destroyPos = 12;
-		ItemStack item = ItemStackUtils.createItem(Material.STAINED_GLASS_PANE, 0, ChatColor.BLACK + "DONT CLICK ME");
-		gettGUIAction().add(new GUIAction(item) {
-
-			@Override
-			public void actionNow(GUI gui, Player player) {
-
-			}
-		});
+		destroyPos = 3;
 		for (int i = 0; i < 27; i++) {
+			ItemStack item = ItemStackUtils.createItem(Material.STAINED_GLASS_PANE, 0, ChatColor.BLACK + "DONT CLICK ME");
+			gettGUIAction().add(new GUIAction(item) {
+
+				@Override
+				public void actionNow(GUI gui, Player player) {
+
+				}
+			});
 			getInventory().setItem(i, item);
 		}
 		gettGUIAction().add(new GUIAction(openInventory) {
@@ -89,7 +89,7 @@ public class GUIRobotBasic extends GUI {
 	public void setFollowPos(int i) {
 		ItemStack item = ItemStackUtils.createItem(Material.STAINED_GLASS_PANE, 0, ChatColor.BLACK + "DONT CLICK ME");
 		getInventory().setItem(followPos, item);
-		this.destroyPos = i;
+		this.followPos = i;
 		getInventory().setItem(followPos, (robot.isFollowing()) ? itemNoFollow : itemFollow);
 	}
 
