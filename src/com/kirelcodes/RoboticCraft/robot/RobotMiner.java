@@ -61,6 +61,8 @@ public class RobotMiner extends RobotBase {
 	}
 	
 	public void mineBlock(Location loc, boolean ee){
+		if(!checkAllowed(loc))
+			return;
 		final Location loc2 = loc;
 		onDelay = true;
 		new BukkitRunnable() {

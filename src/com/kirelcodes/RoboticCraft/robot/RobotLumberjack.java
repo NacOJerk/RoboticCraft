@@ -27,6 +27,8 @@ public class RobotLumberjack extends RobotBase {
 	}
 
 	public void mineBlock(Block b) {
+		if(!checkAllowed(b.getLocation()))
+			return;
 		final Block b2 = b;
 		onDelay = true;
 		new BukkitRunnable() {

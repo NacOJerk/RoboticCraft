@@ -156,18 +156,8 @@ public class RobotBase implements InventoryHolder {
 				ChatColor.MAGIC + "NacOJerkGalShaked-" + ID);
 		getArmorStand().setCustomNameVisible(false);
 		this.owner = owner;
-		if (RoboticCraft.usingWorldGuard())
-			if (!RoboticCraft.getWorldGuard().canBuild(
-					Bukkit.getPlayer(getOwner()), loc))
-				remove();
-		if(RoboticCraft.usingFactions()){
-			Faction facL = BoardColl.get().getFactionAt(PS.valueOf(loc));
-			if(facL.getId().equals(FactionColl.get().getNone().getId())){
-				MPlayer mplayer = MPlayer.get(owner);
-				if(facL.getId()!=mplayer.getFactionId())
-					remove();
-			}
-		}
+		if(!checkAllowed(loc))
+			remove();
 	}
 
 	/**
@@ -519,5 +509,21 @@ public class RobotBase implements InventoryHolder {
 
 	public UUID getOwner() {
 		return owner;
+	}
+	
+	public boolean checkAllowed(Location loc){
+		if (RoboticCraft.usingWorldGuard())
+			if (!RoboticCraft.getWorldGuard().canBuild(
+					Bukkit.getPlayer(getOwner()), loc))
+				return false;
+		if(RoboticCraft.usingFactions()){
+			Faction facL = BoardColl.get().getFactionAt(PS.valueOf(loc));
+			if(facL.getId().equals(FactionColl.get().getNone().getId())){
+				MPlayer mplayer = MPlayer.get(owner);
+				if(facL.getId()!=mplayer.getFactionId())
+					return false;
+			}
+		}
+		return true;
 	}
 }

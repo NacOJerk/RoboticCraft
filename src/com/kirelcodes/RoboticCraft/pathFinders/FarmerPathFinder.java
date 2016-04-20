@@ -34,12 +34,16 @@ public class FarmerPathFinder extends BasicPathfinder {
 	@Override
 	public void updateTask() {
 		for (final Block b : robot.getAllBlocks()) {
+			if(!this.robot.checkAllowed(b.getLocation()))
+				return;
 			if (dirty.contains(b.getLocation().clone()))
 				continue;
 			// HOEING
 			if (b.getLocation().clone().subtract(0, 1, 0).getBlock().getType() == Material.GRASS
 					|| b.getLocation().clone().subtract(0, 1, 0).getBlock()
 							.getType() == Material.DIRT) {
+				if(!this.robot.checkAllowed(b.getLocation().clone().subtract(0,1,0)))
+					return;
 				try {
 					this.robot.setTargetLocation(b.getLocation().clone());
 				} catch (Exception e) {

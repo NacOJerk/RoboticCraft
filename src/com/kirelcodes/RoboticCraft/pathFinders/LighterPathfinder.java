@@ -12,8 +12,6 @@ public class LighterPathfinder extends BasicPathfinder {
 	private int delayManager;
 	private int timeout;
 	private Location previous;
-	// This is the simple follower code. Now I add a timer to create the
-	// torches.
 	private int torchTimer;
 
 	public LighterPathfinder(RobotLighter robot) {
@@ -50,7 +48,6 @@ public class LighterPathfinder extends BasicPathfinder {
 			timeout++;
 		}
 		if ((delayManager % 20) != 0) {
-			// This happens every one second.
 			torchTimer++;
 		}
 		if (previous.distance(robot.getLocation()) > 2)
@@ -65,14 +62,14 @@ public class LighterPathfinder extends BasicPathfinder {
 			timeout = 0;
 		}
 
-		// Now we want to check if the timer reaches 3
 		if (torchTimer >= 3) {
 			if (this.robot.isStuck())
 				return;
-			// Place the torches
 			if (this.robot.getInventory().contains(Material.TORCH)
 					&& (this.robot.getLocation().clone().subtract(0, 1, 0)
-							.getBlock().getType().isSolid()))
+							.getBlock().getType().isSolid())){
+				if(!this.robot.checkAllowed(this.robot.getLocation()))
+					return;
 				if (this.robot.getLocation().getBlock().getType() == Material.AIR) {
 					this.robot.getLocation().getBlock().setType(Material.TORCH);
 					for (ItemStack is : robot.getInventory().getContents()) {
@@ -87,6 +84,7 @@ public class LighterPathfinder extends BasicPathfinder {
 						is.setAmount(is.getAmount() - 1);
 					}
 				}
+			}
 			torchTimer = 0;
 		}
 	}
