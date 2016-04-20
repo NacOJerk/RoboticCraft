@@ -50,7 +50,7 @@ public class BaseConfig {
 
 	public BaseConfig(String name) {
 		this.configName = name;
-		saveDefaultConfig();
 		reloadConfig();
+		saveDefaultConfig();
 	}
 }

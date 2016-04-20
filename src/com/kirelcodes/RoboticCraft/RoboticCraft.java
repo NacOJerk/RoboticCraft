@@ -26,9 +26,8 @@ public class RoboticCraft extends JavaPlugin {
 	
 	@Override
 	public void onEnable() {
-		Configs.SPEED.getConfig();
-		Configs.SPEED.saveDefaultConfig();
 		robotiCraft = this;
+		Configs.SPEED.getClass();
 		try {
 			Metrics metrics = new Metrics(this);
 			metrics.start();
