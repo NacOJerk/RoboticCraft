@@ -6,9 +6,7 @@ import java.util.List;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.scheduler.BukkitRunnable;
 
-import com.kirelcodes.RoboticCraft.RoboticCraft;
 import com.kirelcodes.RoboticCraft.robot.RobotLumberjack;
 
 public class LumberjackPathfinder extends BasicPathfinder {
@@ -36,11 +34,11 @@ public class LumberjackPathfinder extends BasicPathfinder {
 		if (target == null)
 			return;
 		if (target.getType() == Material.AIR
-				|| (target.getY() - robot.getLocation().getY()) > 5)
+				|| (target.getY() - robot.getLocation().getY()) >= 9)
 			target = null;
 		if (target == null || robot == null)
 			return;
-		if ((target.getY() - robot.getLocation().getY()) >= 5)
+		if ((target.getY() - robot.getLocation().getY()) >= 9)
 			blackList.add(target);
 		blocks.clear();
 	}
@@ -60,14 +58,8 @@ public class LumberjackPathfinder extends BasicPathfinder {
 
 	@Override
 	public void updateTask() {
-		new BukkitRunnable() {
-
-			@Override
-			public void run() {
-				if (target == null)
-					blocks.addAll(robot.getNearbyBlocks(10));
-			}
-		}.runTaskAsynchronously(RoboticCraft.getInstance());
+		if (target == null)
+			blocks.addAll(robot.getNearbyBlocks(10));
 		for (Block b : blocks) {
 			if (b == null)
 				continue;
@@ -87,7 +79,7 @@ public class LumberjackPathfinder extends BasicPathfinder {
 			if (robot == null || target == null)
 				return;
 			robot.setTargetLocation(target.getLocation());
-			if (target.getLocation().distance(robot.getLocation()) <= 5) {
+			if (target.getLocation().distance(robot.getLocation()) <= 8) {
 				robot.mineBlock(target);
 				target = null;
 			} else if (target.getLocation().getBlockX() == robot.getLocation()

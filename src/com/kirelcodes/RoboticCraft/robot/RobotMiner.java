@@ -80,7 +80,7 @@ public class RobotMiner extends RobotBase {
 			return;
 		final Location loc2 = loc;
 		onDelay = true;
-		AnimationManager.mine.runAnimationCycle(getArmorStand(), 2L);
+		AnimationManager.mine.runAnimationCycle(getArmorStand(), 5L);
 		new BukkitRunnable() {
 			@Override
 			public void run() {

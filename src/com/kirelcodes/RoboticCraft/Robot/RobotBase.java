@@ -48,8 +48,8 @@ import com.massivecraft.massivecore.ps.PS;
  *
  */
 public class RobotBase implements InventoryHolder {
-	protected AnimationFrame deafult = new AnimationFrame().setBody(new EulerAngle(0, 0, 0))
-			.setHead(new EulerAngle(0, 0, 0))
+	protected AnimationFrame deafult = new AnimationFrame()
+			.setBody(new EulerAngle(0, 0, 0)).setHead(new EulerAngle(0, 0, 0))
 			.setLeftHand(new EulerAngle(0, 0, 0))
 			.setLeftLeg(new EulerAngle(0, 0, 0))
 			.setRightHand(new EulerAngle(0, 0, 0))
@@ -66,7 +66,7 @@ public class RobotBase implements InventoryHolder {
 	private Object nmsHandel;
 	private UUID owner;
 	protected PathManager pathManager;
-	private Location targetLocation , previus;
+	private Location targetLocation, previus;
 
 	/**
 	 * Responsible for the armor stand teleportation and target following
@@ -100,7 +100,7 @@ public class RobotBase implements InventoryHolder {
 				AnimationManager.walk.cancelTask(getArmorStand());
 				deafult.setLocations(getArmorStand());
 			}
-			if(previus.distanceSquared(getLocation()) < 1){
+			if (previus.distanceSquared(getLocation()) < 1) {
 				AnimationManager.walk.cancelTask(getArmorStand());
 				deafult.setLocations(getArmorStand());
 			}
@@ -320,7 +320,7 @@ public class RobotBase implements InventoryHolder {
 		navagation.getClass().getMethod("a", double.class)
 				.invoke(navagation, 2.0D);
 		targetLocation = loc;
-		AnimationManager.walk.runAnimationCycle(getArmorStand(), 7L);
+		AnimationManager.walk.runAnimationCycle(getArmorStand(), 15L);
 		return true;
 	}
 
@@ -331,21 +331,17 @@ public class RobotBase implements InventoryHolder {
 	 * @return
 	 */
 	public List<Block> getNearbyBlocks(int radius) {
-		ArrayList<Location> locs = new ArrayList<>();
+		ArrayList<Block> blocks = new ArrayList<>();
 		for (int x = getLocation().getBlockX() - radius; x < getLocation()
 				.getX() + radius; x++) {
 			for (int y = getLocation().getBlockY() - radius; y < getLocation()
 					.getY() + radius; y++) {
 				for (int z = getLocation().getBlockZ() - radius; z < getLocation()
 						.getZ() + radius; z++) {
-					locs.add(getLocation().getWorld().getBlockAt(x, y, z)
-							.getLocation());
+					blocks.add(getLocation().getWorld().getBlockAt(x, y, z));
 				}
 			}
 		}
-		ArrayList<Block> blocks = new ArrayList<>();
-		for (Location loc : orderDistance(locs))
-			blocks.add(loc.getBlock());
 		return blocks;
 	}
 

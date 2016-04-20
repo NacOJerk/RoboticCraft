@@ -30,7 +30,7 @@ public class AnimationCycle {
 				frames.get(i).setLocations(armor);
 				i++;
 			}
-		}.runTaskTimer(RoboticCraft.getInstance(), 0L, delay);
+		}.runTaskTimerAsynchronously(RoboticCraft.getInstance(), 0L, delay);
 	}
 
 	public void runAnimationCycle(ArmorStand armor, long delay) {
@@ -47,7 +47,7 @@ public class AnimationCycle {
 				frames.get(i).setLocations(armor);
 				i++;
 			}
-		}.runTaskTimer(RoboticCraft.getInstance(), 0L, delay);
+		}.runTaskTimerAsynchronously(RoboticCraft.getInstance(), 0L, delay);
 	}
 
 	public void cancelTask(ArmorStand armor){

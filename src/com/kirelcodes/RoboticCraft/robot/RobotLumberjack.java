@@ -32,7 +32,7 @@ public class RobotLumberjack extends RobotBase {
 			return;
 		final Block b2 = b;
 		onDelay = true;
-		AnimationManager.mine.runAnimationCycle(getArmorStand(), 2L);
+		AnimationManager.mine.runAnimationCycle(getArmorStand(), 5L);
 		new BukkitRunnable() {
 			@Override
 			public void run() {
