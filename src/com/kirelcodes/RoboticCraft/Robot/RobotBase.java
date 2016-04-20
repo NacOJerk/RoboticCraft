@@ -320,7 +320,7 @@ public class RobotBase implements InventoryHolder {
 		navagation.getClass().getMethod("a", double.class)
 				.invoke(navagation, 2.0D);
 		targetLocation = loc;
-		AnimationManager.walk.runAnimationCycle(getArmorStand(), 5L);
+		AnimationManager.walk.runAnimationCycle(getArmorStand(), 7L);
 		return true;
 	}
 

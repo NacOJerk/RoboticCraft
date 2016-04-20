@@ -22,6 +22,8 @@ public class GUIRobotFisher extends GUIRobotBasic {
 		super(robot);
 		setSize(27);
 		setTitle("&cFisher Robot GUI");
+		instalizeInventory();
+		fillInventory();
 		this.robot = robot;
 		itemNoFish = ItemStackUtils.createItem(Material.FISHING_ROD, "&cStop Fish");
 		gettGUIAction().add(new GUIAction(itemFish) {

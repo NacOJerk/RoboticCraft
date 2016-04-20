@@ -23,6 +23,8 @@ public class GUIRobotCollector extends GUIRobotBasic {
 		super(robot);
 		setSize(27);
 		setTitle("&cMiner Robot GUI");
+		instalizeInventory();
+		fillInventory();
 		this.robot = robot;
 		itemCollect = ItemStackUtils.createItem(Material.HOPPER, "&aCollect");
 		itemNoCollect = ItemStackUtils.createItem(Material.HOPPER, "&cStop Collecting");

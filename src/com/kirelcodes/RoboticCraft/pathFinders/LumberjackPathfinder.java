@@ -15,6 +15,7 @@ public class LumberjackPathfinder extends BasicPathfinder {
 	private RobotLumberjack robot;
 	private Block target;
 	private ArrayList<Block> blackList = new ArrayList<Block>();
+	private List<Block> blocks = new ArrayList<>();
 
 	public LumberjackPathfinder(RobotLumberjack robot) {
 		this.robot = robot;
@@ -41,6 +42,7 @@ public class LumberjackPathfinder extends BasicPathfinder {
 			return;
 		if ((target.getY() - robot.getLocation().getY()) >= 5)
 			blackList.add(target);
+		blocks.clear();
 	}
 
 	private boolean contains(Location loc) {
@@ -58,29 +60,27 @@ public class LumberjackPathfinder extends BasicPathfinder {
 
 	@Override
 	public void updateTask() {
-		final List<Block> blocks = new ArrayList<>();
 		new BukkitRunnable() {
 
 			@Override
 			public void run() {
 				if (target == null)
 					blocks.addAll(robot.getNearbyBlocks(10));
-				for (Block b : blocks) {
-					if (b == null)
-						continue;
-					if (contains(b.getLocation()))
-						continue;
-					if (b.getType() == Material.LOG
-							|| b.getType() == Material.LOG_2) {
-						if (!blackList.contains(b)) {
-							target = b;
-							break;
-						}
-					}
-				}
 			}
 		}.runTaskAsynchronously(RoboticCraft.getInstance());
-
+		for (Block b : blocks) {
+			if (b == null)
+				continue;
+			if (contains(b.getLocation()))
+				continue;
+			if (b.getType() == Material.LOG
+					|| b.getType() == Material.LOG_2) {
+				if (!blackList.contains(b)) {
+					target = b;
+					break;
+				}
+			}
+		}
 		if (target == null)
 			return;
 		try {

@@ -38,7 +38,7 @@ public class FollowPathfinder extends BasicPathfinder {
 		if ((delayManager % 20) != 0
 				&& robot.getLocation().distance(previous) <= 1
 				&& robot.getFollowTarget().getLocation()
-						.distance(robot.getLocation()) > 5) {
+						.distanceSquared(robot.getLocation()) > 15) {
 			timeout++;
 		}
 		if (previous.distance(robot.getLocation()) > 2)

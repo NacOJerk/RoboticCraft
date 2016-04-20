@@ -11,7 +11,6 @@ import org.bukkit.entity.Entity;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.kirelcodes.RoboticCraft.configs.BaseConfig;
 import com.kirelcodes.RoboticCraft.configs.Configs;
 import com.kirelcodes.RoboticCraft.gui.GUIListener;
 import com.kirelcodes.RoboticCraft.listener.RobotListener;

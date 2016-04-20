@@ -102,6 +102,8 @@ public class RobotListener implements Listener {
 			ArmorStand armor = (ArmorStand) en;
 			if(armor.isCustomNameVisible())
 				continue;
+			if(armor.getCustomName() == null)
+				continue;
 			if(!ChatColor.stripColor(armor.getCustomName()).startsWith("{NacOSearilize"))
 				continue;
 			if(armor.getLocation().getBlock().getType() != Material.CHEST)
