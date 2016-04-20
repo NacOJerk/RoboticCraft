@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.StringJoiner;
 import java.util.UUID;
 
 import org.bukkit.ChatColor;
@@ -28,7 +29,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
-import com.kirelcodes.RoboticCraft.RobotItem;
 import com.kirelcodes.RoboticCraft.RoboticCraft;
 import com.kirelcodes.RoboticCraft.pathFinders.FollowPathfinder;
 import com.kirelcodes.RoboticCraft.pathFinders.PathManager;
@@ -96,7 +96,7 @@ public class RobotBase implements InventoryHolder {
 	 * @param loc
 	 *            the location where the robot would be spawned
 	 * @param owner
-	 * 	
+	 * 
 	 */
 	public RobotBase(Location loc, UUID owner) {
 		Chicken chick = null;
@@ -106,8 +106,9 @@ public class RobotBase implements InventoryHolder {
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
-		}else
-			chick = (Chicken) loc.getWorld().spawnEntity(loc, EntityType.CHICKEN);
+		} else
+			chick = (Chicken) loc.getWorld().spawnEntity(loc,
+					EntityType.CHICKEN);
 		this.chick = chick;
 		this.chick.setMaxHealth(Integer.MAX_VALUE);
 		this.chick.setHealth(this.chick.getMaxHealth());
@@ -139,6 +140,7 @@ public class RobotBase implements InventoryHolder {
 		this.armorStand.setBoots(new ItemStack(Material.IRON_BOOTS));
 		this.armorStand.setLeggings(new ItemStack(Material.IRON_LEGGINGS));
 		this.armorStand.setChestplate(new ItemStack(Material.IRON_CHESTPLATE));
+		this.armorStand.setMarker(true);
 		setFuel(100);
 		this.pathManager = new PathManager();
 		addPaths();
@@ -150,18 +152,19 @@ public class RobotBase implements InventoryHolder {
 				ChatColor.MAGIC + "NacOJerkGalShaked-" + ID);
 		getArmorStand().setCustomNameVisible(false);
 		this.owner = owner;
-		if(RoboticCraft.usingWorldGuard())
-			if(!RoboticCraft.getWorldGuard().canBuild(Bukkit.getPlayer(getOwner()), loc))
+		if (RoboticCraft.usingWorldGuard())
+			if (!RoboticCraft.getWorldGuard().canBuild(
+					Bukkit.getPlayer(getOwner()), loc))
 				remove();
 	}
-	
+
 	/**
 	 * Spawns the robot
 	 * 
 	 * @param loc
 	 *            the location where the robot would be spawned
 	 * @param owner
-	 * 	
+	 * 
 	 */
 	public RobotBase(Location loc, Player owner) {
 		this(loc, owner.getUniqueId());
@@ -209,23 +212,23 @@ public class RobotBase implements InventoryHolder {
 		chick.setCustomName(ChatColor.MAGIC + "" + getID());
 		chick.setCustomNameVisible(false);
 		Object goalSelector = getField(getNMSHandle(), "goalSelector");
-		if(getVersion().contains("9")){
-		LinkedHashSet<?> goalSelectorA = (LinkedHashSet<?>) getDeclaredField(
-				goalSelector, "b");
-		LinkedHashSet<?> goalSelectorB = (LinkedHashSet<?>) getDeclaredField(
-				goalSelector, "c");
-		goalSelectorA.clear();
-		goalSelectorB.clear();
-		}else{
-			List<?> goalSelectorA = (List<?>) getDeclaredField(
+		if (getVersion().contains("9")) {
+			LinkedHashSet<?> goalSelectorA = (LinkedHashSet<?>) getDeclaredField(
 					goalSelector, "b");
-			List<?> goalSelectorB = (List<?>) getDeclaredField(
+			LinkedHashSet<?> goalSelectorB = (LinkedHashSet<?>) getDeclaredField(
 					goalSelector, "c");
+			goalSelectorA.clear();
+			goalSelectorB.clear();
+		} else {
+			List<?> goalSelectorA = (List<?>) getDeclaredField(goalSelector,
+					"b");
+			List<?> goalSelectorB = (List<?>) getDeclaredField(goalSelector,
+					"c");
 			goalSelectorA.clear();
 			goalSelectorB.clear();
 
 		}
-				getNMSHandle().getClass().getMethod("setInvisible", boolean.class)
+		getNMSHandle().getClass().getMethod("setInvisible", boolean.class)
 				.invoke(getNMSHandle(), true);
 
 	}
@@ -286,23 +289,50 @@ public class RobotBase implements InventoryHolder {
 				.invoke(navagation, 2.0D);
 		return true;
 	}
+
 	/**
 	 * Get blocks in a nearby radius
+	 * 
 	 * @param raduis
 	 * @return
 	 */
-	public List<Block> getNearbyBlocks(int radius){
-		ArrayList<Block> blocks = new ArrayList<>();
-		for(int x = 0 ; x <= radius ; x++){
-			for(int z = 0 ; z <= radius ; z++){
-				for(int y = 0 ; y<= radius; y++){
-					blocks.add(getLocation().getWorld().getBlockAt(getLocation().getBlockX() + x, getLocation().getBlockY() + y, getLocation().getBlockZ() + z));
-					blocks.add(getLocation().getWorld().getBlockAt(getLocation().getBlockX() - x, getLocation().getBlockY() - y, getLocation().getBlockZ() - z));
+	public List<Block> getNearbyBlocks(int radius) {
+		ArrayList<Location> locs = new ArrayList<>();
+		for (int x = getLocation().getBlockX() - radius; x < getLocation()
+				.getX() + radius; x++) {
+			for (int y = getLocation().getBlockY() - radius; y < getLocation()
+					.getY() + radius; y++) {
+				for (int z = getLocation().getBlockZ() - radius; z < getLocation()
+						.getZ() + radius; z++) {
+					locs.add(getLocation().getWorld().getBlockAt(x, y, z).getLocation());
 				}
 			}
 		}
+		ArrayList<Block> blocks = new ArrayList<>();
+		for(Location loc : orderDistance(locs))
+			blocks.add(loc.getBlock());
 		return blocks;
 	}
+
+	public List<Location> orderDistance(List<Location> locations) {
+		Location target = getLocation();
+		int size = locations.size();
+		List<Location> ordered = new ArrayList<>();
+		while (ordered.size() < size) {
+			Location closest = locations.get(0);
+			double closestDist = closest.distance(target);
+			for (Location loc : locations) {
+				if (loc.distance(target) < closestDist) {
+					closestDist = loc.distance(target);
+					closest = loc;
+				}
+			}
+			ordered.add(closest);
+			locations.remove(closest);
+		}
+		return ordered;
+	}
+
 	/**
 	 * 
 	 * @return the navigator (Chicken)
@@ -379,18 +409,50 @@ public class RobotBase implements InventoryHolder {
 		this.isFollowing = false;
 		this.followTarget = null;
 	}
-
+	private void setID(int ID){
+		this.ID = ID;
+	}
 	/**
 	 * Destroys the robot and drops an armor remove (Robot remove)
 	 */
 	public void destroy() {
+		ArmorStand armor = (ArmorStand) getWorld().spawnEntity(getLocation(), EntityType.ARMOR_STAND);
+		StringJoiner string = new StringJoiner(" , ", "{", "}");
+		string.add("NacOSearilize");
+		string.add(this.getClass().getName());
+		string.add(getOwner().toString());
+		string.add(getID() + "");
+		armor.setCustomName(ChatColor.MAGIC + string.toString());
+		armor.setCustomNameVisible(false);
+		armor.setMarker(true);
+		armor.setVisible(false);
+		armor.setGravity(false);
 		getLocation().getBlock().setType(Material.CHEST);
-		Chest chest = (Chest) getLocation().getBlock().getState();
-		chest.getBlockInventory().addItem(RobotItem.getItem(this.getClass()));
+		Chest chesty = (Chest) getLocation().getBlock().getState();
+		for(int i = 0 ; i < getInventory().getContents().length ; i++)
+			if(getInventory().getContents()[i] != null)
+				chesty.getBlockInventory().addItem(getInventory().getContents()[i]);
 		remove();
-
 	}
-
+	
+	public static RobotBase getRobot(ArmorStand armor , Chest chest) throws Exception{
+		String[] data = ChatColor.stripColor(armor.getCustomName().replaceAll("\\{", "").replaceAll("\\}", "")).split(" , ");
+		Inventory inven = chest.getInventory();
+		String clazz = data[1];
+		UUID uuid = UUID.fromString(data[2]);
+		int ID = Integer.parseInt(data[3]);
+		RobotBase robot = (RobotBase) Class.forName(clazz).getConstructor(Location.class ,UUID.class).newInstance(armor.getLocation() , uuid);
+		for(int i = 0 ; i < inven.getContents().length ; i++)
+			if(inven.getContents()[i] != null)
+				robot.addItem(inven.getContents()[i]);
+		RobotCenter.removeRobot(robot.getID());
+		robot.setID(ID);
+		RobotCenter.addRobotID(robot);
+		chest.getInventory().clear();
+		chest.getBlock().setType(Material.AIR);
+		armor.remove();
+		return robot;
+	}
 	/**
 	 * Completely removes the robot
 	 */
@@ -442,8 +504,8 @@ public class RobotBase implements InventoryHolder {
 	public void setStuck(boolean stuck) {
 		this.isStuck = stuck;
 	}
-	
-	public UUID getOwner(){
+
+	public UUID getOwner() {
 		return owner;
 	}
 }

@@ -3,10 +3,14 @@ package com.kirelcodes.RoboticCraft.listener;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.block.Chest;
+import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.Entity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerArmorStandManipulateEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
@@ -82,10 +86,32 @@ public class RobotListener implements Listener {
 			if (!hasID(item))
 				return;
 			int ID = getID(item);
+			if(!RobotCenter.exists(ID))
+				return;
 			GUIGet.getGUI(RobotCenter.getRobot(ID)).openGUI(e.getPlayer());
 		} catch (Exception e1) {
 			return;
 		}
 	}
 
+	@EventHandler
+	public void onChunckLoad(ChunkLoadEvent e){
+		for(Entity en : e.getChunk().getEntities()){
+			if(!(en instanceof ArmorStand))
+				continue;
+			ArmorStand armor = (ArmorStand) en;
+			if(armor.isCustomNameVisible())
+				continue;
+			if(!ChatColor.stripColor(armor.getCustomName()).startsWith("{NacOSearilize"))
+				continue;
+			if(armor.getLocation().getBlock().getType() != Material.CHEST)
+				continue;
+			Chest chest = (Chest) armor.getLocation().getBlock().getState();
+			try {
+				RobotBase.getRobot(armor, chest);
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
 }

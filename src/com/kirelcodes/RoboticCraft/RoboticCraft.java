@@ -2,6 +2,12 @@ package com.kirelcodes.RoboticCraft;
 
 import java.io.IOException;
 
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.World;
+import org.bukkit.block.Chest;
+import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.Entity;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -30,12 +36,42 @@ public class RoboticCraft extends JavaPlugin {
 		new RobotListener(this);
 		RecipeAdder.addAll();
 		worldGuard = setupWorldGuard();
+		RobotCenter.getID();
+		for (World w : getServer().getWorlds()) {
+			for (Entity en : w.getEntities()) {
+				if (en == null)
+					continue;
+				if (!(en instanceof ArmorStand))
+					continue;
+				ArmorStand armor = (ArmorStand) en;
+				if (armor.isCustomNameVisible())
+					continue;
+				if (armor.getCustomName() == null)
+					continue;
+				if (!ChatColor.stripColor(armor.getCustomName()).startsWith(
+						"{NacOSearilize"))
+					continue;
+				if (armor.getLocation().getBlock().getType() != Material.CHEST)
+					continue;
+				Chest chest = (Chest) armor.getLocation().getBlock().getState();
+				try {
+					RobotBase.getRobot(armor, chest);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+		}
+
 	}
 
 	@Override
 	public void onDisable() {
-		for (RobotBase robot : RobotCenter.getRobots()) {
-			robot.destroy();
+		try {
+			for (RobotBase robot : RobotCenter.getRobots()) {
+				robot.destroy();
+			}
+		} catch (Exception e) {
+
 		}
 	}
 

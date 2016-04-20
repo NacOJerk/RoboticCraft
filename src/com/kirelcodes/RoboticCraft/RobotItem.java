@@ -1,6 +1,7 @@
 package com.kirelcodes.RoboticCraft;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -57,7 +58,7 @@ public class RobotItem {
 	public static RobotBase getRobot(ItemStack item , Player p) throws Exception{
 		for(RobotItem robot : robotItems){
 			if(robot.getItem().isSimilar(item))
-				return robot.getRobotClass().getConstructor(Location.class , Player.class).newInstance(p.getLocation() , p);
+				return robot.getRobotClass().getConstructor(Location.class , UUID.class).newInstance(p.getLocation() , p.getUniqueId());
 		}
 		return null;
 	}

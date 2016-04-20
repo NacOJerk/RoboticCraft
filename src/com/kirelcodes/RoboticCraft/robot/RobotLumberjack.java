@@ -1,5 +1,7 @@
 package com.kirelcodes.RoboticCraft.robot;
 
+import java.util.UUID;
+
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -12,11 +14,14 @@ import com.kirelcodes.RoboticCraft.pathFinders.LumberjackPathfinder;
 
 public class RobotLumberjack extends RobotBase {
 	private boolean isCutting;
-	@SuppressWarnings("unused")
 	private boolean onDelay = false;
 
 	public RobotLumberjack(Location loc, Player p) {
 		super(loc, p.getUniqueId());
+		getArmorStand().setItemInHand(new ItemStack(Material.DIAMOND_AXE));
+	}
+	public RobotLumberjack(Location loc, UUID u) {
+		super(loc, u);
 		getArmorStand().setItemInHand(new ItemStack(Material.DIAMOND_AXE));
 	}
 
@@ -37,7 +42,9 @@ public class RobotLumberjack extends RobotBase {
 	public void setOnDelay(boolean onDelay) {
 		this.onDelay = onDelay;
 	}
-
+	public boolean isOnDelay(){
+		return onDelay;
+	}
 	@Override
 	protected void addPaths() {
 		super.addPaths();

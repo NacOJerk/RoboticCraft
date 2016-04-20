@@ -1,5 +1,7 @@
 package com.kirelcodes.RoboticCraft.robot;
 
+import java.util.UUID;
+
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Ageable;
@@ -16,8 +18,12 @@ public class RobotBreeder extends RobotBase{
 	public RobotBreeder(Location loc, Player p) {
 		super(loc, p.getUniqueId());
 		getArmorStand().setItemInHand(new ItemStack(Material.WHEAT));
-		
 	}
+	public RobotBreeder(Location loc, UUID u) {
+		super(loc, u);
+		getArmorStand().setItemInHand(new ItemStack(Material.WHEAT));
+	}
+
 	@Override
 	protected void addPaths() {
 		super.addPaths();

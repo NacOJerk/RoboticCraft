@@ -1,6 +1,8 @@
 package com.kirelcodes.RoboticCraft.robot;
 
 
+import java.util.UUID;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -30,7 +32,17 @@ public class RobotMiner extends RobotBase {
 		}
 
 	}
-	
+	public RobotMiner(Location loc, UUID u) {
+		super(loc, u);
+		getArmorStand().setItemInHand(new ItemStack(Material.DIAMOND_PICKAXE));
+		try {
+			getArmorStand().setHelmet(ItemStackUtils.getSkullFromURL("http://textures.minecraft.net/texture/b0b7d537b2616e69d4de323d8a83a0b8a61bc7e249e5ef10f9d91f6bf7b3", "Robot"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
 	@Override
 	protected void addPaths() {
 		super.addPaths();

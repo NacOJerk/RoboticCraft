@@ -87,6 +87,8 @@ public class LumberjackPathfinder extends BasicPathfinder {
 		if (target == null)
 			return;
 		try {
+			if(robot == null || target == null)
+				return;
 			robot.setTargetLocation(target.getLocation());
 			if (target.getLocation().distance(robot.getLocation()) <= 5) {
 				robot.mineBlock(target);
@@ -100,7 +102,6 @@ public class LumberjackPathfinder extends BasicPathfinder {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 	}
 }

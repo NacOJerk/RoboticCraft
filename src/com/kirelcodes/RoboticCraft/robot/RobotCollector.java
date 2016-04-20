@@ -1,8 +1,9 @@
 package com.kirelcodes.RoboticCraft.robot;
 
+import java.util.UUID;
+
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
-
 import com.kirelcodes.RoboticCraft.pathFinders.CollectorPathFinder;
 
 public class RobotCollector extends RobotBase {
@@ -11,6 +12,10 @@ public class RobotCollector extends RobotBase {
 
 	public RobotCollector(Location loc, Player p) {
 		super(loc, p.getUniqueId());
+		startBlock = loc;
+	}
+	public RobotCollector(Location loc, UUID u) {
+		super(loc, u);
 		startBlock = loc;
 	}
 

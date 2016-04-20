@@ -1,5 +1,7 @@
 package com.kirelcodes.RoboticCraft.robot;
 
+import java.util.UUID;
+
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -12,6 +14,10 @@ public class RobotFisher extends RobotBase {
 
 	public RobotFisher(Location loc, Player p) {
 		super(loc, p.getUniqueId());
+		getArmorStand().setItemInHand(new ItemStack(Material.FISHING_ROD));
+	}
+	public RobotFisher(Location loc, UUID u) {
+		super(loc, u);
 		getArmorStand().setItemInHand(new ItemStack(Material.FISHING_ROD));
 	}
 	@Override

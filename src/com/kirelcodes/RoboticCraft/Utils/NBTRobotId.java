@@ -20,7 +20,11 @@ public class NBTRobotId {
 		ItemStack result = asBukkitCopy(nmsIS);
 		return result;
 	}
-
+	public static ItemStack clearNBT(ItemStack item){
+		String[] s = new String[item.getItemMeta().getLore().size()];
+		item.getItemMeta().getLore().toArray(s);
+		return ItemStackUtils.createItem(item.getType(), item.getDurability(), item.getItemMeta().getDisplayName(), s);
+	}
 	public static boolean hasID(ItemStack is) throws Exception{
 		Object nmsIS = asNMSCopy(is);
 		boolean hasNBTC = (boolean) nmsIS.getClass().getMethod("hasTag")

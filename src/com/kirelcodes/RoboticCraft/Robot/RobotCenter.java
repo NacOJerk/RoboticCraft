@@ -16,6 +16,11 @@ public class RobotCenter {
 		robotBase.put(ID, robot);
 		return ID;
 	}
+	public static int addRobotID(RobotBase robot){
+		int ID = robot.getID();
+		robotBase.put(ID, robot);
+		return ID;
+	}
 	public static boolean exists(int ID){
 		return robotBase.containsKey(ID);
 	}
