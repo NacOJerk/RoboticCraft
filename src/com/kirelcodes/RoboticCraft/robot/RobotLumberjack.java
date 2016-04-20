@@ -12,6 +12,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import com.kirelcodes.RoboticCraft.RoboticCraft;
 import com.kirelcodes.RoboticCraft.configs.ConfigManager;
 import com.kirelcodes.RoboticCraft.pathFinders.LumberjackPathfinder;
+import com.kirelcodes.RoboticCraft.robot.animation.AnimationManager;
 
 public class RobotLumberjack extends RobotBase {
 	private boolean isCutting;
@@ -31,6 +32,7 @@ public class RobotLumberjack extends RobotBase {
 			return;
 		final Block b2 = b;
 		onDelay = true;
+		AnimationManager.mine.runAnimationCycle(getArmorStand(), 2L);
 		new BukkitRunnable() {
 			@Override
 			public void run() {
@@ -44,6 +46,10 @@ public class RobotLumberjack extends RobotBase {
 
 	public void setOnDelay(boolean onDelay) {
 		this.onDelay = onDelay;
+		if (!onDelay) {
+			AnimationManager.mine.cancelTask(getArmorStand());
+			deafult.setLocations(getArmorStand());
+		}
 	}
 	public boolean isOnDelay(){
 		return onDelay;

@@ -28,6 +28,7 @@ public class AnimationCycle {
 				if (i == frames.size())
 					cancel();
 				frames.get(i).setLocations(armor);
+				i++;
 			}
 		}.runTaskTimer(RoboticCraft.getInstance(), 0L, delay);
 	}
@@ -44,11 +45,19 @@ public class AnimationCycle {
 				if (i == frames.size())
 					i = 0;
 				frames.get(i).setLocations(armor);
+				i++;
 			}
 		}.runTaskTimer(RoboticCraft.getInstance(), 0L, delay);
 	}
 
 	public void cancelTask(ArmorStand armor){
-		endless.remove(armor);
+		ArrayList<ArmorStand> remove = new ArrayList<>();
+		for(ArmorStand ar : endless){
+			if(ar.getCustomName() == null)
+				continue;
+			if(ar.getCustomName().equalsIgnoreCase(armor.getCustomName()))
+				remove.add(ar);
+		}
+		endless.removeAll(remove);
 	}
 }

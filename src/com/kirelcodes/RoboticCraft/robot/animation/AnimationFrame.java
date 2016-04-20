@@ -29,7 +29,7 @@ public class AnimationFrame {
 		return this;
 	}
 	public AnimationFrame setRightLeg(EulerAngle rightLeg){
-		this.rightHand = rightLeg;
+		this.rightLeg = rightLeg;
 		return this;
 	}
 	public EulerAngle getHead(){

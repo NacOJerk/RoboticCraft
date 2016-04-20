@@ -3,6 +3,7 @@ package com.kirelcodes.RoboticCraft.pathFinders;
 import java.util.ArrayList;
 
 import org.bukkit.Location;
+import org.bukkit.entity.Chicken;
 import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Ocelot;
@@ -50,7 +51,7 @@ public class HunterPathfinder extends BasicPathfinder {
 				return;
 			for (Entity e : nearby) {
 				if (e instanceof Player || e instanceof Wolf
-						|| e instanceof Ocelot || e.equals(robot.getNavigator()) || e.equals(robot.getArmorStand()))
+						|| e instanceof Ocelot || e.equals(robot.getNavigator()) || e.equals(robot.getArmorStand()) || e instanceof Chicken)
 					continue;
 				if (e instanceof Damageable) {
 					target = e;

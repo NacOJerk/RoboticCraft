@@ -27,11 +27,14 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.EulerAngle;
 
 import com.kirelcodes.RoboticCraft.RoboticCraft;
 import com.kirelcodes.RoboticCraft.pathFinders.FollowPathfinder;
 import com.kirelcodes.RoboticCraft.pathFinders.PathManager;
 import com.kirelcodes.RoboticCraft.pathFinders.RandomStrollPathfinder;
+import com.kirelcodes.RoboticCraft.robot.animation.AnimationFrame;
+import com.kirelcodes.RoboticCraft.robot.animation.AnimationManager;
 import com.kirelcodes.RoboticCraft.utils.ItemStackUtils;
 import com.massivecraft.factions.entity.BoardColl;
 import com.massivecraft.factions.entity.Faction;
@@ -45,6 +48,12 @@ import com.massivecraft.massivecore.ps.PS;
  *
  */
 public class RobotBase implements InventoryHolder {
+	protected AnimationFrame deafult = new AnimationFrame().setBody(new EulerAngle(0, 0, 0))
+			.setHead(new EulerAngle(0, 0, 0))
+			.setLeftHand(new EulerAngle(0, 0, 0))
+			.setLeftLeg(new EulerAngle(0, 0, 0))
+			.setRightHand(new EulerAngle(0, 0, 0))
+			.setRightLeg(new EulerAngle(0, 0, 0));
 	private Chicken chick;
 	private ArmorStand armorStand;
 	private boolean isStuck;
@@ -57,6 +66,7 @@ public class RobotBase implements InventoryHolder {
 	private Object nmsHandel;
 	private UUID owner;
 	protected PathManager pathManager;
+	private Location targetLocation , previus;
 
 	/**
 	 * Responsible for the armor stand teleportation and target following
@@ -86,7 +96,16 @@ public class RobotBase implements InventoryHolder {
 					// Error thrower here
 				}
 			}
+			if (onTargetLocation()) {
+				AnimationManager.walk.cancelTask(getArmorStand());
+				deafult.setLocations(getArmorStand());
+			}
+			if(previus.distanceSquared(getLocation()) < 1){
+				AnimationManager.walk.cancelTask(getArmorStand());
+				deafult.setLocations(getArmorStand());
+			}
 			getArmorStand().teleport(getLocation());
+			previus = getLocation();
 		}
 
 		public void cancel() {
@@ -155,9 +174,11 @@ public class RobotBase implements InventoryHolder {
 		getArmorStand().setCustomName(
 				ChatColor.MAGIC + "NacOJerkGalShaked-" + ID);
 		getArmorStand().setCustomNameVisible(false);
+		this.previus = getLocation();
 		this.owner = owner;
-		if(!checkAllowed(loc))
+		if (!checkAllowed(loc))
 			remove();
+
 	}
 
 	/**
@@ -267,6 +288,16 @@ public class RobotBase implements InventoryHolder {
 				.invoke(genericSpeed);
 	}
 
+	public boolean onTargetLocation() {
+		if (targetLocation == null)
+			return false;
+		if (targetLocation.distanceSquared(getLocation()) < 1) {
+			targetLocation = null;
+			return true;
+		}
+		return false;
+	}
+
 	/**
 	 * Sets the location the robot should move to
 	 * 
@@ -274,7 +305,6 @@ public class RobotBase implements InventoryHolder {
 	 * @return did it start or not
 	 * @throws Exception
 	 */
-
 	public boolean setTargetLocation(Location loc) throws Exception {
 		Object navagation = getNMSHandle().getClass()
 				.getMethod("getNavigation").invoke(getNMSHandle());
@@ -289,6 +319,8 @@ public class RobotBase implements InventoryHolder {
 				.invoke(navagation, path, getSpeed());
 		navagation.getClass().getMethod("a", double.class)
 				.invoke(navagation, 2.0D);
+		targetLocation = loc;
+		AnimationManager.walk.runAnimationCycle(getArmorStand(), 5L);
 		return true;
 	}
 
@@ -306,12 +338,13 @@ public class RobotBase implements InventoryHolder {
 					.getY() + radius; y++) {
 				for (int z = getLocation().getBlockZ() - radius; z < getLocation()
 						.getZ() + radius; z++) {
-					locs.add(getLocation().getWorld().getBlockAt(x, y, z).getLocation());
+					locs.add(getLocation().getWorld().getBlockAt(x, y, z)
+							.getLocation());
 				}
 			}
 		}
 		ArrayList<Block> blocks = new ArrayList<>();
-		for(Location loc : orderDistance(locs))
+		for (Location loc : orderDistance(locs))
 			blocks.add(loc.getBlock());
 		return blocks;
 	}
@@ -411,14 +444,17 @@ public class RobotBase implements InventoryHolder {
 		this.isFollowing = false;
 		this.followTarget = null;
 	}
-	private void setID(int ID){
+
+	private void setID(int ID) {
 		this.ID = ID;
 	}
+
 	/**
 	 * Destroys the robot and drops an armor remove (Robot remove)
 	 */
 	public void destroy() {
-		ArmorStand armor = (ArmorStand) getWorld().spawnEntity(getLocation(), EntityType.ARMOR_STAND);
+		ArmorStand armor = (ArmorStand) getWorld().spawnEntity(getLocation(),
+				EntityType.ARMOR_STAND);
 		StringJoiner string = new StringJoiner(" , ", "{", "}");
 		string.add("NacOSearilize");
 		string.add(this.getClass().getName());
@@ -431,21 +467,27 @@ public class RobotBase implements InventoryHolder {
 		armor.setGravity(false);
 		getLocation().getBlock().setType(Material.CHEST);
 		Chest chesty = (Chest) getLocation().getBlock().getState();
-		for(int i = 0 ; i < getInventory().getContents().length ; i++)
-			if(getInventory().getContents()[i] != null)
-				chesty.getBlockInventory().addItem(getInventory().getContents()[i]);
+		for (int i = 0; i < getInventory().getContents().length; i++)
+			if (getInventory().getContents()[i] != null)
+				chesty.getBlockInventory().addItem(
+						getInventory().getContents()[i]);
 		remove();
 	}
-	
-	public static RobotBase getRobot(ArmorStand armor , Chest chest) throws Exception{
-		String[] data = ChatColor.stripColor(armor.getCustomName().replaceAll("\\{", "").replaceAll("\\}", "")).split(" , ");
+
+	public static RobotBase getRobot(ArmorStand armor, Chest chest)
+			throws Exception {
+		String[] data = ChatColor.stripColor(
+				armor.getCustomName().replaceAll("\\{", "")
+						.replaceAll("\\}", "")).split(" , ");
 		Inventory inven = chest.getInventory();
 		String clazz = data[1];
 		UUID uuid = UUID.fromString(data[2]);
 		int ID = Integer.parseInt(data[3]);
-		RobotBase robot = (RobotBase) Class.forName(clazz).getConstructor(Location.class ,UUID.class).newInstance(armor.getLocation() , uuid);
-		for(int i = 0 ; i < inven.getContents().length ; i++)
-			if(inven.getContents()[i] != null)
+		RobotBase robot = (RobotBase) Class.forName(clazz)
+				.getConstructor(Location.class, UUID.class)
+				.newInstance(armor.getLocation(), uuid);
+		for (int i = 0; i < inven.getContents().length; i++)
+			if (inven.getContents()[i] != null)
 				robot.addItem(inven.getContents()[i]);
 		RobotCenter.removeRobot(robot.getID());
 		robot.setID(ID);
@@ -455,6 +497,7 @@ public class RobotBase implements InventoryHolder {
 		armor.remove();
 		return robot;
 	}
+
 	/**
 	 * Completely removes the robot
 	 */
@@ -510,17 +553,17 @@ public class RobotBase implements InventoryHolder {
 	public UUID getOwner() {
 		return owner;
 	}
-	
-	public boolean checkAllowed(Location loc){
+
+	public boolean checkAllowed(Location loc) {
 		if (RoboticCraft.usingWorldGuard())
 			if (!RoboticCraft.getWorldGuard().canBuild(
 					Bukkit.getPlayer(getOwner()), loc))
 				return false;
-		if(RoboticCraft.usingFactions()){
+		if (RoboticCraft.usingFactions()) {
 			Faction facL = BoardColl.get().getFactionAt(PS.valueOf(loc));
-			if(facL.getId().equals(FactionColl.get().getNone().getId())){
+			if (facL.getId().equals(FactionColl.get().getNone().getId())) {
 				MPlayer mplayer = MPlayer.get(owner);
-				if(facL.getId()!=mplayer.getFactionId())
+				if (facL.getId() != mplayer.getFactionId())
 					return false;
 			}
 		}
