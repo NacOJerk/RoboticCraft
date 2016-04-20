@@ -44,8 +44,8 @@ public class GUIRobotMiner extends GUIRobotBasic {
 		});
 		setRemovePos(3);
 		setChestPos(13);
-		getInventory().setItem(14, (robot.isMining()) ? itemNoMine : itemMine);
 		setFollowPos(12);
+		getInventory().setItem(14, (robot.isMining()) ? itemNoMine : itemMine);
 	}
 
 	public void Mine() {

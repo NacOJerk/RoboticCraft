@@ -104,10 +104,11 @@ public class RecipeAdder {
 	}
 
 	public static ShapedRecipe addRecipeHunterRobot() {
-		return new ShapedRecipe(remoteHunter).shape("GAG", "DSD", "DDD")
-				.setIngredient('D', Material.DIAMOND_BLOCK)
+		return new ShapedRecipe(remoteHunter).shape("GAG", "DSD", "III")
+				.setIngredient('D', Material.GOLD_INGOT)
 				.setIngredient('S', Material.ARMOR_STAND)
-				.setIngredient('G', Material.GOLD_BLOCK)
+				.setIngredient('G', Material.REDSTONE)
+				.setIngredient('I', Material.IRON_INGOT)
 				.setIngredient('A', Material.DIAMOND_SWORD);
 	}
 
