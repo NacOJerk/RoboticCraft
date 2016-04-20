@@ -2,19 +2,18 @@ package com.kirelcodes.RoboticCraft.pathFinders;
 
 import java.util.ArrayList;
 
-import org.bukkit.Bukkit;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import com.kirelcodes.RoboticCraft.RoboticCraft;
 
 
-public class PathManager implements Runnable{
+public class PathManager extends BukkitRunnable{
 	private ArrayList<BasicPathfinder> paths;
 	private ArrayList<BasicPathfinder> running;
-	private int ID;
 	public PathManager(){
 		paths = new ArrayList<>();
 		running = new ArrayList<>();
-		ID = Bukkit.getScheduler().scheduleSyncRepeatingTask(RoboticCraft.getInstance(), this, 0L, 1L);
+		runTaskTimer(RoboticCraft.getInstance(), 0L, 1L);
 	}
 	public void addPath(BasicPathfinder path){
 		paths.add(path);
@@ -41,8 +40,5 @@ public class PathManager implements Runnable{
 				path.afterTask();
 			}
 		}
-	}
-	public void cancel(){
-		Bukkit.getScheduler().cancelTask(ID);
 	}
 }
