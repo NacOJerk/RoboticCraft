@@ -1,6 +1,7 @@
 package com.kirelcodes.RoboticCraft.gui.guiRobots;
 
 import org.bukkit.Material;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -49,7 +50,11 @@ public class GUIRobotCollector extends GUIRobotBasic {
 		robot.setCollecting(true);
 		getInventory().setItem(14, itemNoCollect);
 	}
-
+	@Override
+	public void follow(Entity p) {
+		super.follow(p);
+		noCollect();
+	}
 	public void noCollect() {
 		robot.setCollecting(false);
 		getInventory().setItem(14, itemCollect);

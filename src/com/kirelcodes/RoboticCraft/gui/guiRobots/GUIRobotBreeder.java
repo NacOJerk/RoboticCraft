@@ -1,6 +1,7 @@
 package com.kirelcodes.RoboticCraft.gui.guiRobots;
 
 import org.bukkit.Material;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -30,14 +31,14 @@ public class GUIRobotBreeder extends GUIRobotBasic {
 
 			@Override
 			public void actionNow(GUI gui, Player player) {
-				((GUIRobotBreeder) gui).Farm();
+				((GUIRobotBreeder) gui).Breed();
 			}
 		});
 		gettGUIAction().add(new GUIAction(itemNoBreed) {
 
 			@Override
 			public void actionNow(GUI gui, Player player) {
-				((GUIRobotBreeder) gui).noFarm();
+				((GUIRobotBreeder) gui).noBreed();
 			}
 		});
 		setRemovePos(3);
@@ -46,14 +47,20 @@ public class GUIRobotBreeder extends GUIRobotBasic {
 		setFollowPos(12);
 	}
 
-	public void Farm() {
+	public void Breed() {
 		robot.setBreeding(true);
 		if (robot.isFollowing())
 			noFollow(robot.getFollowTarget());
 		getInventory().setItem(14, itemNoBreed);
 	}
 
-	public void noFarm() {
+	@Override
+	public void follow(Entity p) {
+		super.follow(p);
+		noBreed();
+	}
+
+	public void noBreed() {
 		robot.setBreeding(false);
 		getInventory().setItem(14, itemBreed);
 	}
