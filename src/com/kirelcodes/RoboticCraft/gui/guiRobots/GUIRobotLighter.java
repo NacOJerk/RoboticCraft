@@ -10,7 +10,7 @@ import com.kirelcodes.RoboticCraft.gui.GUI;
 import com.kirelcodes.RoboticCraft.robot.RobotLighter;
 import com.kirelcodes.RoboticCraft.utils.ItemStackUtils;
 
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 
 public class GUIRobotLighter extends GUI {
 

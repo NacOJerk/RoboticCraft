@@ -11,7 +11,7 @@ import com.kirelcodes.RoboticCraft.gui.GUI;
 import com.kirelcodes.RoboticCraft.robot.RobotMiner;
 import com.kirelcodes.RoboticCraft.utils.ItemStackUtils;
 
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 
 public class GUIRobotMiner extends GUI {
 
