@@ -2,12 +2,16 @@ package com.kirelcodes.RoboticCraft;
 
 import java.io.IOException;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Chest;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -135,6 +139,46 @@ public class RoboticCraft extends JavaPlugin {
 
 	public static WorldGuardPlugin getWorldGuard() {
 		return worldGuard;
+	}
+	
+	@Override
+	public boolean onCommand(CommandSender sender, Command command,
+			String label, String[] args) {
+		if(command.getLabel().equalsIgnoreCase("remote")){
+			if(sender.isOp()){
+				if(args.length==1){
+					if(!(sender instanceof Player)){
+						sender.sendMessage("[RoboticCraft] Only players can use this command!");
+						return false;
+					}
+					for(RobotItem ri : RobotItem.getRobotItemList()){
+						String name = ri.getRobotClass().getName().split(".")[4];
+						if(("Robot"+args[0]).equalsIgnoreCase(name)){
+							((Player)sender).getInventory().addItem(ri.getItem());
+							sender.sendMessage("[RoboticCraft] Recieved a "+name+" remote!");
+							return false;
+						}
+						sender.sendMessage("[RoboticCraft] Robot "+name+" wasn't found!");
+					}
+				}else if(args.length==2){
+					if(Bukkit.getPlayer(args[1])!=null){
+						for(RobotItem ri : RobotItem.getRobotItemList()){
+							String name = ri.getRobotClass().getName().split(".")[4];
+							if(("Robot"+args[0]).equalsIgnoreCase(name)){
+								Bukkit.getPlayer(args[1]).getInventory().addItem(ri.getItem());
+								sender.sendMessage("[RoboticCraft] Send a "+name+" remote to "+args[1]+"!");
+								return false;
+							}
+							sender.sendMessage("[RoboticCraft] Robot "+name+" wasn't found!");
+						}
+					}else{
+						sender.sendMessage("[RoboticCraft] Couldn't find player "+args[1]+"!");
+					}
+				}else
+					sender.sendMessage("[RoboticCraft] Correct usage: /remote [robot] {player}");
+			}
+		}
+		return false;
 	}
 
 }

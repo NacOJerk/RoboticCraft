@@ -2,3 +2,6 @@ name: RoboticCraft
 version: 1.0
 main: com.kirelcodes.RoboticCraft.RoboticCraft
 softdepend: [WorldGuard, Factions, Residence]
+commands:
+  remote:
+    description: /remote [robot] {player} - gives you a remote of that robot.

@@ -362,7 +362,7 @@ public class RobotBase implements InventoryHolder {
 		return getNearbyBlocks(getLocation(), raduis);
 	}
 
-	public List<Block> getNearbyBlocks(Location loc, int raduis) {
+	public static List<Block> getNearbyBlocks(Location loc, int raduis) {
 		List<Block> circle = new ArrayList<>();
 		circle.add(loc.getBlock());
 		for (int i = 0; i < raduis; i++)
@@ -370,7 +370,7 @@ public class RobotBase implements InventoryHolder {
 		return circle;
 	}
 
-	public List<Block> getCircle(Location loc, int i) {
+	private static List<Block> getCircle(Location loc, int i) {
 		List<Block> circle = new ArrayList<>();
 		Location relavtive = loc.clone();
 		relavtive.add(i, 0, i);

@@ -1,6 +1,7 @@
 package com.kirelcodes.RoboticCraft;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -95,6 +96,9 @@ public class RobotItem {
 		}
 		return "";
 
+	}
+	public static List<RobotItem> getRobotItemList(){
+		return robotItems;
 	}
 
 }
