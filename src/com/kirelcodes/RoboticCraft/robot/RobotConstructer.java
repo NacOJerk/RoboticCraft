@@ -34,6 +34,8 @@ public class RobotConstructer extends RobotBase {
 	}
 
 	public boolean isValid() {
+		if(pos1 == null || pos2 == null)
+			return true;
 		int x = pos1.getBlockX() - pos2.getBlockX();
 		int y = pos1.getBlockY() - pos2.getBlockY();
 		int z = pos1.getBlockZ() - pos2.getBlockZ();

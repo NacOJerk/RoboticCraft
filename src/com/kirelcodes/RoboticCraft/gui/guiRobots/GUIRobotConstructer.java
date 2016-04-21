@@ -80,6 +80,8 @@ public class GUIRobotConstructer extends GUIRobotBasic {
 		} else {
 			getInventory().setItem(14, itemConstruct);
 		}
+		getInventory().setItem(15, itemPos1);
+		getInventory().setItem(16 , itemPos2);
 	}
 
 }

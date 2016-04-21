@@ -172,7 +172,7 @@ public class RecipeAdder {
 				.setIngredient('A', Material.HOPPER);
 	}
 	public static ShapedRecipe addRecipeRobotConstructer() {
-		return new ShapedRecipe(remoteCollector).shape("GAG", "DSD", "III")
+		return new ShapedRecipe(remoteConstructer).shape("GAG", "DSD", "III")
 				.setIngredient('D', Material.GOLD_BLOCK)
 				.setIngredient('S', Material.ARMOR_STAND)
 				.setIngredient('G', Material.REDSTONE_BLOCK)
