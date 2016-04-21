@@ -31,6 +31,7 @@ public class RoboticCraft extends JavaPlugin {
 	private static WorldGuardPlugin worldGuard;
 	private static boolean usingFactions = false;
 	private static boolean usingResidence = false;
+	private static String prefix = "§b§6[§cRoboticCraft§b§6] ";
 
 	@Override
 	public void onEnable() {
@@ -65,8 +66,7 @@ public class RoboticCraft extends JavaPlugin {
 					continue;
 				if (armor.getCustomName() == null)
 					continue;
-				if (!ChatColor.stripColor(armor.getCustomName()).startsWith(
-						"{NacOSearilize"))
+				if (!ChatColor.stripColor(armor.getCustomName()).startsWith("{NacOSearilize"))
 					continue;
 				if (armor.getLocation().getBlock().getType() != Material.CHEST)
 					continue;
@@ -142,49 +142,41 @@ public class RoboticCraft extends JavaPlugin {
 	}
 
 	@Override
-	public boolean onCommand(CommandSender sender, Command command,
-			String label, String[] args) {
+	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		if (command.getLabel().equalsIgnoreCase("remote")) {
 			if (sender.isOp()) {
 				if (args.length == 1) {
 					if (!(sender instanceof Player)) {
-						sender.sendMessage("[RoboticCraft] Only players can use this command!");
+						sender.sendMessage(prefix + "§8Only players can use this command§4!");
 						return false;
 					}
 					for (RobotItem ri : RobotItem.getRobotItemList()) {
 						String name = ri.getRobotClass().getName().split("\\.")[4];
 						if (("Robot" + args[0]).equalsIgnoreCase(name)) {
-							((Player) sender).getInventory().addItem(
-									ri.getItem());
-							sender.sendMessage("[RoboticCraft] Recieved a "
-									+ name + " remote!");
+							((Player) sender).getInventory().addItem(ri.getItem());
+							sender.sendMessage(prefix + "§8Recieved a §6" + name + " §8remote§4!");
 							return false;
 						}
 					}
-					sender.sendMessage("[RoboticCraft] Robot " + args[0]
-							+ " wasn't found!");
+					sender.sendMessage(prefix + "§8Robot §6" + args[0] + " §8wasn't found§4!");
 				} else if (args.length == 2) {
 					if (Bukkit.getPlayer(args[1]) != null) {
 						for (RobotItem ri : RobotItem.getRobotItemList()) {
-							String name = ri.getRobotClass().getName()
-									.split("\\.")[4];
+							String name = ri.getRobotClass().getName().split("\\.")[4];
 							if (("Robot" + args[0]).equalsIgnoreCase(name)) {
-								Bukkit.getPlayer(args[1]).getInventory()
-										.addItem(ri.getItem());
-								Bukkit.getPlayer(args[1]).sendMessage("[RoboticCraft] You recived a " + args[0] + " remote");
-								sender.sendMessage("[RoboticCraft] Send a "
-										+ name + " remote to " + args[1] + "!");
+								Bukkit.getPlayer(args[1]).getInventory().addItem(ri.getItem());
+								Bukkit.getPlayer(args[1])
+										.sendMessage(prefix + "§8You recived a §6" + args[0] + "§8 remote");
+								sender.sendMessage(prefix + "§8Send a §6" + name + " §8remote to §6" + args[1] + "§4!");
 								return false;
 							}
 						}
-						sender.sendMessage("[RoboticCraft] Robot " + args[0]
-								+ " wasn't found!");
+						sender.sendMessage(prefix + "§8Robot §6" + args[0] + " §8wasn't found§4!");
 					} else {
-						sender.sendMessage("[RoboticCraft] Couldn't find player "
-								+ args[1] + "!");
+						sender.sendMessage(prefix + "§8Couldn't find player §6" + args[1] + "§4!");
 					}
 				} else
-					sender.sendMessage("[RoboticCraft] Correct usage: /remote [robot] {player}");
+					sender.sendMessage(prefix + "§8Correct usage: /remote [robot] {player}");
 			}
 		}
 		return false;
