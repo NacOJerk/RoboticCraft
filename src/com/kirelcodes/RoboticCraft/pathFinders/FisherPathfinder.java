@@ -7,7 +7,9 @@ import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 
 import com.kirelcodes.RoboticCraft.configs.ConfigManager;
+import com.kirelcodes.RoboticCraft.robot.RobotBase;
 import com.kirelcodes.RoboticCraft.robot.RobotFisher;
+
 import org.bukkit.Material;
 
 public class FisherPathfinder extends BasicPathfinder {
@@ -50,7 +52,7 @@ public class FisherPathfinder extends BasicPathfinder {
 			int x = robot.getLocation().getBlockX();
 			int z = robot.getLocation().getBlockZ();
 			for (int y = radius; y > -radius; y--) {
-				water.addAll(robot.getNearbyBlocks(
+				water.addAll(RobotBase.getNearbyBlocks(
 						robot.getWorld().getBlockAt(x, robot.getLocation().getBlockY() + y, z).getLocation(), radius));
 			}
 		}

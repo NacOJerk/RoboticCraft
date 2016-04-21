@@ -6,6 +6,7 @@ import java.util.List;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 
+import com.kirelcodes.RoboticCraft.robot.RobotBase;
 import com.kirelcodes.RoboticCraft.robot.RobotLumberjack;
 
 public class LumberjackPathfinder extends BasicPathfinder {
@@ -48,7 +49,7 @@ public class LumberjackPathfinder extends BasicPathfinder {
 			int x = robot.getLocation().getBlockX();
 			int z = robot.getLocation().getBlockZ();
 			for (int y = radius; y > -radius; y--) {
-				blocks.addAll(robot.getNearbyBlocks(
+				blocks.addAll(RobotBase.getNearbyBlocks(
 						robot.getWorld().getBlockAt(x, robot.getLocation().getBlockY() + y, z).getLocation(), radius));
 			}
 		}
