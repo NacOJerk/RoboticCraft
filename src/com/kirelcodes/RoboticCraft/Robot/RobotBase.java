@@ -75,6 +75,7 @@ public class RobotBase implements InventoryHolder {
 	private UUID owner;
 	protected PathManager pathManager;
 	private Location targetLocation, previus, previusFuel;
+	private boolean exists;
 
 	/**
 	 * Responsible for the armor stand teleportation and target following
@@ -200,6 +201,7 @@ public class RobotBase implements InventoryHolder {
 		this.previus = getLocation();
 		this.owner = owner;
 		this.previusFuel = getLocation();
+		exists = true;
 		if (!checkAllowed(loc))
 			remove();
 
@@ -543,8 +545,11 @@ public class RobotBase implements InventoryHolder {
 		this.chick.remove();
 		this.armorStand.remove();
 		RobotCenter.removeRobot(getID());
+		exists = false;
 	}
-
+	public boolean doesExists(){
+		return exists;
+	}
 	public Inventory getInventory() {
 		return invetory;
 	}

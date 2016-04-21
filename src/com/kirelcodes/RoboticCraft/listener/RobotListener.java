@@ -69,14 +69,18 @@ public class RobotListener implements Listener {
 		ItemStack item = e.getItem();
 		if (!RobotItem.containsItem(item))
 			return;
-		if(!(RobotItem.hasPermission(item) && e.getPlayer().hasPermission(RobotItem.getPermission(item))))
-			return;
+		if(RobotItem.hasPermission(item)){
+			if(!e.getPlayer().hasPermission(RobotItem.getPermission(item)))
+				return;
+		}
 		try {
 			if (hasID(item))
 				return;
 			ItemStack itemC = item;
 			item = NBTRobotId.clearNBT(item);
 			RobotBase robot = RobotItem.getRobot(item, e.getPlayer());
+			if(!robot.doesExists())
+				return;
 			if (hasFuel(itemC)) {
 				robot.setFuel(getFuel(itemC));
 			}
