@@ -6,21 +6,19 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 
 import com.kirelcodes.RoboticCraft.gui.guiRobots.GUIRobotBasic;
+import com.kirelcodes.RoboticCraft.gui.guiRobots.GUIRobotCollector;
 import com.kirelcodes.RoboticCraft.gui.guiRobots.GUIRobotFarmer;
 import com.kirelcodes.RoboticCraft.gui.guiRobots.GUIRobotFisher;
 import com.kirelcodes.RoboticCraft.gui.guiRobots.GUIRobotHunter;
-import com.kirelcodes.RoboticCraft.gui.guiRobots.GUIRobotCollector;
 import com.kirelcodes.RoboticCraft.gui.guiRobots.GUIRobotLighter;
-import com.kirelcodes.RoboticCraft.gui.guiRobots.GUIRobotLumberjack;
 import com.kirelcodes.RoboticCraft.gui.guiRobots.GUIRobotMiner;
 import com.kirelcodes.RoboticCraft.robot.RobotBase;
+import com.kirelcodes.RoboticCraft.robot.RobotCollector;
 import com.kirelcodes.RoboticCraft.robot.RobotFarmer;
 import com.kirelcodes.RoboticCraft.robot.RobotFisher;
 import com.kirelcodes.RoboticCraft.robot.RobotHunter;
 import com.kirelcodes.RoboticCraft.robot.RobotLighter;
-import com.kirelcodes.RoboticCraft.robot.RobotLumberjack;
 import com.kirelcodes.RoboticCraft.robot.RobotMiner;
-import com.kirelcodes.RoboticCraft.robot.RobotCollector;
 import com.kirelcodes.RoboticCraft.utils.ItemStackUtils;
 import com.kirelcodes.RoboticCraft.utils.NMSClassInteracter;
 
