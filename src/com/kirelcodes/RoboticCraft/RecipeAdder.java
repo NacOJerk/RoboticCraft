@@ -25,7 +25,7 @@ import com.kirelcodes.RoboticCraft.utils.NMSClassInteracter;
 public class RecipeAdder {
 	private static ItemStack remoteBase, remoteFarmer, remoteHunter,
 			remoteLighter, remoteLumberjack, remoteMiner, remoteFisher,
-			remoteBreeder, remoteCollector;
+			remoteBreeder, remoteCollector , remoteConstructer;
 
 	public static void addAll() {
 		initializeItem();
@@ -84,6 +84,10 @@ public class RecipeAdder {
 		remoteCollector = ItemStackUtils.createItem(m,
 				"&cRemote Control Collector", ChatColor.AQUA
 						+ "Remote for the collector robot");
+		remoteConstructer = ItemStackUtils.createItem(m,
+				"&cRemote Control Constructer", ChatColor.AQUA
+						+ "Remote for the constructer robot");
+
 	}
 
 	public static ShapedRecipe addRecipeBasicRobot() {
@@ -165,4 +169,13 @@ public class RecipeAdder {
 				.setIngredient('I', Material.IRON_BLOCK)
 				.setIngredient('A', Material.HOPPER);
 	}
+	public static ShapedRecipe addRecipeRobotConstructer() {
+		return new ShapedRecipe(remoteCollector).shape("GAG", "DSD", "III")
+				.setIngredient('D', Material.GOLD_BLOCK)
+				.setIngredient('S', Material.ARMOR_STAND)
+				.setIngredient('G', Material.REDSTONE_BLOCK)
+				.setIngredient('I', Material.IRON_BLOCK)
+				.setIngredient('A', Material.WORKBENCH);
+	}
+
 }
