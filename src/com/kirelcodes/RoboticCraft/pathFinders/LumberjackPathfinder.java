@@ -3,7 +3,6 @@ package com.kirelcodes.RoboticCraft.pathFinders;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 
@@ -33,8 +32,7 @@ public class LumberjackPathfinder extends BasicPathfinder {
 	public void afterTask() {
 		if (target == null)
 			return;
-		if (target.getType() == Material.AIR
-				|| (target.getY() - robot.getLocation().getY()) >= 9)
+		if (target.getType() == Material.AIR || (target.getY() - robot.getLocation().getY()) >= 9)
 			target = null;
 		if (target == null || robot == null)
 			return;
@@ -43,49 +41,41 @@ public class LumberjackPathfinder extends BasicPathfinder {
 		blocks.clear();
 	}
 
-	private boolean contains(Location loc) {
-		boolean nope = false;
-		for (Block b : blackList) {
-			if (b.getLocation().getBlockX() == loc.getBlockX()
-					&& b.getLocation().getBlockY() == loc.getBlockY()
-					&& b.getLocation().getBlockZ() == loc.getBlockZ()) {
-				nope = true;
-				break;
-			}
-		}
-		return nope;
-	}
-
 	@Override
 	public void updateTask() {
-		if (target == null)
-			blocks.addAll(robot.getNearbyBlocks(10));
+		int radius = 10;
+		if (target == null) {
+			int x = robot.getLocation().getBlockX();
+			int z = robot.getLocation().getBlockZ();
+			for (int y = radius; y > -radius; y--) {
+				blocks.addAll(robot.getNearbyBlocks(
+						robot.getWorld().getBlockAt(x, robot.getLocation().getBlockY() + y, z).getLocation(), radius));
+			}
+		}
 		for (Block b : blocks) {
 			if (b == null)
 				continue;
-			if (contains(b.getLocation()))
+			if (blackList.contains(b))
 				continue;
-			if (b.getType() == Material.LOG
-					|| b.getType() == Material.LOG_2) {
+			if (b.getType() == Material.LOG || b.getType() == Material.LOG_2) {
 				if (!blackList.contains(b)) {
 					target = b;
 					break;
 				}
 			}
 		}
+
 		if (target == null)
 			return;
 		try {
 			if (robot == null || target == null)
 				return;
 			robot.setTargetLocation(target.getLocation());
-			if (target.getLocation().distance(robot.getLocation()) <= 10) {
+			if (target.getLocation().distance(robot.getLocation()) <= 6) {
 				robot.mineBlock(target);
 				target = null;
-			} else if (target.getLocation().getBlockX() == robot.getLocation()
-					.getBlockX()) {
-				if (target.getLocation().getBlockZ() == robot.getLocation()
-						.getBlockZ()) {
+			} else if (target.getLocation().getBlockX() == robot.getLocation().getBlockX()) {
+				if (target.getLocation().getBlockZ() == robot.getLocation().getBlockZ()) {
 					blackList.add(target);
 					target = null;
 				}
