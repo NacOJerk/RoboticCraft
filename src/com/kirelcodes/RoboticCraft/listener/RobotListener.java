@@ -60,17 +60,18 @@ public class RobotListener implements Listener {
 		e.setCancelled(true);
 	}
 
+	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void rightClickSpawner(PlayerInteractEvent e) {
-		if(!e.getAction().name().contains("RIGHT"))
+		if (!e.getAction().name().contains("RIGHT"))
 			return;
 		if (!e.hasItem())
 			return;
 		ItemStack item = e.getItem();
 		if (!RobotItem.containsItem(item))
 			return;
-		if(RobotItem.hasPermission(item)){
-			if(!e.getPlayer().hasPermission(RobotItem.getPermission(item)))
+		if (RobotItem.hasPermission(item)) {
+			if (!e.getPlayer().hasPermission(RobotItem.getPermission(item)))
 				return;
 		}
 		try {
@@ -79,13 +80,17 @@ public class RobotListener implements Listener {
 			ItemStack itemC = item;
 			item = NBTRobotId.clearNBT(item);
 			RobotBase robot = RobotItem.getRobot(item, e.getPlayer());
-			if(!robot.doesExists())
+			if (!robot.doesExists())
 				return;
 			if (hasFuel(itemC)) {
 				robot.setFuel(getFuel(itemC));
 			}
-			ItemStack cloneItem = e.getItem();
-			e.getPlayer().getInventory().remove(itemC);
+			ItemStack cloneItem = e.getItem().clone();
+			cloneItem.setAmount(1);
+			if (itemC.getAmount() == 1)
+				e.getPlayer().setItemInHand(new ItemStack(Material.AIR));
+			else
+				itemC.setAmount(itemC.getAmount() - 1);
 			cloneItem = setID(cloneItem, robot.getID());
 			e.getPlayer().getInventory().addItem(cloneItem);
 			e.getPlayer().updateInventory();

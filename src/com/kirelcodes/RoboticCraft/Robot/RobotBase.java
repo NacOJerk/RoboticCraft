@@ -99,6 +99,8 @@ public class RobotBase implements InventoryHolder {
 
 		@Override
 		public void run() {
+			if(getArmorStand().isDead() || getNavigator().isDead())
+				remove();
 			if((delay % 100) == 0){
 				goThroughInventory();
 			}
@@ -613,13 +615,17 @@ public class RobotBase implements InventoryHolder {
 	}
 
 	public boolean checkAllowed(Location loc) {
+		if(Bukkit.getOfflinePlayer(owner).isOp())
+			return true;
 		if (RoboticCraft.usingWorldGuard())
 			if (!RoboticCraft.getWorldGuard().canBuild(
 					Bukkit.getPlayer(getOwner()), loc))
 				return false;
 		if (RoboticCraft.usingFactions()) {
 			Faction facL = BoardColl.get().getFactionAt(PS.valueOf(loc));
-			if (facL.getId().equals(FactionColl.get().getNone().getId())) {
+			if(facL.getId().equalsIgnoreCase("none"))
+				return true;
+			if (!facL.getId().equals(FactionColl.get().getNone().getId())) {
 				MPlayer mplayer = MPlayer.get(owner);
 				if (facL.getId() != mplayer.getFactionId())
 					return false;
