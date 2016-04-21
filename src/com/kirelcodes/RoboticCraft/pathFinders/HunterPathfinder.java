@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.bukkit.Location;
 import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Ocelot;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
@@ -54,7 +55,7 @@ public class HunterPathfinder extends BasicPathfinder {
 						|| e instanceof Wolf
 						|| e instanceof Ocelot
 						|| e.equals(robot.getNavigator())
-						|| e.equals(robot.getArmorStand()) || e.getCustomName() != null)
+						|| e.equals(robot.getArmorStand()) || (e.getType() == EntityType.CHICKEN && e.getCustomName() != null))
 					continue;
 				if (e instanceof Damageable) {
 					target = e;

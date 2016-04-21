@@ -1,46 +1,91 @@
 package com.kirelcodes.RoboticCraft.configs;
 
-import org.bukkit.entity.Player;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import org.bukkit.entity.Player;
+import static com.kirelcodes.RoboticCraft.configs.Configs.*;
 public class ConfigManager {
 	public static double getMineSpeed() {
-		return Configs.SPEED.getConfig().getDouble("BlockMine");
+		if(!SPEED.getConfig().contains("BlockMine")){
+			SPEED.getConfig().set("BlockMine", SPEED.getDefaultConfig().get("BlockMine"));
+			SPEED.saveConfig();
+		}
+		return SPEED.getConfig().getDouble("BlockMine");
 	}
 
 	public static double getLogSpeed() {
-		return Configs.SPEED.getConfig().getDouble("LogMine");
+		if(!SPEED.getConfig().contains("LogMine")){
+			SPEED.getConfig().set("LogMine", SPEED.getDefaultConfig().get("LogMine"));
+			SPEED.saveConfig();
+		}
+		return SPEED.getConfig().getDouble("LogMine");
 	}
 
 	public static double getHuntSpeed() {
-		return Configs.SPEED.getConfig().getDouble("HuntDelay");
+		if(!SPEED.getConfig().contains("HuntDelay")){
+			SPEED.getConfig().set("HuntDelay", SPEED.getDefaultConfig().get("BlockMine"));
+			SPEED.saveConfig();
+		}
+		return SPEED.getConfig().getDouble("HuntDelay");
 	}
 
 	public static double getFishTime() {
-		return Configs.SPEED.getConfig().getDouble("FishingTime") * 20;
+		if(!SPEED.getConfig().contains("FishingTime")){
+			SPEED.getConfig().set("FishingTime", SPEED.getDefaultConfig().get("FishingTime"));
+			SPEED.saveConfig();
+		}
+		return SPEED.getConfig().getDouble("FishingTime") * 20;
 	}
 
 	public static String getLang(String lang, Player p) {
-		String s = Configs.Languages.getConfig().getString(lang);
-		if (s.contains("%prefix%")) {
-			s = s.replace("%prefix%", Configs.Languages.getConfig().getString("Prefix"));
+		if(!containsLang(lang)){
+			if(LANGUAGES.getDefaultConfig().contains(lang)){
+				LANGUAGES.getConfig().set(lang, LANGUAGES.getDefaultConfig().get(lang));
+				LANGUAGES.saveConfig();
+			}
+			return "";
 		}
-		if (s.contains("%player%")) {
-			s = s.replace("%player%", p.getName());
+		String s = LANGUAGES.getConfig().getString(lang);
+		s = s.replaceAll("&", "§");
+		if (s.contains("%PLAYER%")) {
+			s = s.replaceAll("%PLAYER%", p.getName());
 		}
-		if (s.contains("%playerx%")) {
-			s = s.replace("%playerx%", p.getLocation().getX() + "");
+		if (s.contains("%PLAYERX%")) {
+			s = s.replaceAll("%PLAYERX%", p.getLocation().getX() + "");
 		}
-		if (s.contains("%playery%")) {
-			s = s.replace("%playery%", p.getLocation().getY() + "");
+		if (s.contains("%PLAYERY%")) {
+			s = s.replaceAll("%PLAYERY%", p.getLocation().getY() + "");
 		}
-		if (s.contains("%playerz%")) {
-			s = s.replace("%playerz%", p.getLocation().getZ() + "");
+		if (s.contains("%PLAYERZ%")) {
+			s = s.replaceAll("%PLAYERZ%", p.getLocation().getZ() + "");
+		}
+		List<String> matches = getMatches(s);
+		for(String match : matches){
+			String match2 = match.replaceAll("%", "");
+			if(!containsLang(match2))
+				continue;
+			s.replaceAll(match, getLang(match2, p));
 		}
 		return s;
-	}
 
+	}
+	public static boolean containsLang(String lang){
+		return LANGUAGES.getConfig().contains(lang);
+	}
+	private static List<String> getMatches(String input){
+		Pattern regexField = Pattern.compile("(\\%\\w+\\%)");
+		Matcher m = regexField.matcher(input);
+		List<String> matches = new ArrayList<>();
+		while(m.find())
+			matches.add(m.group());
+		return matches;
+	}
+	
 	public static void setLang(String lang, String type) {
-		Configs.Languages.getConfig().set(lang, type);
+		LANGUAGES.getConfig().set(lang, type);
 	}
 
 }

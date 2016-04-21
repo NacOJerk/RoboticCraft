@@ -42,6 +42,11 @@ public class BaseConfig {
 			RoboticCraft.getInstance().saveResource(configName + ".yml", false);
 	}
 
+	@SuppressWarnings("deprecation")
+	public FileConfiguration getDefaultConfig(){
+		return YamlConfiguration.loadConfiguration(RoboticCraft.getInstance().getResource(configName + ".yml"));
+		
+	}
 	///////////////////////////////////////
 
 	public String getName() {
