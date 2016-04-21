@@ -31,7 +31,7 @@ public class RoboticCraft extends JavaPlugin {
 	private static WorldGuardPlugin worldGuard;
 	private static boolean usingFactions = false;
 	private static boolean usingResidence = false;
-	private static String prefix = "§b§6[§cRoboticCraft§b§6] ";
+	public static String prefix = "§b§6[§cRoboticCraft§b§6] ";
 
 	@Override
 	public void onEnable() {

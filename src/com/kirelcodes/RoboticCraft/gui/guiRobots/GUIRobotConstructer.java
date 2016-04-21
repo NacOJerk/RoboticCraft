@@ -4,6 +4,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import com.kirelcodes.RoboticCraft.RoboticCraft;
 import com.kirelcodes.RoboticCraft.gui.GUI;
 import com.kirelcodes.RoboticCraft.robot.RobotConstructer;
 import com.kirelcodes.RoboticCraft.utils.ItemStackUtils;
@@ -11,7 +12,7 @@ import com.kirelcodes.RoboticCraft.utils.ItemStackUtils;
 public class GUIRobotConstructer extends GUIRobotBasic {
 
 	private RobotConstructer robot;
-	private ItemStack itemConstruct, itemStopConstruct;
+	private ItemStack itemConstruct, itemStopConstruct, itemPos1, itemPos2;
 
 	public GUIRobotConstructer(RobotConstructer robot) {
 		super(robot);
@@ -23,11 +24,15 @@ public class GUIRobotConstructer extends GUIRobotBasic {
 		setRemovePos(11);
 		setChestPos(13);
 		setFollowPos(12);
-		setFuelPos(15);
+		setFuelPos(10);
 		itemConstruct = ItemStackUtils.createItem(Material.WORKBENCH,
 				"&aConstruct", "");
 		itemStopConstruct = ItemStackUtils.createItem(Material.WORKBENCH,
 				"&cStop Constructing", "");
+		itemPos1 = ItemStackUtils.createItem(Material.COMPASS,
+				"&aSet Pos1", "");
+		itemPos2 = ItemStackUtils.createItem(Material.COMPASS,
+				"&aSet Pos2", "");
 		getGUIAction().add(new GUIAction(itemConstruct) {
 
 			@Override
@@ -44,6 +49,30 @@ public class GUIRobotConstructer extends GUIRobotBasic {
 				((GUIRobotConstructer) gui).robot.setConstructing(false);
 				((GUIRobotConstructer) gui).robot.getInventory().setItem(14,
 						itemConstruct);
+			}
+		});
+		getGUIAction().add(new GUIAction(itemPos1) {
+
+			@Override
+			public void actionNow(GUI gui, Player player) {
+				RobotConstructer robot = ((GUIRobotConstructer) gui).robot;
+				robot.setposOne(player.getLocation());
+				if(!robot.isValid()){
+					player.closeInventory();
+					player.sendMessage(RoboticCraft.prefix+"§8This selection is invalid§4!");
+				}
+			}
+		});
+		getGUIAction().add(new GUIAction(itemPos2) {
+
+			@Override
+			public void actionNow(GUI gui, Player player) {
+				RobotConstructer robot = ((GUIRobotConstructer) gui).robot;
+				robot.setposTwo(player.getLocation());
+				if(!robot.isValid()){
+					player.closeInventory();
+					player.sendMessage(RoboticCraft.prefix+"§8This selection is invalid§4!");
+				}
 			}
 		});
 		if (this.robot.isConstructing()) {

@@ -37,11 +37,7 @@ public class RobotConstructer extends RobotBase {
 		int x = pos1.getBlockX() - pos2.getBlockX();
 		int y = pos1.getBlockY() - pos2.getBlockY();
 		int z = pos1.getBlockZ() - pos2.getBlockZ();
-		if (x == 0 && y == 0)
-			return true;
-		if (x == 0 && z == 0)
-			return true;
-		if (y == 0 && z == 0)
+		if (x==0||y==0||z==0)
 			return true;
 		return false;
 	}
