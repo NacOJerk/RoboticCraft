@@ -52,13 +52,16 @@ public class RecipeAdder {
 				.setPermission("RoboticCraft.Collector");
 		;
 	}
+	
+	public static Material getRemoteMaterial(){
+		if (NMSClassInteracter.getVersion().contains("9")) {
+			return Material.END_CRYSTAL;
+		} else
+			return Material.WATCH;
+	}
 
 	public static void initializeItem() {
-		Material m = null;
-		if (NMSClassInteracter.getVersion().contains("9")) {
-			m = Material.END_CRYSTAL;
-		} else
-			m = Material.WATCH;
+		Material m = getRemoteMaterial();
 		remoteBase = ItemStackUtils.createItem(m, "&cRemote Control Basic",
 				ChatColor.AQUA + "Remote for the basic robot");
 		remoteFarmer = ItemStackUtils.createItem(m, "&cRemote Control Farmer",
