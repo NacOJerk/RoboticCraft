@@ -85,7 +85,7 @@ public class RecipeAdder {
 
 	public static ShapedRecipe addRecipeBasicRobot() {
 		return new ShapedRecipe(remoteBase).shape("G G", "DSD", "III")
-				.setIngredient('D', Material.GOLD_INGOT)
+				.setIngredient('D', Material.GOLD_BLOCK)
 				.setIngredient('S', Material.ARMOR_STAND)
 				.setIngredient('G', Material.REDSTONE_BLOCK)
 				.setIngredient('I', Material.IRON_BLOCK);
@@ -93,7 +93,7 @@ public class RecipeAdder {
 
 	public static ShapedRecipe addRecipeFarmerRobot() {
 		return new ShapedRecipe(remoteFarmer).shape("GAG", "DSD", "III")
-				.setIngredient('D', Material.GOLD_INGOT)
+				.setIngredient('D', Material.GOLD_BLOCK)
 				.setIngredient('S', Material.ARMOR_STAND)
 				.setIngredient('G', Material.REDSTONE_BLOCK)
 				.setIngredient('I', Material.IRON_BLOCK)
@@ -102,7 +102,7 @@ public class RecipeAdder {
 
 	public static ShapedRecipe addRecipeHunterRobot() {
 		return new ShapedRecipe(remoteHunter).shape("GAG", "DSD", "III")
-				.setIngredient('D', Material.GOLD_INGOT)
+				.setIngredient('D', Material.GOLD_BLOCK)
 				.setIngredient('S', Material.ARMOR_STAND)
 				.setIngredient('G', Material.REDSTONE_BLOCK)
 				.setIngredient('I', Material.IRON_BLOCK)
@@ -111,7 +111,7 @@ public class RecipeAdder {
 
 	public static ShapedRecipe addRecipeLighterRobot() {
 		return new ShapedRecipe(remoteLighter).shape("GAG", "DSD", "III")
-				.setIngredient('D', Material.GOLD_INGOT)
+				.setIngredient('D', Material.GOLD_BLOCK)
 				.setIngredient('S', Material.ARMOR_STAND)
 				.setIngredient('G', Material.REDSTONE_BLOCK)
 				.setIngredient('I', Material.IRON_BLOCK)
@@ -120,7 +120,7 @@ public class RecipeAdder {
 
 	public static ShapedRecipe addRecipeLumberjackRobot() {
 		return new ShapedRecipe(remoteLumberjack).shape("GAG", "DSD", "III")
-				.setIngredient('D', Material.GOLD_INGOT)
+				.setIngredient('D', Material.GOLD_BLOCK)
 				.setIngredient('S', Material.ARMOR_STAND)
 				.setIngredient('G', Material.REDSTONE_BLOCK)
 				.setIngredient('I', Material.IRON_BLOCK)
@@ -129,7 +129,7 @@ public class RecipeAdder {
 
 	public static ShapedRecipe addRecipeMinerRobot() {
 		return new ShapedRecipe(remoteMiner).shape("GAG", "DSD", "III")
-				.setIngredient('D', Material.GOLD_INGOT)
+				.setIngredient('D', Material.GOLD_BLOCK)
 				.setIngredient('S', Material.ARMOR_STAND)
 				.setIngredient('G', Material.REDSTONE_BLOCK)
 				.setIngredient('I', Material.IRON_BLOCK)
@@ -138,7 +138,7 @@ public class RecipeAdder {
 
 	public static ShapedRecipe addRecipeFisherRobot() {
 		return new ShapedRecipe(remoteFisher).shape("GAG", "DSD", "III")
-				.setIngredient('D', Material.GOLD_INGOT)
+				.setIngredient('D', Material.GOLD_BLOCK)
 				.setIngredient('S', Material.ARMOR_STAND)
 				.setIngredient('G', Material.REDSTONE_BLOCK)
 				.setIngredient('I', Material.IRON_BLOCK)
@@ -147,7 +147,7 @@ public class RecipeAdder {
 
 	public static ShapedRecipe addRecipeBreederRobot() {
 		return new ShapedRecipe(remoteBreeder).shape("GAG", "DSD", "III")
-				.setIngredient('D', Material.GOLD_INGOT)
+				.setIngredient('D', Material.GOLD_BLOCK)
 				.setIngredient('S', Material.ARMOR_STAND)
 				.setIngredient('G', Material.REDSTONE_BLOCK)
 				.setIngredient('I', Material.IRON_BLOCK)
@@ -156,7 +156,7 @@ public class RecipeAdder {
 
 	public static ShapedRecipe addRecipeCollectorRobot() {
 		return new ShapedRecipe(remoteCollector).shape("GAG", "DSD", "III")
-				.setIngredient('D', Material.GOLD_INGOT)
+				.setIngredient('D', Material.GOLD_BLOCK)
 				.setIngredient('S', Material.ARMOR_STAND)
 				.setIngredient('G', Material.REDSTONE_BLOCK)
 				.setIngredient('I', Material.IRON_BLOCK)
