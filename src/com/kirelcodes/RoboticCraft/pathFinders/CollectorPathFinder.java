@@ -55,5 +55,4 @@ public class CollectorPathFinder extends BasicPathfinder {
 			}
 		}
 	}
-
 }
