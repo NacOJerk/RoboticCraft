@@ -31,7 +31,7 @@ public class RoboticCraft extends JavaPlugin {
 	private static WorldGuardPlugin worldGuard;
 	private static boolean usingFactions = false;
 	private static boolean usingResidence = false;
-	
+
 	@Override
 	public void onEnable() {
 		robotiCraft = this;
@@ -45,14 +45,14 @@ public class RoboticCraft extends JavaPlugin {
 		controllerManager = new GUIListener(this);
 		new RobotListener(this);
 		RecipeAdder.addAll();
-		
-		//World Guard
+
+		// World Guard
 		worldGuard = setupWorldGuard();
-		//Factions
+		// Factions
 		setupFactions();
-		//Residence
+		// Residence
 		setupResidence();
-		
+
 		RobotCenter.getID();
 		for (World w : getServer().getWorlds()) {
 			for (Entity en : w.getEntities()) {
@@ -109,30 +109,30 @@ public class RoboticCraft extends JavaPlugin {
 		usingWorldGuard = true;
 		return (WorldGuardPlugin) plugin;
 	}
-	
-	private void setupFactions(){
-		if(getServer().getPluginManager().getPlugin("Factions")!=null){
+
+	private void setupFactions() {
+		if (getServer().getPluginManager().getPlugin("Factions") != null) {
 			usingFactions = true;
 		}
 	}
-	
+
 	private ResidenceApi setupResidence() {
 		Plugin resPlug = getServer().getPluginManager().getPlugin("Residence");
-	    if (resPlug != null) {
-	    	usingResidence = true;
-	        return Residence.getAPI();  
-	    }
-	    return null;
+		if (resPlug != null) {
+			usingResidence = true;
+			return Residence.getAPI();
+		}
+		return null;
 	}
 
 	public static boolean usingWorldGuard() {
 		return usingWorldGuard;
 	}
-	
+
 	public static boolean usingFactions() {
 		return usingFactions;
 	}
-	
+
 	public static boolean usingResidence() {
 		return usingResidence;
 	}
@@ -140,41 +140,50 @@ public class RoboticCraft extends JavaPlugin {
 	public static WorldGuardPlugin getWorldGuard() {
 		return worldGuard;
 	}
-	
+
 	@Override
 	public boolean onCommand(CommandSender sender, Command command,
 			String label, String[] args) {
-		if(command.getLabel().equalsIgnoreCase("remote")){
-			if(sender.isOp()){
-				if(args.length==1){
-					if(!(sender instanceof Player)){
+		if (command.getLabel().equalsIgnoreCase("remote")) {
+			if (sender.isOp()) {
+				if (args.length == 1) {
+					if (!(sender instanceof Player)) {
 						sender.sendMessage("[RoboticCraft] Only players can use this command!");
 						return false;
 					}
-					for(RobotItem ri : RobotItem.getRobotItemList()){
-						String name = ri.getRobotClass().getName().split(".")[4];
-						if(("Robot"+args[0]).equalsIgnoreCase(name)){
-							((Player)sender).getInventory().addItem(ri.getItem());
-							sender.sendMessage("[RoboticCraft] Recieved a "+name+" remote!");
+					for (RobotItem ri : RobotItem.getRobotItemList()) {
+						String name = ri.getRobotClass().getName().split("\\.")[4];
+						if (("Robot" + args[0]).equalsIgnoreCase(name)) {
+							((Player) sender).getInventory().addItem(
+									ri.getItem());
+							sender.sendMessage("[RoboticCraft] Recieved a "
+									+ name + " remote!");
 							return false;
 						}
-						sender.sendMessage("[RoboticCraft] Robot "+name+" wasn't found!");
 					}
-				}else if(args.length==2){
-					if(Bukkit.getPlayer(args[1])!=null){
-						for(RobotItem ri : RobotItem.getRobotItemList()){
-							String name = ri.getRobotClass().getName().split(".")[4];
-							if(("Robot"+args[0]).equalsIgnoreCase(name)){
-								Bukkit.getPlayer(args[1]).getInventory().addItem(ri.getItem());
-								sender.sendMessage("[RoboticCraft] Send a "+name+" remote to "+args[1]+"!");
+					sender.sendMessage("[RoboticCraft] Robot " + args[0]
+							+ " wasn't found!");
+				} else if (args.length == 2) {
+					if (Bukkit.getPlayer(args[1]) != null) {
+						for (RobotItem ri : RobotItem.getRobotItemList()) {
+							String name = ri.getRobotClass().getName()
+									.split("\\.")[4];
+							if (("Robot" + args[0]).equalsIgnoreCase(name)) {
+								Bukkit.getPlayer(args[1]).getInventory()
+										.addItem(ri.getItem());
+								Bukkit.getPlayer(args[1]).sendMessage("[RoboticCraft] You recived a " + args[0] + " remote");
+								sender.sendMessage("[RoboticCraft] Send a "
+										+ name + " remote to " + args[1] + "!");
 								return false;
 							}
-							sender.sendMessage("[RoboticCraft] Robot "+name+" wasn't found!");
 						}
-					}else{
-						sender.sendMessage("[RoboticCraft] Couldn't find player "+args[1]+"!");
+						sender.sendMessage("[RoboticCraft] Robot " + args[0]
+								+ " wasn't found!");
+					} else {
+						sender.sendMessage("[RoboticCraft] Couldn't find player "
+								+ args[1] + "!");
 					}
-				}else
+				} else
 					sender.sendMessage("[RoboticCraft] Correct usage: /remote [robot] {player}");
 			}
 		}
