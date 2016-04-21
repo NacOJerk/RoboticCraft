@@ -48,7 +48,7 @@ public class GUIRobotBasic extends GUI {
 		destroyPos = 3;
 		fuelPos = 8;
 		fillInventory();
-		gettGUIAction().add(new GUIAction(fuel) {
+		getGUIAction().add(new GUIAction(fuel) {
 			
 			@Override
 			public void actionNow(GUI gui, Player player) {
@@ -56,7 +56,7 @@ public class GUIRobotBasic extends GUI {
 				
 			}
 		});
-		gettGUIAction().add(new GUIAction(openInventory) {
+		getGUIAction().add(new GUIAction(openInventory) {
 
 			@Override
 			public void actionNow(GUI gui, Player player) {
@@ -64,14 +64,14 @@ public class GUIRobotBasic extends GUI {
 				player.openInventory(((GUIRobotBasic) gui).getRobot().getInventory());
 			}
 		});
-		gettGUIAction().add(new GUIAction(itemFollow) {
+		getGUIAction().add(new GUIAction(itemFollow) {
 
 			@Override
 			public void actionNow(GUI gui, Player player) {
 				((GUIRobotBasic) gui).follow(player);
 			}
 		});
-		gettGUIAction().add(new GUIAction(Destroy) {
+		getGUIAction().add(new GUIAction(Destroy) {
 
 			@Override
 			public void actionNow(GUI gui, Player player) {
@@ -79,7 +79,7 @@ public class GUIRobotBasic extends GUI {
 				player.closeInventory();
 			}
 		});
-		gettGUIAction().add(new GUIAction(itemNoFollow) {
+		getGUIAction().add(new GUIAction(itemNoFollow) {
 
 			@Override
 			public void actionNow(GUI gui, Player player) {
@@ -136,7 +136,7 @@ public class GUIRobotBasic extends GUI {
 		for (int i = 0; i < 27; i++) {
 			ItemStack item = ItemStackUtils.createItem(Material.STAINED_GLASS_PANE, 0,
 					ChatColor.BLACK + "DONT CLICK ME");
-			gettGUIAction().add(new GUIAction(item) {
+			getGUIAction().add(new GUIAction(item) {
 
 				@Override
 				public void actionNow(GUI gui, Player player) {

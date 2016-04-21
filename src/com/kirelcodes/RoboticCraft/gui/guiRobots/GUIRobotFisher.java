@@ -27,14 +27,14 @@ public class GUIRobotFisher extends GUIRobotBasic {
 		this.robot = robot;
 		itemFish = ItemStackUtils.createItem(Material.FISHING_ROD, "&aFish");
 		itemNoFish = ItemStackUtils.createItem(Material.FISHING_ROD, "&cStop Fish");
-		gettGUIAction().add(new GUIAction(itemFish) {
+		getGUIAction().add(new GUIAction(itemFish) {
 
 			@Override
 			public void actionNow(GUI gui, Player player) {
 				((GUIRobotFisher) gui).Fish();
 			}
 		});
-		gettGUIAction().add(new GUIAction(itemNoFish) {
+		getGUIAction().add(new GUIAction(itemNoFish) {
 
 			@Override
 			public void actionNow(GUI gui, Player player) {

@@ -29,14 +29,14 @@ public class GUIRobotBreeder extends GUIRobotBasic {
 		itemBreed = ItemStackUtils.createItem(Material.WHEAT, "&aBreed");
 		itemNoBreed = ItemStackUtils.createItem(Material.WHEAT, "&cStop Breed");
 
-		gettGUIAction().add(new GUIAction(itemBreed) {
+		getGUIAction().add(new GUIAction(itemBreed) {
 
 			@Override
 			public void actionNow(GUI gui, Player player) {
 				((GUIRobotBreeder) gui).Breed();
 			}
 		});
-		gettGUIAction().add(new GUIAction(itemNoBreed) {
+		getGUIAction().add(new GUIAction(itemNoBreed) {
 
 			@Override
 			public void actionNow(GUI gui, Player player) {

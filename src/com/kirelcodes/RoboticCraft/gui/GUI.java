@@ -39,12 +39,12 @@ public abstract class GUI implements InventoryHolder {
 		return title;
 	}
 
-	public ArrayList<GUIAction> gettGUIAction() {
+	public ArrayList<GUIAction> getGUIAction() {
 		return inventoryAction;
 	}
 
 	protected void addAction(GUIAction gui) {
-		gettGUIAction().add(gui);
+		getGUIAction().add(gui);
 	}
 
 	public void openGUI(Player p){

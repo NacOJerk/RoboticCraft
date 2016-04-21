@@ -32,21 +32,21 @@ public class GUIRobotFarmer extends GUIRobotBasic {
 				"&cStop Farm");
 		pos1 = ItemStackUtils.createItem(Material.DIRT, 2, "&aset Pos1");
 		pos2 = ItemStackUtils.createItem(Material.DIRT, 2, "&aset Pos2");
-		gettGUIAction().add(new GUIAction(itemFarm) {
+		getGUIAction().add(new GUIAction(itemFarm) {
 
 			@Override
 			public void actionNow(GUI gui, Player player) {
 				((GUIRobotFarmer) gui).Farm();
 			}
 		});
-		gettGUIAction().add(new GUIAction(itemNoFarm) {
+		getGUIAction().add(new GUIAction(itemNoFarm) {
 
 			@Override
 			public void actionNow(GUI gui, Player player) {
 				((GUIRobotFarmer) gui).noFarm();
 			}
 		});
-		gettGUIAction().add(new GUIAction(pos1) {
+		getGUIAction().add(new GUIAction(pos1) {
 
 			@Override
 			public void actionNow(GUI gui, Player player) {
@@ -55,7 +55,7 @@ public class GUIRobotFarmer extends GUIRobotBasic {
 				player.sendMessage(ChatColor.AQUA + "[Robot] Setted pos1");
 			}
 		});
-		gettGUIAction().add(new GUIAction(pos2) {
+		getGUIAction().add(new GUIAction(pos2) {
 
 			@Override
 			public void actionNow(GUI gui, Player player) {

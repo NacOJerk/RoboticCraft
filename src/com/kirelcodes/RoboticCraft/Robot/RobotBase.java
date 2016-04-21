@@ -31,6 +31,7 @@ import org.bukkit.util.EulerAngle;
 
 import com.bekvon.bukkit.residence.api.ResidenceApi;
 import com.kirelcodes.RoboticCraft.RoboticCraft;
+import com.kirelcodes.RoboticCraft.configs.ConfigManager;
 import com.kirelcodes.RoboticCraft.pathFinders.FollowPathfinder;
 import com.kirelcodes.RoboticCraft.pathFinders.PathManager;
 import com.kirelcodes.RoboticCraft.pathFinders.RandomStrollPathfinder;
@@ -619,6 +620,11 @@ public class RobotBase implements InventoryHolder {
 	}
 
 	public boolean checkAllowed(Location loc) {
+		String robotName = getClass().getName().split("\\.")[getClass().getName().split("\\.").length - 1];
+		robotName = robotName.replaceAll("Robot", "");
+		for(World w : ConfigManager.getBannedWorlds(robotName))
+			if(getWorld().getName().equalsIgnoreCase(w.getName()))
+				return false;
 		if (Bukkit.getOfflinePlayer(owner).isOp())
 			return true;
 		if (RoboticCraft.usingWorldGuard())

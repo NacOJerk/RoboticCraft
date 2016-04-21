@@ -29,7 +29,7 @@ public class GUIRobotLumberjack extends GUIRobotBasic {
 		itemCut = ItemStackUtils.createItem(Material.GOLD_AXE, "&aCut");
 		itemNoCut = ItemStackUtils.createItem(Material.GOLD_AXE, "&cStop Cut");
 
-		gettGUIAction().add(new GUIAction(itemCut) {
+		getGUIAction().add(new GUIAction(itemCut) {
 
 			@Override
 			public void actionNow(GUI gui, Player player) {
@@ -37,7 +37,7 @@ public class GUIRobotLumberjack extends GUIRobotBasic {
 			}
 		});
 
-		gettGUIAction().add(new GUIAction(itemNoCut) {
+		getGUIAction().add(new GUIAction(itemNoCut) {
 
 			@Override
 			public void actionNow(GUI gui, Player player) {

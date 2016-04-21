@@ -1,12 +1,13 @@
 package com.kirelcodes.RoboticCraft.configs;
 
+import static com.kirelcodes.RoboticCraft.configs.Configs.BANNEDWORLDS;
+import static com.kirelcodes.RoboticCraft.configs.Configs.SPEED;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-import org.bukkit.entity.Player;
-import static com.kirelcodes.RoboticCraft.configs.Configs.*;
+import org.bukkit.Bukkit;
+import org.bukkit.World;
 public class ConfigManager {
 	public static double getMineSpeed() {
 		if(!SPEED.getConfig().contains("BlockMine")){
@@ -39,6 +40,20 @@ public class ConfigManager {
 		}
 		return SPEED.getConfig().getDouble("FishingTime") * 20;
 	}
+	
+	public static List<World> getBannedWorlds(String robot){
+		List<World> worlds = new ArrayList<>();
+		if(!BANNEDWORLDS.getConfig().contains(robot))
+			return worlds;
+		for(String s : BANNEDWORLDS.getConfig().getStringList(robot)){
+			if(Bukkit.getWorld(s) == null)
+				continue;
+			worlds.add(Bukkit.getWorld(s));
+		}
+		return worlds;
+	}
+	
+	
 	/*
 	public static String getLang(String lang, Player p) {
 		if(!containsLang(lang)){

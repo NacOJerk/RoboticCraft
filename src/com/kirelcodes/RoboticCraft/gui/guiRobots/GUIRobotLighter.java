@@ -28,7 +28,7 @@ public class GUIRobotLighter extends GUI {
 		itemLight = ItemStackUtils.createItem(Material.TORCH, "&aLight");
 		itemNoLight = ItemStackUtils.createItem(Material.TORCH, "&cStop Light");
 		openInventory = ItemStackUtils.createItem(Material.CHEST, "&cOpen Robot's Inventory");
-		gettGUIAction().add(new GUIAction(openInventory) {
+		getGUIAction().add(new GUIAction(openInventory) {
 
 			@Override
 			public void actionNow(GUI gui, Player player) {
@@ -36,7 +36,7 @@ public class GUIRobotLighter extends GUI {
 				player.openInventory(((GUIRobotLighter) gui).getRobot().getInventory());
 			}
 		});
-		gettGUIAction().add(new GUIAction(Destroy) {
+		getGUIAction().add(new GUIAction(Destroy) {
 
 			@Override
 			public void actionNow(GUI gui, Player player) {
@@ -44,14 +44,14 @@ public class GUIRobotLighter extends GUI {
 				player.closeInventory();
 			}
 		});
-		gettGUIAction().add(new GUIAction(itemLight) {
+		getGUIAction().add(new GUIAction(itemLight) {
 
 			@Override
 			public void actionNow(GUI gui, Player player) {
 				((GUIRobotLighter) gui).Light(player);
 			}
 		});
-		gettGUIAction().add(new GUIAction(itemNoLight) {
+		getGUIAction().add(new GUIAction(itemNoLight) {
 
 			@Override
 			public void actionNow(GUI gui, Player player) {
@@ -59,7 +59,7 @@ public class GUIRobotLighter extends GUI {
 			}
 		});
 		ItemStack item = ItemStackUtils.createItem(Material.STAINED_GLASS_PANE, 0, ChatColor.BLACK + "DONT CLICK ME");
-		gettGUIAction().add(new GUIAction(item) {
+		getGUIAction().add(new GUIAction(item) {
 
 			@Override
 			public void actionNow(GUI gui, Player player) {

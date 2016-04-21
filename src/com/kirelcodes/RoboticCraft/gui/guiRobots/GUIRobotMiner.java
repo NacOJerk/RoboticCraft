@@ -28,14 +28,14 @@ public class GUIRobotMiner extends GUIRobotBasic {
 		this.robot = robot;
 		itemMine = ItemStackUtils.createItem(Material.DIAMOND_PICKAXE, "&aMine");
 		itemNoMine = ItemStackUtils.createItem(Material.DIAMOND_PICKAXE, "&cStop Mine");
-		gettGUIAction().add(new GUIAction(itemMine) {
+		getGUIAction().add(new GUIAction(itemMine) {
 
 			@Override
 			public void actionNow(GUI gui, Player player) {
 				((GUIRobotMiner) gui).Mine();
 			}
 		});
-		gettGUIAction().add(new GUIAction(itemNoMine) {
+		getGUIAction().add(new GUIAction(itemNoMine) {
 
 			@Override
 			public void actionNow(GUI gui, Player player) {

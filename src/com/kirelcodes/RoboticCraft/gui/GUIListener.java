@@ -31,7 +31,7 @@ public class GUIListener implements Listener{
 			return;
 		Player player = (Player) e.getWhoClicked();
 		GUIAction guiAc = null;
-		for(GUIAction guiAction : gui.gettGUIAction()){
+		for(GUIAction guiAction : gui.getGUIAction()){
 			if(!guiAction.isSame(item))
 				continue;
 			guiAc = guiAction;

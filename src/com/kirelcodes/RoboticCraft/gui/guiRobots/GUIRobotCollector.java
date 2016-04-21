@@ -28,14 +28,14 @@ public class GUIRobotCollector extends GUIRobotBasic {
 		this.robot = robot;
 		itemCollect = ItemStackUtils.createItem(Material.HOPPER, "&aCollect");
 		itemNoCollect = ItemStackUtils.createItem(Material.HOPPER, "&cStop Collecting");
-		gettGUIAction().add(new GUIAction(itemCollect) {
+		getGUIAction().add(new GUIAction(itemCollect) {
 
 			@Override
 			public void actionNow(GUI gui, Player player) {
 				((GUIRobotCollector) gui).Collect();
 			}
 		});
-		gettGUIAction().add(new GUIAction(itemNoCollect) {
+		getGUIAction().add(new GUIAction(itemNoCollect) {
 
 			@Override
 			public void actionNow(GUI gui, Player player) {

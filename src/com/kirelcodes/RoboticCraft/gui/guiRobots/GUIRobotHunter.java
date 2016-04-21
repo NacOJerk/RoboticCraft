@@ -27,14 +27,14 @@ public class GUIRobotHunter extends GUIRobotBasic {
 		this.robot = robot;
 		itemHunt = ItemStackUtils.createItem(Material.DIAMOND_SWORD, "&aHunt");
 		itemNoHunt = ItemStackUtils.createItem(Material.DIAMOND_SWORD, "&cStop Hunt");
-		gettGUIAction().add(new GUIAction(itemHunt) {
+		getGUIAction().add(new GUIAction(itemHunt) {
 
 			@Override
 			public void actionNow(GUI gui, Player player) {
 				((GUIRobotHunter) gui).Hunt();
 			}
 		});
-		gettGUIAction().add(new GUIAction(itemNoHunt) {
+		getGUIAction().add(new GUIAction(itemNoHunt) {
 
 			@Override
 			public void actionNow(GUI gui, Player player) {
