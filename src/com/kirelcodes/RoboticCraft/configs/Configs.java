@@ -3,7 +3,8 @@ package com.kirelcodes.RoboticCraft.configs;
 import org.bukkit.configuration.file.FileConfiguration;
 
 public enum Configs {
-	SPEED(new BaseConfig("speeds"));
+	SPEED(new BaseConfig("speeds")),
+	Languages(new BaseConfig("Languages"));
 	private final BaseConfig config;
 	private Configs(BaseConfig config){
 		this.config = config;
