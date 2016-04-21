@@ -16,17 +16,14 @@ import com.kirelcodes.RoboticCraft.utils.ItemStackUtils;
 public class RobotFarmer extends RobotBase {
 	private Location mark1, mark2;
 	private boolean isFarming;
-
+	private Player p;
 	public RobotFarmer(Location loc, Player p) {
 		super(loc, p.getUniqueId());
 		getArmorStand().setItemInHand(new ItemStack(Material.DIAMOND_HOE));
 		try {
-			getArmorStand()
-					.setHelmet(
-							ItemStackUtils
-									.getSkullFromURL(
-											"http://textures.minecraft.net/texture/5a921c75cd645aa753d89e1c14097bfeca22a497829edd6fc7a875956a1282",
-											"Robot"));
+			getArmorStand().setHelmet(ItemStackUtils.getSkullFromURL(
+					"http://textures.minecraft.net/texture/5a921c75cd645aa753d89e1c14097bfeca22a497829edd6fc7a875956a1282",
+					"Robot"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -36,12 +33,9 @@ public class RobotFarmer extends RobotBase {
 		super(loc, u);
 		getArmorStand().setItemInHand(new ItemStack(Material.DIAMOND_HOE));
 		try {
-			getArmorStand()
-					.setHelmet(
-							ItemStackUtils
-									.getSkullFromURL(
-											"http://textures.minecraft.net/texture/5a921c75cd645aa753d89e1c14097bfeca22a497829edd6fc7a875956a1282",
-											"Robot"));
+			getArmorStand().setHelmet(ItemStackUtils.getSkullFromURL(
+					"http://textures.minecraft.net/texture/5a921c75cd645aa753d89e1c14097bfeca22a497829edd6fc7a875956a1282",
+					"Robot"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -70,7 +64,15 @@ public class RobotFarmer extends RobotBase {
 	}
 
 	public void setFarming(boolean isFarming) {
-		this.isFarming = isFarming;
+		if (isFarming == true) {
+			if (getMarkOne() != null && getMarkTwo() != null) {
+				this.isFarming = isFarming;
+			}else{
+				p.sendMessage("Cant farm no pos set!");
+			}
+		} else {
+			this.isFarming = isFarming;
+		}
 	}
 
 	public boolean isFarming() {
@@ -113,8 +115,7 @@ public class RobotFarmer extends RobotBase {
 		ArrayList<Block> blocks = new ArrayList<>();
 		for (int x : getXList()) {
 			for (int z : getZList()) {
-				blocks.add(new Location(getMarkOne().getWorld(), x,
-						getMarkOne().getY(), z).getBlock());
+				blocks.add(new Location(getMarkOne().getWorld(), x, getMarkOne().getY(), z).getBlock());
 				// blocks.add(new Location(getMarkOne().getWorld(), x,
 				// getMarkOne().getY() - 1, z).getBlock());
 			}
