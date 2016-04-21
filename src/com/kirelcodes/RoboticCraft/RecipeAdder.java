@@ -49,7 +49,7 @@ public class RecipeAdder {
 		;
 		new RobotItem(RobotCollector.class, remoteCollector,
 				addRecipeCollectorRobot(), GUIRobotCollector.class)
-				.setPermission("RoboticCraft.Collector");
+				.setPermission("RoboticCraft.RobotCollector");
 		;
 	}
 	
