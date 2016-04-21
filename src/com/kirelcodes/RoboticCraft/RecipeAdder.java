@@ -87,7 +87,7 @@ public class RecipeAdder {
 		return new ShapedRecipe(remoteBase).shape("G G", "DSD", "III")
 				.setIngredient('D', Material.GOLD_INGOT)
 				.setIngredient('S', Material.ARMOR_STAND)
-				.setIngredient('G', Material.REDSTONE_BLOCK_BLOCK)
+				.setIngredient('G', Material.REDSTONE_BLOCK)
 				.setIngredient('I', Material.IRON_BLOCK);
 	}
 
