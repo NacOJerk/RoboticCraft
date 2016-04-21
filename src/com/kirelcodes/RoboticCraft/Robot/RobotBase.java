@@ -101,7 +101,7 @@ public class RobotBase implements InventoryHolder {
 		public void run() {
 			if(getArmorStand().isDead() || getNavigator().isDead())
 				remove();
-			if((delay % 100) == 0){
+			if((delay % 5) == 0){
 				goThroughInventory();
 			}
 			delay ++ ;
@@ -126,7 +126,7 @@ public class RobotBase implements InventoryHolder {
 				AnimationManager.walk.cancelTask(getArmorStand());
 				deafult.setLocations(getArmorStand());
 			}
-			if (previusFuel.distanceSquared(getLocation()) >= 15) {
+			if (((delay % (60 * 20))) == 0) {
 				previusFuel = getLocation();
 				setFuel(getFuel() - 1);
 			}
@@ -572,7 +572,6 @@ public class RobotBase implements InventoryHolder {
 					else
 						itemH.setAmount(itemH.getAmount() - 1);
 					setFuel((getFuel() + 1) >= 100 ? 100 : getFuel() + 1);
-					break;
 				}
 			}
 		}

@@ -12,8 +12,8 @@ import com.kirelcodes.RoboticCraft.utils.ItemStackUtils;
 
 public class GUIRobotBasic extends GUI {
 	private RobotBase robot;
-	private ItemStack itemFollow, itemNoFollow, Destroy, openInventory;
-	private int chestPos, followPos, destroyPos;
+	private ItemStack itemFollow, itemNoFollow, Destroy, openInventory , fuel;
+	private int chestPos, followPos, destroyPos , fuelPos;
 
 	public GUIRobotBasic(RobotBase robot) {
 		setSize(27);
@@ -24,10 +24,38 @@ public class GUIRobotBasic extends GUI {
 		itemFollow = ItemStackUtils.createItem(Material.COMPASS, "&aFollow");
 		itemNoFollow = ItemStackUtils.createItem(Material.COMPASS, "&cStop Follow");
 		openInventory = ItemStackUtils.createItem(Material.CHEST, "&cOpen Robot's Inventory");
+		int fuelD = 0;
+		ChatColor color = ChatColor.WHITE;
+		if(robot.getFuel() >= 75){
+			fuelD = 5;
+			color = ChatColor.GREEN;
+		}
+		else if (robot.getFuel() >= 50){
+			fuelD = 4;
+			color = ChatColor.YELLOW;
+		}
+		else if(robot.getFuel() >= 25){
+			fuelD = 1;
+			color = ChatColor.RED;
+		}
+		else if(robot.getFuel() >= 0){
+			fuelD = 14;
+			color = ChatColor.DARK_RED;
+		}
+		fuel = ItemStackUtils.createItem(Material.STAINED_GLASS_PANE, fuelD, color + "Fuel level : " + robot.getFuel());
 		chestPos = 13;
 		followPos = 14;
 		destroyPos = 3;
+		fuelPos = 8;
 		fillInventory();
+		gettGUIAction().add(new GUIAction(fuel) {
+			
+			@Override
+			public void actionNow(GUI gui, Player player) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		gettGUIAction().add(new GUIAction(openInventory) {
 
 			@Override
@@ -61,6 +89,7 @@ public class GUIRobotBasic extends GUI {
 		getInventory().setItem(chestPos, openInventory);
 		getInventory().setItem(destroyPos, Destroy);
 		getInventory().setItem(followPos, (robot.isFollowing()) ? itemNoFollow : itemFollow);
+		getInventory().setItem(fuelPos, fuel);
 	}
 
 	protected void setChestPos(int i) {
@@ -82,6 +111,12 @@ public class GUIRobotBasic extends GUI {
 		getInventory().setItem(followPos, item);
 		this.followPos = i;
 		getInventory().setItem(followPos, (robot.isFollowing()) ? itemNoFollow : itemFollow);
+	}
+	public void setFuelPos(int i) {
+		ItemStack item = ItemStackUtils.createItem(Material.STAINED_GLASS_PANE, 0, ChatColor.BLACK + "DONT CLICK ME");
+		getInventory().setItem(fuelPos, item);
+		this.fuelPos = i;
+		getInventory().setItem(fuelPos, fuel);
 	}
 
 	protected RobotBase getRobot() {
@@ -110,5 +145,9 @@ public class GUIRobotBasic extends GUI {
 			});
 			getInventory().setItem(i, item);
 		}
+		getInventory().setItem(chestPos, openInventory);
+		getInventory().setItem(destroyPos, Destroy);
+		getInventory().setItem(followPos, (robot.isFollowing()) ? itemNoFollow : itemFollow);
+		getInventory().setItem(fuelPos, fuel);
 	}
 }

@@ -74,12 +74,6 @@ public class ItemStackUtils {
 		return armor;
 	}
 
-	public static boolean isPerfect(ItemStack is) {
-		if (!is.hasItemMeta())
-			return false;
-		return (is.getItemMeta().hasLore() || is.getItemMeta().hasDisplayName());
-	}
-
 	public static ItemStack getSkullFromURL(String url, String name)
 			throws Exception {
 		ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
