@@ -74,7 +74,7 @@ public class RobotBase implements InventoryHolder {
 	private Object nmsHandel;
 	private UUID owner;
 	protected PathManager pathManager;
-	private Location targetLocation, previus, previusFuel;
+	private Location targetLocation, previus;
 	private boolean exists;
 
 	/**
@@ -86,6 +86,7 @@ public class RobotBase implements InventoryHolder {
 	public class RobotTask implements Runnable {
 		private int ID;
 		private int delay;
+
 		// private int mark; not needed
 		// private int stuckCalc;
 		// private Location previus;
@@ -99,12 +100,12 @@ public class RobotBase implements InventoryHolder {
 
 		@Override
 		public void run() {
-			if(getArmorStand().isDead() || getNavigator().isDead())
+			if (getArmorStand().isDead() || getNavigator().isDead())
 				remove();
-			if((delay % 5) == 0){
+			if ((delay % 5) == 0) {
 				goThroughInventory();
 			}
-			delay ++ ;
+			delay++;
 			if (!hasFuel()) {
 				try {
 					setTargetLocation(getLocation());
@@ -127,7 +128,6 @@ public class RobotBase implements InventoryHolder {
 				deafult.setLocations(getArmorStand());
 			}
 			if (((delay % (60 * 20))) == 0) {
-				previusFuel = getLocation();
 				setFuel(getFuel() - 1);
 			}
 			getArmorStand().teleport(getLocation());
@@ -202,7 +202,6 @@ public class RobotBase implements InventoryHolder {
 		getArmorStand().setCustomNameVisible(false);
 		this.previus = getLocation();
 		this.owner = owner;
-		this.previusFuel = getLocation();
 		exists = true;
 		if (!checkAllowed(loc))
 			remove();
@@ -504,12 +503,13 @@ public class RobotBase implements InventoryHolder {
 		for (ItemStack stack : getInventory().getContents())
 			if (stack != null)
 				p.getInventory().addItem(stack);
-		ItemStack item =p.getItemInHand();
+		ItemStack item = p.getItemInHand();
 		p.setItemInHand(new ItemStack(Material.AIR));
-		try{
-			p.setItemInHand(NBTRobotId.setFuel(NBTRobotId.clearNBT(item), getFuel()));
-		}catch(Exception e){
-			
+		try {
+			p.setItemInHand(NBTRobotId.setFuel(NBTRobotId.clearNBT(item),
+					getFuel()));
+		} catch (Exception e) {
+
 		}
 		remove();
 	}
@@ -549,9 +549,11 @@ public class RobotBase implements InventoryHolder {
 		RobotCenter.removeRobot(getID());
 		exists = false;
 	}
-	public boolean doesExists(){
+
+	public boolean doesExists() {
 		return exists;
 	}
+
 	public Inventory getInventory() {
 		return invetory;
 	}
@@ -561,7 +563,8 @@ public class RobotBase implements InventoryHolder {
 		goThroughInventory();
 		return items;
 	}
-	public void goThroughInventory(){
+
+	public void goThroughInventory() {
 		if (getFuel() != 100) {
 			for (ItemStack itemH : getInventory().getContents()) {
 				if (itemH == null)
@@ -572,10 +575,12 @@ public class RobotBase implements InventoryHolder {
 					else
 						itemH.setAmount(itemH.getAmount() - 1);
 					setFuel((getFuel() + 1) >= 100 ? 100 : getFuel() + 1);
+					break;
 				}
 			}
 		}
 	}
+
 	public static Chicken getSilentChicken(Location loc) throws Exception {
 		Object nbtTAG = getNMS("NBTTagCompound").getConstructor().newInstance();
 		nbtTAG.getClass()
@@ -614,7 +619,7 @@ public class RobotBase implements InventoryHolder {
 	}
 
 	public boolean checkAllowed(Location loc) {
-		if(Bukkit.getOfflinePlayer(owner).isOp())
+		if (Bukkit.getOfflinePlayer(owner).isOp())
 			return true;
 		if (RoboticCraft.usingWorldGuard())
 			if (!RoboticCraft.getWorldGuard().canBuild(
@@ -622,7 +627,7 @@ public class RobotBase implements InventoryHolder {
 				return false;
 		if (RoboticCraft.usingFactions()) {
 			Faction facL = BoardColl.get().getFactionAt(PS.valueOf(loc));
-			if(facL.getId().equalsIgnoreCase("none"))
+			if (facL.getId().equalsIgnoreCase("none"))
 				return true;
 			if (!facL.getId().equals(FactionColl.get().getNone().getId())) {
 				MPlayer mplayer = MPlayer.get(owner);
