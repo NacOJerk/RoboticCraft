@@ -39,7 +39,7 @@ public class ConfigManager {
 		}
 		return SPEED.getConfig().getDouble("FishingTime") * 20;
 	}
-
+	/*
 	public static String getLang(String lang, Player p) {
 		if(!containsLang(lang)){
 			if(LANGUAGES.getDefaultConfig().contains(lang)){
@@ -86,6 +86,6 @@ public class ConfigManager {
 	
 	public static void setLang(String lang, String type) {
 		LANGUAGES.getConfig().set(lang, type);
-	}
+	}*/
 
 }

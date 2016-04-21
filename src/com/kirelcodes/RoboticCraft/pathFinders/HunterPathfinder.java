@@ -2,6 +2,7 @@ package com.kirelcodes.RoboticCraft.pathFinders;
 
 import java.util.ArrayList;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Entity;
@@ -10,6 +11,7 @@ import org.bukkit.entity.Ocelot;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
 
+import com.bekvon.bukkit.residence.commands.confirm;
 import com.kirelcodes.RoboticCraft.configs.ConfigManager;
 import com.kirelcodes.RoboticCraft.robot.RobotHunter;
 
@@ -55,8 +57,11 @@ public class HunterPathfinder extends BasicPathfinder {
 						|| e instanceof Wolf
 						|| e instanceof Ocelot
 						|| e.equals(robot.getNavigator())
-						|| e.equals(robot.getArmorStand()) || (e.getType() == EntityType.CHICKEN && e.getCustomName() != null))
+						|| e.equals(robot.getArmorStand()))
 					continue;
+				if(e.getCustomName() != null)
+					if(e.getCustomName().contains(ChatColor.MAGIC + ""))
+						continue;
 				if (e instanceof Damageable) {
 					target = e;
 					found = true;
