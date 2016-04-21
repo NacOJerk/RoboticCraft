@@ -128,7 +128,7 @@ public class RobotBase implements InventoryHolder {
 				AnimationManager.walk.cancelTask(getArmorStand());
 				deafult.setLocations(getArmorStand());
 			}
-			if (((delay % (60 * 20))) == 0) {
+			if (((delay % (30 * 20))) == 0) {
 				setFuel(getFuel() - 1);
 			}
 			getArmorStand().teleport(getLocation());
