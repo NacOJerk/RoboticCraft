@@ -50,9 +50,9 @@ public class RecipeAdder {
 		new RobotItem(RobotCollector.class, remoteCollector,
 				addRecipeCollectorRobot(), GUIRobotCollector.class)
 				.setPermission("RoboticCraft.RobotCollector");
-		new RobotItem(RobotConstructer.class, remoteConstructer,
+		/*new RobotItem(RobotConstructer.class, remoteConstructer,
 				addRecipeRobotConstructer(), GUIRobotConstructer.class)
-				.setPermission("RoboticCraft.RobotConstructer");
+				.setPermission("RoboticCraft.RobotConstructer");*/
 	}
 	
 	public static Material getRemoteMaterial(){
