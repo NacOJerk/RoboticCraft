@@ -1,14 +1,14 @@
 package com.kirelcodes.RoboticCraft.gui.guiRobots;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import com.kirelcodes.RoboticCraft.configs.ConfigManager;
 import com.kirelcodes.RoboticCraft.gui.GUI;
 import com.kirelcodes.RoboticCraft.robot.RobotLighter;
 import com.kirelcodes.RoboticCraft.utils.ItemStackUtils;
-
-import org.bukkit.ChatColor;
 
 public class GUIRobotLighter extends GUI {
 
@@ -28,6 +28,33 @@ public class GUIRobotLighter extends GUI {
 		itemLight = ItemStackUtils.createItem(Material.TORCH, "&aLight");
 		itemNoLight = ItemStackUtils.createItem(Material.TORCH, "&cStop Light");
 		openInventory = ItemStackUtils.createItem(Material.CHEST, "&cOpen Robot's Inventory");
+		int fuelD = 0;
+		ChatColor color = ChatColor.WHITE;
+		if(robot.getFuel() >= 75){
+			fuelD = 5;
+			color = ChatColor.GREEN;
+		}
+		else if (robot.getFuel() >= 50){
+			fuelD = 4;
+			color = ChatColor.YELLOW;
+		}
+		else if(robot.getFuel() >= 25){
+			fuelD = 1;
+			color = ChatColor.RED;
+		}
+		else if(robot.getFuel() >= 0){
+			fuelD = 14;
+			color = ChatColor.DARK_RED;
+		}
+		ItemStack fuel = ItemStackUtils.createItem(Material.STAINED_GLASS_PANE, fuelD, color + ConfigManager.getLang("BasicItem_Fuel") + robot.getFuel());
+		getGUIAction().add(new GUIAction(fuel) {
+			
+			@Override
+			public void actionNow(GUI gui, Player player) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		getGUIAction().add(new GUIAction(openInventory) {
 
 			@Override
@@ -40,7 +67,7 @@ public class GUIRobotLighter extends GUI {
 
 			@Override
 			public void actionNow(GUI gui, Player player) {
-				((GUIRobotLighter) gui).getRobot().destroy();
+				((GUIRobotBasic) gui).getRobot().guiDestroy(player);
 				player.closeInventory();
 			}
 		});
@@ -72,6 +99,7 @@ public class GUIRobotLighter extends GUI {
 		getInventory().setItem(12, Destroy);
 		getInventory().setItem(13, openInventory);
 		getInventory().setItem(14, (robot.isLightning()) ? itemNoLight : itemLight);
+		getInventory().setItem(8, fuel);
 	}
 
 	public void Light(Player p) {

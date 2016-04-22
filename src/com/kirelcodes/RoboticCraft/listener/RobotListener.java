@@ -53,7 +53,8 @@ public class RobotListener implements Listener {
 
 	@EventHandler
 	public void intaractAtArmor(PlayerArmorStandManipulateEvent e) {
-
+		if(e.getRightClicked().getCustomName() == null)
+			return;
 		if (!e.getRightClicked().getCustomName()
 				.contains(ChatColor.MAGIC + "NacOJerkGalShaked-"))
 			return;

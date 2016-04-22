@@ -131,6 +131,10 @@ public class RobotBase implements InventoryHolder {
 			if (((delay % (30 * 20))) == 0) {
 				setFuel(getFuel() - 1);
 			}
+			if(getArmorStand().getLocation().getBlock().getType().name().contains("WATER")){
+				AnimationManager.walk.cancelTask(getArmorStand());
+				deafult.setLocations(getArmorStand());
+			}
 			getArmorStand().teleport(getLocation());
 			previus = getLocation();
 		}
