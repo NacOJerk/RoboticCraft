@@ -22,7 +22,7 @@ public class GUIRobotCollector extends GUIRobotBasic {
 	public GUIRobotCollector(RobotCollector robot) {
 		super(robot);
 		setSize(27);
-		setTitle("&cMiner Robot GUI");
+		setTitle("&Collector Robot GUI");
 		instalizeInventory();
 		fillInventory();
 		this.robot = robot;
