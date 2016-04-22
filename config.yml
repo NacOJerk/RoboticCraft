@@ -5,3 +5,8 @@
 # Authors: NacoJerk,    #
 # DrPiggy, xShakedDev   #
 #########################
+
+#To make it maxless just set the max amount to 0
+MaxAmount: 0
+#This would make your robot breakable just like an ArmorStand highly not recommended
+RobotBreakble: false

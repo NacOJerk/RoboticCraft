@@ -23,7 +23,7 @@ import com.kirelcodes.RoboticCraft.listener.RobotListener;
 import com.kirelcodes.RoboticCraft.robot.RobotBase;
 import com.kirelcodes.RoboticCraft.robot.RobotCenter;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
-
+import static com.kirelcodes.RoboticCraft.configs.ConfigManager.*;
 public class RoboticCraft extends JavaPlugin {
 	private static RoboticCraft robotiCraft = null;
 	private GUIListener controllerManager;
@@ -31,12 +31,13 @@ public class RoboticCraft extends JavaPlugin {
 	private static WorldGuardPlugin worldGuard;
 	private static boolean usingFactions = false;
 	private static boolean usingResidence = false;
-	public static String prefix = "§b§6[§cRoboticCraft§b§6] ";
-
+	public static String prefix = "";
+	
 	@Override
 	public void onEnable() {
 		robotiCraft = this;
-		Configs.SPEED.getClass();
+		Configs.loadAll();
+		prefix = getLang("PREFIX");
 		try {
 			Metrics metrics = new Metrics(this);
 			metrics.start();
@@ -147,18 +148,18 @@ public class RoboticCraft extends JavaPlugin {
 			if (sender.isOp()) {
 				if (args.length == 1) {
 					if (!(sender instanceof Player)) {
-						sender.sendMessage(prefix + "§8Only players can use this command§4!");
+						sender.sendMessage(prefix + getLang("CRemote_OnlyPlayers"));
 						return false;
 					}
 					for (RobotItem ri : RobotItem.getRobotItemList()) {
 						String name = ri.getRobotClass().getName().split("\\.")[4];
 						if (("Robot" + args[0]).equalsIgnoreCase(name)) {
 							((Player) sender).getInventory().addItem(ri.getItem());
-							sender.sendMessage(prefix + "§8Recieved a §6" + name + " §8remote§4!");
+							sender.sendMessage(prefix + getLang("CRemote_RecivedP1", ((Player) sender)) + name + getLang("CRemote_RecivedP2", ((Player) sender)));
 							return false;
 						}
 					}
-					sender.sendMessage(prefix + "§8Robot §6" + args[0] + " §8wasn't found§4!");
+					sender.sendMessage(prefix + getLang("CRemote_NotFoundP1", ((Player) sender)) + args[0] + getLang("CRemote_NotFoundP2", ((Player) sender)));
 				} else if (args.length == 2) {
 					if (Bukkit.getPlayer(args[1]) != null) {
 						for (RobotItem ri : RobotItem.getRobotItemList()) {
@@ -166,17 +167,17 @@ public class RoboticCraft extends JavaPlugin {
 							if (("Robot" + args[0]).equalsIgnoreCase(name)) {
 								Bukkit.getPlayer(args[1]).getInventory().addItem(ri.getItem());
 								Bukkit.getPlayer(args[1])
-										.sendMessage(prefix + "§8You recived a §6" + args[0] + "§8 remote");
-								sender.sendMessage(prefix + "§8Send a §6" + name + " §8remote to §6" + args[1] + "§4!");
+										.sendMessage(prefix + getLang("CRemote_RecivedP1", ((Player) sender)) + name + getLang("CRemote_RecivedP2", ((Player) sender)));
+								sender.sendMessage(prefix + getLang("CRemote_SentP1") + name + getLang("CRemote_SentP2") + args[1] + getLang("CRemote_SentP3"));
 								return false;
 							}
 						}
-						sender.sendMessage(prefix + "§8Robot §6" + args[0] + " §8wasn't found§4!");
+						sender.sendMessage(prefix + getLang("CRemote_NotFoundP1") + args[0] + getLang("CRemote_NotFoundP2"));
 					} else {
-						sender.sendMessage(prefix + "§8Couldn't find player §6" + args[1] + "§4!");
+						sender.sendMessage(prefix + getLang("CRemote_PlayerNoFindP1") + args[1] + getLang("CRemote_PlayerNoFindP2"));
 					}
 				} else
-					sender.sendMessage(prefix + "§8Correct usage: /remote [robot] {player}");
+					sender.sendMessage(prefix + getLang("CRemote_CorrectUsage"));
 			}
 		}
 		return false;

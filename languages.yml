@@ -1,0 +1,38 @@
+#########################
+#                       #
+# Robotic Craft         #
+#                       # 
+# Authors: NacoJerk,    #
+# DrPiggy, xShakedDev   #
+#########################
+
+#No player place holder support
+PREFIX: "&b&6[&cRoboticCraft&b&6]" 
+CRemote_OnlyPlayers: "&8Only players can use this command&4!"
+CRemote_SentP1: "&8Sent a &6"
+CRemote_SentP2: " &8remote to &6"
+CRemote_SentP3: "&4!"
+CRemote_PlayerNoFindP1: "&8Coudn't find player &6"
+CRemote_PlayerNoFindP2: "&4!"
+CRemote_CorrectUsage: "&8Correct usage: /remote [robot] {player}"
+
+#GUI
+BasicItem_Destroy: "&cDESTROY ROBOT"
+BasicItem_Follow: "&aFollow"
+BasicItem_NoFollow: "&cStop Follow"
+BasicItem_Inventory: "&cOpen Robot's Inventory"
+BasicItem_Fuel: "Fuel level : "
+BasicItem_DontClickItem: "DONT CLICK ME"
+
+#GUI Messages:
+GUIMessageFarmer1: "[Robot] Setted position 1"
+GUIMessageFarmer2: "[Robot] Setted position 2"
+
+#Player place holder support
+###############################
+#Parts (Only found in commands usually and between them usually one of the args is)
+###############################
+CRemote_RecivedP1: "&8You recieved a &6"
+CRemote_RecivedP2: " &8remote&4!"
+CRemote_NotFoundP1: "&8Robot &6"
+CRemote_NotFoundP2: " &8wasn't found&4!"

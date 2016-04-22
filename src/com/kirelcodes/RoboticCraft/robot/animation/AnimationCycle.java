@@ -2,10 +2,12 @@ package com.kirelcodes.RoboticCraft.robot.animation;
 
 import java.util.ArrayList;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import com.kirelcodes.RoboticCraft.RoboticCraft;
+import com.kirelcodes.RoboticCraft.utils.NMSClassInteracter;
 
 public class AnimationCycle {
 	private ArrayList<AnimationFrame> frames = new ArrayList<>();
@@ -20,6 +22,26 @@ public class AnimationCycle {
 	}
 
 	public void runAnimation(ArmorStand armor, long delay) {
+		if(NMSClassInteracter.getVersion().contains("8")){
+			new Runnable() {
+				int i = 0;
+				int id;
+				@SuppressWarnings("deprecation")
+				public void start(){
+					id = Bukkit.getScheduler().scheduleAsyncRepeatingTask(RoboticCraft.getInstance(), this, 0L, delay);
+				}
+				public void run() {
+					if (i == frames.size())
+						cancel();
+					frames.get(i).setLocations(armor);
+					i++;
+				}
+				private void cancel(){
+					Bukkit.getScheduler().cancelTask(id);
+				}
+			}.start();
+			return;
+		}
 		new BukkitRunnable() {
 			int i = 0;
 
@@ -35,6 +57,29 @@ public class AnimationCycle {
 
 	public void runAnimationCycle(ArmorStand armor, long delay) {
 		endless.add(armor);
+		if(NMSClassInteracter.getVersion().contains("8"))
+		{
+			new Runnable() {
+				int i = 0;
+				int id;
+				@SuppressWarnings("deprecation")
+				public void start(){
+					id = Bukkit.getScheduler().scheduleAsyncRepeatingTask(RoboticCraft.getInstance(), this, 0L, delay);
+				}
+				public void run() {
+					if(!endless.contains(armor))
+						cancel();
+					if (i == frames.size())
+						i = 0;
+					frames.get(i).setLocations(armor);
+					i++;
+				}
+				private void cancel(){
+					Bukkit.getScheduler().cancelTask(id);
+				}
+			}.start();
+			return;
+		}
 		new BukkitRunnable() {
 			int i = 0;
 
@@ -52,6 +97,8 @@ public class AnimationCycle {
 
 	public void cancelTask(ArmorStand armor){
 		ArrayList<ArmorStand> remove = new ArrayList<>();
+		if(NMSClassInteracter.getVersion().contains("8"))
+			return;
 		for(ArmorStand ar : endless){
 			if(ar.getCustomName() == null)
 				continue;

@@ -7,7 +7,6 @@ import org.bukkit.inventory.ShapedRecipe;
 
 import com.kirelcodes.RoboticCraft.gui.guiRobots.GUIRobotBasic;
 import com.kirelcodes.RoboticCraft.gui.guiRobots.GUIRobotCollector;
-import com.kirelcodes.RoboticCraft.gui.guiRobots.GUIRobotConstructer;
 import com.kirelcodes.RoboticCraft.gui.guiRobots.GUIRobotFarmer;
 import com.kirelcodes.RoboticCraft.gui.guiRobots.GUIRobotFisher;
 import com.kirelcodes.RoboticCraft.gui.guiRobots.GUIRobotHunter;
@@ -15,7 +14,6 @@ import com.kirelcodes.RoboticCraft.gui.guiRobots.GUIRobotLighter;
 import com.kirelcodes.RoboticCraft.gui.guiRobots.GUIRobotMiner;
 import com.kirelcodes.RoboticCraft.robot.RobotBase;
 import com.kirelcodes.RoboticCraft.robot.RobotCollector;
-import com.kirelcodes.RoboticCraft.robot.RobotConstructer;
 import com.kirelcodes.RoboticCraft.robot.RobotFarmer;
 import com.kirelcodes.RoboticCraft.robot.RobotFisher;
 import com.kirelcodes.RoboticCraft.robot.RobotHunter;

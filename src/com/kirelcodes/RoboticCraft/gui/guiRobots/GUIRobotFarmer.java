@@ -4,6 +4,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import com.kirelcodes.RoboticCraft.configs.ConfigManager;
 import com.kirelcodes.RoboticCraft.gui.GUI;
 import com.kirelcodes.RoboticCraft.robot.RobotFarmer;
 import com.kirelcodes.RoboticCraft.utils.ItemStackUtils;
@@ -30,8 +31,8 @@ public class GUIRobotFarmer extends GUIRobotBasic {
 		itemFarm = ItemStackUtils.createItem(Material.DIAMOND_HOE, "&aFarm");
 		itemNoFarm = ItemStackUtils.createItem(Material.DIAMOND_HOE,
 				"&cStop Farm");
-		pos1 = ItemStackUtils.createItem(Material.DIRT, 2, "&aset Pos1");
-		pos2 = ItemStackUtils.createItem(Material.DIRT, 2, "&aset Pos2");
+		pos1 = ItemStackUtils.createItem(Material.DIRT, 2, "&aSet position 1");
+		pos2 = ItemStackUtils.createItem(Material.DIRT, 2, "&aSet position 2");
 		getGUIAction().add(new GUIAction(itemFarm) {
 
 			@Override
@@ -52,7 +53,7 @@ public class GUIRobotFarmer extends GUIRobotBasic {
 			public void actionNow(GUI gui, Player player) {
 				((GUIRobotFarmer) gui).getRobot().setMarkOne(
 						player.getLocation());
-				player.sendMessage(ChatColor.AQUA + "[Robot] Setted pos1");
+				player.sendMessage(ChatColor.AQUA + ConfigManager.getLang("GUIMessageFarmer1"));
 			}
 		});
 		getGUIAction().add(new GUIAction(pos2) {
@@ -61,7 +62,7 @@ public class GUIRobotFarmer extends GUIRobotBasic {
 			public void actionNow(GUI gui, Player player) {
 				((GUIRobotFarmer) gui).getRobot().setMarkTwo(
 						player.getLocation());
-				player.sendMessage(ChatColor.AQUA + "[Robot] Setted pos2");
+				player.sendMessage(ChatColor.AQUA + ConfigManager.getLang("GUIMessageFarmer2"));
 			}
 		});
 		setRemovePos(3);

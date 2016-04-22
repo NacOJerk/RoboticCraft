@@ -6,6 +6,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import com.kirelcodes.RoboticCraft.configs.ConfigManager;
 import com.kirelcodes.RoboticCraft.gui.GUI;
 import com.kirelcodes.RoboticCraft.robot.RobotBase;
 import com.kirelcodes.RoboticCraft.utils.ItemStackUtils;
@@ -20,10 +21,10 @@ public class GUIRobotBasic extends GUI {
 		setTitle("&cBasic Robot GUI");
 		instalizeInventory();
 		this.robot = robot;
-		Destroy = ItemStackUtils.createItem(Material.BARRIER, "&cDESTROY ROBOT");
-		itemFollow = ItemStackUtils.createItem(Material.COMPASS, "&aFollow");
-		itemNoFollow = ItemStackUtils.createItem(Material.COMPASS, "&cStop Follow");
-		openInventory = ItemStackUtils.createItem(Material.CHEST, "&cOpen Robot's Inventory");
+		Destroy = ItemStackUtils.createItem(Material.BARRIER, ConfigManager.getLang("BasicItem_Destroy"));
+		itemFollow = ItemStackUtils.createItem(Material.COMPASS, ConfigManager.getLang("BasicItem_Follow"));
+		itemNoFollow = ItemStackUtils.createItem(Material.COMPASS, ConfigManager.getLang("BasicItem_NoFollow"));
+		openInventory = ItemStackUtils.createItem(Material.CHEST, ConfigManager.getLang("BasicItem_Inventory"));
 		int fuelD = 0;
 		ChatColor color = ChatColor.WHITE;
 		if(robot.getFuel() >= 75){
@@ -42,7 +43,7 @@ public class GUIRobotBasic extends GUI {
 			fuelD = 14;
 			color = ChatColor.DARK_RED;
 		}
-		fuel = ItemStackUtils.createItem(Material.STAINED_GLASS_PANE, fuelD, color + "Fuel level : " + robot.getFuel());
+		fuel = ItemStackUtils.createItem(Material.STAINED_GLASS_PANE, fuelD, color + ConfigManager.getLang("BasicItem_Fuel") + robot.getFuel());
 		chestPos = 13;
 		followPos = 14;
 		destroyPos = 3;
@@ -93,27 +94,27 @@ public class GUIRobotBasic extends GUI {
 	}
 
 	protected void setChestPos(int i) {
-		ItemStack item = ItemStackUtils.createItem(Material.STAINED_GLASS_PANE, 0, ChatColor.BLACK + "DONT CLICK ME");
+		ItemStack item = ItemStackUtils.createItem(Material.STAINED_GLASS_PANE, 0, ChatColor.BLACK + ConfigManager.getLang("BasicItem_DontClickItem"));
 		getInventory().setItem(chestPos, item);
 		this.chestPos = i;
 		getInventory().setItem(chestPos, openInventory);
 	}
 
 	protected void setRemovePos(int i) {
-		ItemStack item = ItemStackUtils.createItem(Material.STAINED_GLASS_PANE, 0, ChatColor.BLACK + "DONT CLICK ME");
+		ItemStack item = ItemStackUtils.createItem(Material.STAINED_GLASS_PANE, 0, ChatColor.BLACK + ConfigManager.getLang("BasicItem_DontClickItem"));
 		getInventory().setItem(destroyPos, item);
 		this.destroyPos = i;
 		getInventory().setItem(destroyPos, Destroy);
 	}
 
 	public void setFollowPos(int i) {
-		ItemStack item = ItemStackUtils.createItem(Material.STAINED_GLASS_PANE, 0, ChatColor.BLACK + "DONT CLICK ME");
+		ItemStack item = ItemStackUtils.createItem(Material.STAINED_GLASS_PANE, 0, ChatColor.BLACK + ConfigManager.getLang("BasicItem_DontClickItem"));
 		getInventory().setItem(followPos, item);
 		this.followPos = i;
 		getInventory().setItem(followPos, (robot.isFollowing()) ? itemNoFollow : itemFollow);
 	}
 	public void setFuelPos(int i) {
-		ItemStack item = ItemStackUtils.createItem(Material.STAINED_GLASS_PANE, 0, ChatColor.BLACK + "DONT CLICK ME");
+		ItemStack item = ItemStackUtils.createItem(Material.STAINED_GLASS_PANE, 0, ChatColor.BLACK + ConfigManager.getLang("BasicItem_DontClickItem"));
 		getInventory().setItem(fuelPos, item);
 		this.fuelPos = i;
 		getInventory().setItem(fuelPos, fuel);
@@ -135,7 +136,7 @@ public class GUIRobotBasic extends GUI {
 	public void fillInventory(){
 		for (int i = 0; i < 27; i++) {
 			ItemStack item = ItemStackUtils.createItem(Material.STAINED_GLASS_PANE, 0,
-					ChatColor.BLACK + "DONT CLICK ME");
+					ChatColor.BLACK + ConfigManager.getLang("BasicItem_DontClickItem"));
 			getGUIAction().add(new GUIAction(item) {
 
 				@Override

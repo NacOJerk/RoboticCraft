@@ -150,15 +150,11 @@ public class RobotBase implements InventoryHolder {
 	 */
 	public RobotBase(Location loc, UUID owner) {
 		Chicken chick = null;
-		if (getVersion().contains("9")) {
-			try {
-				chick = getSilentChicken(loc);
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
-		} else
-			chick = (Chicken) loc.getWorld().spawnEntity(loc,
-					EntityType.CHICKEN);
+		try {
+			chick = getSilentChicken(loc);
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
 		this.chick = chick;
 		this.chick.setMaxHealth(Integer.MAX_VALUE);
 		this.chick.setHealth(this.chick.getMaxHealth());
@@ -190,7 +186,8 @@ public class RobotBase implements InventoryHolder {
 		this.armorStand.setBoots(new ItemStack(Material.IRON_BOOTS));
 		this.armorStand.setLeggings(new ItemStack(Material.IRON_LEGGINGS));
 		this.armorStand.setChestplate(new ItemStack(Material.IRON_CHESTPLATE));
-		this.armorStand.setMarker(true);
+		if (!ConfigManager.isRobotBreakable())
+			this.armorStand.setMarker(true);
 		setFuel(100);
 		this.pathManager = new PathManager(this);
 		addPaths();
@@ -606,8 +603,18 @@ public class RobotBase implements InventoryHolder {
 					.getMethod("getBukkitEntity").invoke(entity);
 			return (Chicken) craftChicken;
 		} else {
-			return (Chicken) loc.getWorld()
-					.spawnEntity(loc, EntityType.CHICKEN);
+			Object chicken = getNMS("EntityTypes").getMethod("a",
+					getNMS("NBTTagCompound"), getNMS("World")).invoke(null,
+					nbtTAG, world);
+			chicken.getClass()
+					.getMethod("setPosition", double.class, double.class,
+							double.class)
+					.invoke(chicken, loc.getX(), loc.getY(), loc.getZ());
+			world.getClass().getMethod("addEntity", getNMS("Entity"))
+					.invoke(world, chicken);
+			Object craftChicken = chicken.getClass()
+					.getMethod("getBukkitEntity").invoke(chicken);
+			return (Chicken) craftChicken;
 		}
 	}
 
@@ -620,10 +627,15 @@ public class RobotBase implements InventoryHolder {
 	}
 
 	public boolean checkAllowed(Location loc) {
-		String robotName = getClass().getName().split("\\.")[getClass().getName().split("\\.").length - 1];
+		String robotName = getClass().getName().split("\\.")[getClass()
+				.getName().split("\\.").length - 1];
 		robotName = robotName.replaceAll("Robot", "");
-		for(World w : ConfigManager.getBannedWorlds(robotName))
-			if(getWorld().getName().equalsIgnoreCase(w.getName()))
+		if (ConfigManager.getRobotMaxAmount() != 0
+				&& RobotCenter.getRobotAmount(getOwner()) > ConfigManager
+						.getRobotMaxAmount())
+			return false;
+		for (World w : ConfigManager.getBannedWorlds(robotName))
+			if (getWorld().getName().equalsIgnoreCase(w.getName()))
 				return false;
 		if (Bukkit.getOfflinePlayer(owner).isOp())
 			return true;
