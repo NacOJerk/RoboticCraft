@@ -6,6 +6,18 @@
 # DrPiggy, xShakedDev   #
 #########################
 
+#########################
+#    PlaceHolders:      #
+#########################
+# %PLAYER% - Player name
+# %PLAYERX% - Player X location
+# %PLAYERY% - Player Y location
+# %PLAYERZ% - Player Z location
+#########################
+
+
+
+
 #No player place holder support
 PREFIX: "&b&6[&cRoboticCraft&b&6]" 
 CRemote_OnlyPlayers: "&8Only players can use this command&4!"
