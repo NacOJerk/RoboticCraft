@@ -70,7 +70,7 @@ public class HunterPathfinder extends BasicPathfinder {
 				try {
 					this.robot.setTargetLocation(startBlock);
 				} catch (Exception e) {
-					this.robot.setHunting(false);
+					
 				}
 			}
 		}
