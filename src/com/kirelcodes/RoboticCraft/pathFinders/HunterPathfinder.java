@@ -12,6 +12,7 @@ import org.bukkit.entity.Wolf;
 
 import com.kirelcodes.RoboticCraft.configs.ConfigManager;
 import com.kirelcodes.RoboticCraft.robot.RobotHunter;
+import com.kirelcodes.RoboticCraft.robot.animation.AnimationManager;
 
 public class HunterPathfinder extends BasicPathfinder {
 	private RobotHunter robot;
@@ -95,6 +96,7 @@ public class HunterPathfinder extends BasicPathfinder {
 			 * .getHealth() - 7) <= 0) ? 0 : ((Damageable) this.target)
 			 * .getHealth() - 7);
 			 */
+			AnimationManager.mine.runAnimation(robot.getArmorStand(), 2L);
 			((Damageable) this.target).damage(7, robot.getNavigator());
 			if (((Damageable) this.target).getHealth() == 0
 					|| ((Damageable) this.target).isDead()) {
