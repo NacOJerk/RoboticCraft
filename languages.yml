@@ -40,6 +40,16 @@ BasicItem_DontClickItem: "DONT CLICK ME"
 GUIMessageFarmer1: "[Robot] Setted position 1"
 GUIMessageFarmer2: "[Robot] Setted position 2"
 
+#GUI Titles
+BasicGUIT: "&cBasic Robot GUI"
+BreederGUIT: "&cBreeder Robot GUI"
+CollectorGUIT: "&Collector Robot GUI"
+FarmerGUIT: "&cFarmer Robot GUI"
+FisherGUIT: "&cFisher Robot GUI"
+HunterGUI: "&cHunter Robot GUI"
+LighterGUIT: "&cLighter Robot GUI"
+MinerGUIT: "&cMiner Robot GUI"
+
 #Player place holder support
 ###############################
 #Parts (Only found in commands usually and between them usually one of the args is)

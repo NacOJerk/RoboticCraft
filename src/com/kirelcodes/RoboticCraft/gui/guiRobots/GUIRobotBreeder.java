@@ -5,6 +5,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import com.kirelcodes.RoboticCraft.configs.ConfigManager;
 import com.kirelcodes.RoboticCraft.gui.GUI;
 import com.kirelcodes.RoboticCraft.robot.RobotBreeder;
 import com.kirelcodes.RoboticCraft.utils.ItemStackUtils;
@@ -22,7 +23,7 @@ public class GUIRobotBreeder extends GUIRobotBasic {
 	public GUIRobotBreeder(RobotBreeder robot) {
 		super(robot);
 		setSize(27);
-		setTitle("&cBreeder Robot GUI");
+		setTitle(ConfigManager.getLang("BreederGUIT"));
 		instalizeInventory();
 		fillInventory();
 		this.robot = robot;

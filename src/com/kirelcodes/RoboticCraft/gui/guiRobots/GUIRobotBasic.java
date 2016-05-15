@@ -18,7 +18,7 @@ public class GUIRobotBasic extends GUI {
 
 	public GUIRobotBasic(RobotBase robot) {
 		setSize(27);
-		setTitle("&cBasic Robot GUI");
+		setTitle(ConfigManager.getLang("BasicGUIT"));
 		instalizeInventory();
 		this.robot = robot;
 		Destroy = ItemStackUtils.createItem(Material.BARRIER, ConfigManager.getLang("BasicItem_Destroy"));

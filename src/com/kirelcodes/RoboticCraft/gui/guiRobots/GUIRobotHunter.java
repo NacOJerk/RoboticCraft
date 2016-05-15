@@ -5,6 +5,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import com.kirelcodes.RoboticCraft.configs.ConfigManager;
 import com.kirelcodes.RoboticCraft.gui.GUI;
 import com.kirelcodes.RoboticCraft.robot.RobotHunter;
 import com.kirelcodes.RoboticCraft.utils.ItemStackUtils;
@@ -21,7 +22,7 @@ public class GUIRobotHunter extends GUIRobotBasic {
 	public GUIRobotHunter(RobotHunter robot) {
 		super(robot);
 		setSize(27);
-		setTitle("&cHunter Robot GUI");
+		setTitle(ConfigManager.getLang("HunterGUIT"));
 		instalizeInventory();
 		fillInventory();
 		this.robot = robot;

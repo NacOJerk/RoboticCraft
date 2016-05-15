@@ -5,6 +5,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import com.kirelcodes.RoboticCraft.configs.ConfigManager;
 import com.kirelcodes.RoboticCraft.gui.GUI;
 import com.kirelcodes.RoboticCraft.robot.RobotCollector;
 import com.kirelcodes.RoboticCraft.utils.ItemStackUtils;
@@ -22,7 +23,7 @@ public class GUIRobotCollector extends GUIRobotBasic {
 	public GUIRobotCollector(RobotCollector robot) {
 		super(robot);
 		setSize(27);
-		setTitle("&Collector Robot GUI");
+		setTitle(ConfigManager.getLang("CollectorGUIT"));
 		instalizeInventory();
 		fillInventory();
 		this.robot = robot;

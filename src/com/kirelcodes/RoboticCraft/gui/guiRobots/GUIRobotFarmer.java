@@ -24,7 +24,7 @@ public class GUIRobotFarmer extends GUIRobotBasic {
 	public GUIRobotFarmer(RobotFarmer robot) {
 		super(robot);
 		setSize(27);
-		setTitle("&cFarmer Robot GUI");
+		setTitle(ConfigManager.getLang("FarmerGUIT"));
 		instalizeInventory();
 		fillInventory();
 		this.robot = robot;
